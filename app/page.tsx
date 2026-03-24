@@ -1,9 +1,9 @@
 import type { ProductsResponse } from "../lib/types";
-import InventoryWidget from "../components/ui/dashboard-widget";
-import Sidebar from "@/components/ui/sidebar";
-import ProductTable from "@/components/ui/product-table";
-import Header from "@/components/ui/header";
-import SearchWidget from "../components/ui/search-widget";
+import InventoryWidget from "../components/admin-ui/dashboard-widget";
+import Sidebar from "@/components/admin-ui/sidebar";
+import ProductTable from "@/components/admin-ui/product-table";
+import Header from "@/components/admin-ui/header";
+import SearchWidget from "../components/admin-ui/search-widget";
 
 const API_URL = "http://localhost:4000";
 const defaultLimit = "6";
@@ -28,7 +28,10 @@ export default async function Home(params: PageProps<"/">) {
         <div className="pr-4 pl-4 pb-4 flex flex-col gap-4">
           <InventoryWidget />
           <SearchWidget />
-          <ProductTable searchParams={params.searchParams} total={total} />
+          <ProductTable
+            searchParams={params.searchParams}
+            total={total}
+          />
         </div>
       </section>
 

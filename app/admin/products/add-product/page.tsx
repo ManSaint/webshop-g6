@@ -1,7 +1,7 @@
 
 
 import { API_URL } from "@/lib/config";
-import CreateForm from "@/components/ui/create-form";
+import CreateForm from "@/components/admin-ui/create-form";
 import type { Category } from "@/lib/types";
 
 export default async function CreatePage() {
