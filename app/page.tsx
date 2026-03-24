@@ -1,3 +1,13 @@
+import ProductsGrid from "@/components/products-grid";
+
 export default async function Home() {
-  return <main></main>;
+
+
+  return (
+    <main >
+      
+       <ProductsGrid />
+      
+    </main>
+  );
 }
