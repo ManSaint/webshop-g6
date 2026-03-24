@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Evening Column Dress — MAISON</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        cream: '#FAF8F5',
+        beige: '#F0EBE3',
+        charcoal: '#2C2C2C',
+        darkbrown: '#3D3024',
+        rose: '#C4A88C',
+        dustypink: '#D4B5A0',
+        border: '#E8E2DA',
+      },
+      fontFamily: {
+        serif: ['Playfair Display', 'Georgia', 'serif'],
+        sans: ['Inter', 'system-ui', 'sans-serif'],
+      }
+    }
+  }
+}
+</script>
+<style>
+  * { box-sizing: border-box; }
+  body { font-family: 'Inter', sans-serif; background: #FAF8F5; color: #2C2C2C; }
+  .font-serif { font-family: 'Playfair Display', Georgia, serif; }
+  .scrollbar-hide::-webkit-scrollbar { display: none; }
+  .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+  .scroll-snap-x { scroll-snap-type: x mandatory; }
+  .scroll-snap-start { scroll-snap-align: start; }
+  /* Overlay nav animation */
+  .overlay-nav { transition: opacity 0.4s ease, visibility 0.4s ease; }
+  .overlay-nav.open { opacity: 1; visibility: visible; }
+  .overlay-nav:not(.open) { opacity: 0; visibility: hidden; }
+</style>
+</head>
+<body class="bg-cream text-charcoal">
+
+<!-- FULL-SCREEN OVERLAY NAV -->
+<div id="overlayNav" class="overlay-nav fixed inset-0 z-[100] bg-cream flex flex-col items-center justify-center">
+  <button onclick="closeNav()" class="absolute top-5 right-5 p-2 hover:text-rose transition-colors">
+    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/></svg>
+  </button>
+  <nav class="flex flex-col items-center gap-8">
+    <a href="#" class="font-serif text-3xl text-darkbrown hover:text-rose transition-colors duration-300">New Arrivals</a>
+    <a href="#" class="font-serif text-3xl text-darkbrown hover:text-rose transition-colors duration-300">Women</a>
+    <a href="#" class="font-serif text-3xl text-darkbrown hover:text-rose transition-colors duration-300">Men</a>
+    <a href="#" class="font-serif text-3xl text-darkbrown hover:text-rose transition-colors duration-300">Beauty</a>
+    <a href="#" class="font-serif text-3xl text-darkbrown hover:text-rose transition-colors duration-300">Home</a>
+  </nav>
+  <div class="absolute bottom-10 flex gap-6 text-xs tracking-[0.15em] uppercase text-charcoal/50">
+    <a href="#" class="hover:text-charcoal transition-colors">Contact</a>
+    <a href="#" class="hover:text-charcoal transition-colors">Instagram</a>
+    <a href="#" class="hover:text-charcoal transition-colors">Pinterest</a>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header class="sticky top-0 z-50 bg-cream/95 backdrop-blur-sm border-b border-border">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-14">
+      <a href="#" class="text-sm tracking-[0.35em] uppercase font-medium text-darkbrown">Maison</a>
+      <div class="flex items-center gap-5">
+        <button class="relative hover:text-rose transition-colors" aria-label="Cart">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4ZM3 6h18" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 10a4 4 0 0 1-8 0" stroke-linecap="round"/></svg>
+          <span class="absolute -top-1.5 -right-2 bg-darkbrown text-cream text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-medium">2</span>
+        </button>
+        <button onclick="openNav()" class="hover:text-rose transition-colors" aria-label="Menu">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M3 12h18M3 6h18M3 18h18" stroke-linecap="round" stroke-width="1.5"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- BREADCRUMB -->
+<nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+  <ol class="flex items-center gap-2 text-xs tracking-wide text-charcoal/50">
+    <li><a href="#" class="hover:text-charcoal transition-colors">Home</a></li>
+    <li>/</li>
+    <li><a href="#" class="hover:text-charcoal transition-colors">Women</a></li>
+    <li>/</li>
+    <li><a href="#" class="hover:text-charcoal transition-colors">Dresses</a></li>
+    <li>/</li>
+    <li class="text-charcoal">Evening Column Dress</li>
+  </ol>
+</nav>
+
+<!-- PRODUCT SECTION: 50/50 Split -->
+<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
+  <div class="lg:flex lg:gap-0 lg:min-h-[80vh]">
+
+    <!-- LEFT: Horizontal scrollable gallery -->
+    <div class="lg:w-1/2 lg:pr-8">
+      <div id="imageGallery" class="flex gap-3 overflow-x-auto scroll-snap-x scrollbar-hide pb-4 lg:pb-0">
+        <div class="flex-shrink-0 w-[85%] sm:w-[70%] lg:w-[90%] scroll-snap-start">
+          <div class="aspect-[3/4] bg-beige overflow-hidden">
+            <img src="https://picsum.photos/seed/evsplit1/600/800" alt="View 1" class="w-full h-full object-cover hover:scale-105 transition-transform duration-700">
+          </div>
+        </div>
+        <div class="flex-shrink-0 w-[85%] sm:w-[70%] lg:w-[90%] scroll-snap-start">
+          <div class="aspect-[3/4] bg-beige overflow-hidden">
+            <img src="https://picsum.photos/seed/evsplit2/600/800" alt="View 2" class="w-full h-full object-cover hover:scale-105 transition-transform duration-700">
+          </div>
+        </div>
+        <div class="flex-shrink-0 w-[85%] sm:w-[70%] lg:w-[90%] scroll-snap-start">
+          <div class="aspect-[3/4] bg-beige overflow-hidden">
+            <img src="https://picsum.photos/seed/evsplit3/600/800" alt="View 3" class="w-full h-full object-cover hover:scale-105 transition-transform duration-700">
+          </div>
+        </div>
+        <div class="flex-shrink-0 w-[85%] sm:w-[70%] lg:w-[90%] scroll-snap-start">
+          <div class="aspect-[3/4] bg-beige overflow-hidden">
+            <img src="https://picsum.photos/seed/evsplit4/600/800" alt="View 4" class="w-full h-full object-cover hover:scale-105 transition-transform duration-700">
+          </div>
+        </div>
+      </div>
+      <!-- Scroll indicators -->
+      <div class="flex gap-1.5 mt-3 justify-center lg:justify-start">
+        <div class="scroll-indicator w-8 h-1 bg-charcoal rounded-full transition-all duration-300"></div>
+        <div class="scroll-indicator w-8 h-1 bg-border rounded-full transition-all duration-300"></div>
+        <div class="scroll-indicator w-8 h-1 bg-border rounded-full transition-all duration-300"></div>
+        <div class="scroll-indicator w-8 h-1 bg-border rounded-full transition-all duration-300"></div>
+      </div>
+    </div>
+
+    <!-- RIGHT: Product Info -->
+    <div class="lg:w-1/2 lg:pl-8 lg:border-l lg:border-border mt-8 lg:mt-0">
+      <div class="lg:sticky lg:top-24 lg:max-h-[calc(100vh-8rem)] lg:overflow-y-auto scrollbar-hide lg:pr-4">
+        <!-- Brand -->
+        <p class="text-xs tracking-[0.3em] uppercase text-charcoal/50 mb-2">Atelier Noir</p>
+        <!-- Title -->
+        <h1 class="font-serif text-3xl lg:text-4xl font-medium text-darkbrown mb-4">Evening Column Dress</h1>
+        <!-- Price with badge -->
+        <div class="flex items-center gap-3 mb-3">
+          <span class="text-xl font-medium">$240</span>
+          <span class="text-sm text-charcoal/40 line-through">$320</span>
+          <span class="bg-darkbrown text-cream text-[10px] tracking-[0.15em] uppercase px-2.5 py-1 font-medium">25% OFF</span>
+        </div>
+        <!-- Rating -->
+        <div class="flex items-center gap-2 mb-6">
+          <div class="flex gap-0.5" id="starRating"></div>
+          <span class="text-sm text-charcoal/50">4.5</span>
+          <span class="text-sm text-charcoal/40">(23 reviews)</span>
+        </div>
+
+        <!-- Description -->
+        <p class="text-sm text-charcoal/60 leading-relaxed mb-6 pb-6 border-b border-border">A floor-length column dress in heavyweight silk crepe. Structured shoulders, invisible zip closure, and a subtle side slit. Designed for presence — from seated dinners to standing ovations.</p>
+
+        <!-- Color selector -->
+        <div class="mb-5">
+          <p class="text-xs tracking-[0.15em] uppercase mb-3">Color: <span id="colorName" class="font-medium">Noir</span></p>
+          <div class="flex gap-2.5">
+            <button onclick="selectColor(this, 'Noir')" class="color-swatch w-7 h-7 rounded-full bg-charcoal ring-2 ring-offset-2 ring-charcoal transition-all duration-300" data-color="noir"></button>
+            <button onclick="selectColor(this, 'Ivory')" class="color-swatch w-7 h-7 rounded-full bg-[#F5F0E8] border border-border ring-2 ring-offset-2 ring-transparent transition-all duration-300" data-color="ivory"></button>
+            <button onclick="selectColor(this, 'Dusty Rose')" class="color-swatch w-7 h-7 rounded-full bg-dustypink ring-2 ring-offset-2 ring-transparent transition-all duration-300" data-color="dustyrose"></button>
+          </div>
+        </div>
+
+        <!-- Size selector (pill buttons) -->
+        <div class="mb-5">
+          <div class="flex items-center justify-between mb-3">
+            <p class="text-xs tracking-[0.15em] uppercase">Size</p>
+            <a href="#" class="text-xs text-charcoal/50 underline underline-offset-2 hover:text-charcoal transition-colors">Size Guide</a>
+          </div>
+          <div class="flex gap-2 flex-wrap">
+            <button onclick="selectSize(this)" class="size-btn px-5 py-2.5 rounded-full border border-border text-xs tracking-wider hover:border-charcoal transition-all duration-300">XS</button>
+            <button onclick="selectSize(this)" class="size-btn px-5 py-2.5 rounded-full border border-border text-xs tracking-wider hover:border-charcoal transition-all duration-300">S</button>
+            <button onclick="selectSize(this)" class="size-btn px-5 py-2.5 rounded-full border border-charcoal bg-charcoal text-cream text-xs tracking-wider transition-all duration-300">M</button>
+            <button onclick="selectSize(this)" class="size-btn px-5 py-2.5 rounded-full border border-border text-xs tracking-wider hover:border-charcoal transition-all duration-300">L</button>
+            <button onclick="selectSize(this)" class="size-btn px-5 py-2.5 rounded-full border border-border text-xs tracking-wider hover:border-charcoal transition-all duration-300">XL</button>
+          </div>
+        </div>
+
+        <!-- Quantity selector -->
+        <div class="mb-6">
+          <p class="text-xs tracking-[0.15em] uppercase mb-3">Quantity</p>
+          <div class="inline-flex items-center border border-border">
+            <button onclick="changeQty(-1)" class="w-10 h-10 flex items-center justify-center hover:bg-beige transition-colors text-lg">-</button>
+            <span id="qtyDisplay" class="w-10 h-10 flex items-center justify-center text-sm font-medium border-x border-border">1</span>
+            <button onclick="changeQty(1)" class="w-10 h-10 flex items-center justify-center hover:bg-beige transition-colors text-lg">+</button>
+          </div>
+        </div>
+
+        <!-- Buttons -->
+        <div class="flex items-center gap-4 mb-6">
+          <button onclick="addToBag()" id="addToBagBtn"
+                  class="flex-1 bg-darkbrown text-cream py-3.5 text-sm tracking-[0.2em] uppercase font-medium hover:bg-charcoal transition-all duration-500">
+            <span id="addToBagText">Add to Bag</span>
+          </button>
+          <button onclick="toggleWishlist(this)" class="flex items-center gap-1.5 text-sm text-charcoal/60 hover:text-charcoal transition-colors group">
+            <svg class="w-5 h-5 wishlist-icon transition-transform duration-300 group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Save
+          </button>
+        </div>
+
+        <!-- Expandable details -->
+        <div class="border-t border-border">
+          <div class="border-b border-border">
+            <button onclick="toggleExpand(this)" class="w-full flex items-center justify-between py-4 text-left">
+              <span class="text-xs tracking-[0.15em] uppercase font-medium">About This Piece</span>
+              <svg class="w-4 h-4 transition-transform duration-300 expand-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="expand-content overflow-hidden max-h-0 transition-all duration-500">
+              <div class="pb-4 text-sm text-charcoal/60 leading-relaxed">
+                <p>The Evening Column Dress is the culmination of Atelier Noir's considered approach to eveningwear. Clean lines and refined structure celebrate the beauty of simplicity, creating a silhouette that commands attention without effort. Structured shoulders, an invisible zip closure, and a subtle side slit create understated drama.</p>
+              </div>
+            </div>
+          </div>
+          <div class="border-b border-border">
+            <button onclick="toggleExpand(this)" class="w-full flex items-center justify-between py-4 text-left">
+              <span class="text-xs tracking-[0.15em] uppercase font-medium">Fabric & Care</span>
+              <svg class="w-4 h-4 transition-transform duration-300 expand-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="expand-content overflow-hidden max-h-0 transition-all duration-500">
+              <div class="pb-4 text-sm text-charcoal/60 leading-relaxed space-y-1">
+                <p>100% Silk Crepe</p>
+                <p>Dry clean only</p>
+                <p>Made in Italy</p>
+                <p>Store on a padded hanger away from direct sunlight</p>
+              </div>
+            </div>
+          </div>
+          <div class="border-b border-border">
+            <button onclick="toggleExpand(this)" class="w-full flex items-center justify-between py-4 text-left">
+              <span class="text-xs tracking-[0.15em] uppercase font-medium">Shipping</span>
+              <svg class="w-4 h-4 transition-transform duration-300 expand-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="expand-content overflow-hidden max-h-0 transition-all duration-500">
+              <div class="pb-4 text-sm text-charcoal/60 leading-relaxed space-y-1">
+                <p>Free shipping on orders over $200</p>
+                <p>Standard delivery in 3-5 business days</p>
+                <p>Express shipping available at checkout</p>
+              </div>
+            </div>
+          </div>
+          <div class="border-b border-border">
+            <button onclick="toggleExpand(this)" class="w-full flex items-center justify-between py-4 text-left">
+              <span class="text-xs tracking-[0.15em] uppercase font-medium">Returns</span>
+              <svg class="w-4 h-4 transition-transform duration-300 expand-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="expand-content overflow-hidden max-h-0 transition-all duration-500">
+              <div class="pb-4 text-sm text-charcoal/60 leading-relaxed space-y-1">
+                <p>30-day returns, free return shipping</p>
+                <p>Items must be unworn with original tags attached</p>
+                <p>Refunds processed within 5-7 business days</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- REVIEWS: Horizontal scroll cards -->
+  <section class="mt-20 pt-12 border-t border-border">
+    <div class="flex items-end justify-between mb-8">
+      <div>
+        <h2 class="font-serif text-2xl lg:text-3xl font-medium text-darkbrown mb-1">What They're Saying</h2>
+        <div class="flex items-center gap-2">
+          <div class="flex gap-0.5" id="avgStars"></div>
+          <span class="text-sm text-charcoal/50">4.5 out of 5 &mdash; 23 reviews</span>
+        </div>
+      </div>
+      <a href="#" class="hidden sm:inline text-xs tracking-wider uppercase underline underline-offset-4 hover:text-rose transition-colors">See All</a>
+    </div>
+    <div class="flex gap-4 overflow-x-auto scrollbar-hide pb-4">
+      <!-- Review Card 1 -->
+      <div class="flex-shrink-0 w-80 bg-beige p-6">
+        <div class="flex gap-0.5 mb-3" data-stars="5"></div>
+        <h4 class="font-medium text-sm mb-2">Absolutely Stunning</h4>
+        <p class="text-sm text-charcoal/60 leading-relaxed mb-4">This dress is everything. The silk crepe is substantial and drapes beautifully. I wore it to a gallery opening and received so many compliments. True to size — I ordered my usual M.</p>
+        <div class="flex items-center justify-between text-xs text-charcoal/40">
+          <span class="font-medium text-charcoal/60">Margaux D.</span>
+          <span>Mar 8, 2026</span>
+        </div>
+      </div>
+      <!-- Review Card 2 -->
+      <div class="flex-shrink-0 w-80 bg-beige p-6">
+        <div class="flex gap-0.5 mb-3" data-stars="4"></div>
+        <h4 class="font-medium text-sm mb-2">Beautiful but runs slightly long</h4>
+        <p class="text-sm text-charcoal/60 leading-relaxed mb-4">The quality is impeccable and the Noir is a gorgeous deep black. Runs a bit long for my 5'6" frame, but the side slit is tasteful and the invisible zip works perfectly.</p>
+        <div class="flex items-center justify-between text-xs text-charcoal/40">
+          <span class="font-medium text-charcoal/60">Sophia L.</span>
+          <span>Feb 20, 2026</span>
+        </div>
+      </div>
+      <!-- Review Card 3 -->
+      <div class="flex-shrink-0 w-80 bg-beige p-6">
+        <div class="flex gap-0.5 mb-3" data-stars="5"></div>
+        <h4 class="font-medium text-sm mb-2">Worth every penny</h4>
+        <p class="text-sm text-charcoal/60 leading-relaxed mb-4">The Dusty Rose color is ethereal in person. This is the kind of dress that makes you stand differently. Exceptional craftsmanship — you can feel the quality in every stitch.</p>
+        <div class="flex items-center justify-between text-xs text-charcoal/40">
+          <span class="font-medium text-charcoal/60">Elena V.</span>
+          <span>Jan 15, 2026</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RELATED PRODUCTS: Editorial 2-col -->
+  <section class="mt-20 pt-12 border-t border-border">
+    <h2 class="font-serif text-2xl lg:text-3xl font-medium text-darkbrown mb-10">Curated For You</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <!-- Item 1 -->
+      <a href="#" class="group relative aspect-[4/5] overflow-hidden bg-beige block">
+        <img src="https://picsum.photos/seed/editcoat/700/875" alt="Wool Line Coat" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
+        <div class="absolute bottom-0 left-0 right-0 p-6 text-cream">
+          <p class="text-xs tracking-[0.2em] uppercase text-cream/70 mb-1">Atelier Noir</p>
+          <h3 class="font-serif text-xl lg:text-2xl font-medium mb-1">Wool Line Coat</h3>
+          <p class="text-sm text-cream/80">$320</p>
+        </div>
+      </a>
+      <!-- Item 2 -->
+      <a href="#" class="group relative aspect-[4/5] overflow-hidden bg-beige block">
+        <img src="https://picsum.photos/seed/editblouse/700/875" alt="Silk Wrap Blouse" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
+        <div class="absolute bottom-0 left-0 right-0 p-6 text-cream">
+          <p class="text-xs tracking-[0.2em] uppercase text-cream/70 mb-1">Atelier Noir</p>
+          <h3 class="font-serif text-xl lg:text-2xl font-medium mb-1">Silk Wrap Blouse</h3>
+          <p class="text-sm text-cream/80">$185</p>
+        </div>
+      </a>
+      <!-- Item 3 -->
+      <a href="#" class="group relative aspect-[4/5] overflow-hidden bg-beige block">
+        <img src="https://picsum.photos/seed/editcash/700/875" alt="Cashmere V-Neck" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
+        <div class="absolute bottom-0 left-0 right-0 p-6 text-cream">
+          <p class="text-xs tracking-[0.2em] uppercase text-cream/70 mb-1">Atelier Noir</p>
+          <h3 class="font-serif text-xl lg:text-2xl font-medium mb-1">Cashmere V-Neck</h3>
+          <p class="text-sm text-cream/80">$275</p>
+        </div>
+      </a>
+      <!-- Item 4 -->
+      <a href="#" class="group relative aspect-[4/5] overflow-hidden bg-beige block">
+        <img src="https://picsum.photos/seed/editlinen/700/875" alt="Tailored Linen Trouser" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
+        <div class="absolute bottom-0 left-0 right-0 p-6 text-cream">
+          <p class="text-xs tracking-[0.2em] uppercase text-cream/70 mb-1">Atelier Noir</p>
+          <h3 class="font-serif text-xl lg:text-2xl font-medium mb-1">Tailored Linen Trouser</h3>
+          <p class="text-sm text-cream/80">$210</p>
+        </div>
+      </a>
+    </div>
+  </section>
+</main>
+
+<!-- FOOTER -->
+<footer class="bg-darkbrown text-cream/70 mt-20">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-10">
+      <div>
+        <a href="#" class="text-lg tracking-[0.3em] font-serif text-cream block mb-5">MAISON</a>
+        <p class="text-sm leading-relaxed max-w-sm mb-6">Considered design for the discerning wardrobe. Quality materials, timeless silhouettes, crafted with intention.</p>
+        <form class="flex max-w-xs" onsubmit="event.preventDefault(); this.querySelector('input').value=''; alert('Subscribed!')">
+          <input type="email" placeholder="Your email" class="bg-transparent border border-cream/20 px-3 py-2 text-sm flex-1 placeholder:text-cream/30 focus:outline-none focus:border-cream/50 transition-colors">
+          <button type="submit" class="bg-cream text-darkbrown px-4 py-2 text-xs tracking-wider uppercase font-medium hover:bg-cream/90 transition-colors">Subscribe</button>
+        </form>
+      </div>
+      <div class="grid grid-cols-2 gap-8">
+        <div>
+          <h4 class="text-xs tracking-[0.2em] uppercase text-cream font-medium mb-4">Shop</h4>
+          <ul class="space-y-2.5 text-sm">
+            <li><a href="#" class="hover:text-cream transition-colors">Women</a></li>
+            <li><a href="#" class="hover:text-cream transition-colors">Men</a></li>
+            <li><a href="#" class="hover:text-cream transition-colors">New Arrivals</a></li>
+            <li><a href="#" class="hover:text-cream transition-colors">Sale</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-xs tracking-[0.2em] uppercase text-cream font-medium mb-4">Help</h4>
+          <ul class="space-y-2.5 text-sm">
+            <li><a href="#" class="hover:text-cream transition-colors">Contact</a></li>
+            <li><a href="#" class="hover:text-cream transition-colors">Shipping</a></li>
+            <li><a href="#" class="hover:text-cream transition-colors">Returns</a></li>
+            <li><a href="#" class="hover:text-cream transition-colors">Size Guide</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="border-t border-cream/10 mt-10 pt-6 text-xs text-cream/30 text-center">
+      &copy; 2026 MAISON. All rights reserved.
+    </div>
+  </div>
+</footer>
+
+<!-- MOBILE STICKY BAR -->
+<div id="stickyBar" class="lg:hidden fixed bottom-0 left-0 right-0 bg-cream/95 backdrop-blur-sm border-t border-border px-4 py-3 z-50 translate-y-full transition-transform duration-500">
+  <div class="flex items-center gap-3">
+    <div class="flex-1">
+      <p class="text-xs text-charcoal/50">Evening Column Dress</p>
+      <p class="font-medium">$240</p>
+    </div>
+    <button onclick="addToBag()" class="bg-darkbrown text-cream px-6 py-3 text-xs tracking-[0.15em] uppercase font-medium hover:bg-charcoal transition-all duration-300">
+      Add to Bag &mdash; $240
+    </button>
+  </div>
+</div>
+
+<script>
+// Stars
+function renderStars(rating, container) {
+  let html = '';
+  for (let i = 1; i <= 5; i++) {
+    if (i <= Math.floor(rating)) {
+      html += '<svg class="w-3.5 h-3.5 text-rose fill-rose" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>';
+    } else if (i === Math.ceil(rating) && rating % 1 !== 0) {
+      html += '<svg class="w-3.5 h-3.5 text-rose" viewBox="0 0 24 24"><defs><linearGradient id="half'+Math.random().toString(36).substr(2,5)+'"><stop offset="50%" stop-color="#C4A88C"/><stop offset="50%" stop-color="transparent"/></linearGradient></defs><path fill="url(#half)" stroke="#C4A88C" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>';
+    } else {
+      html += '<svg class="w-3.5 h-3.5" viewBox="0 0 24 24"><path fill="none" stroke="#E8E2DA" stroke-width="1.5" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>';
+    }
+  }
+  container.innerHTML = html;
+}
+
+renderStars(4.5, document.getElementById('starRating'));
+renderStars(4.5, document.getElementById('avgStars'));
+document.querySelectorAll('[data-stars]').forEach(el => renderStars(parseInt(el.dataset.stars), el));
+
+// Overlay nav
+function openNav() { document.getElementById('overlayNav').classList.add('open'); document.body.style.overflow = 'hidden'; }
+function closeNav() { document.getElementById('overlayNav').classList.remove('open'); document.body.style.overflow = ''; }
+
+// Color
+function selectColor(btn, name) {
+  document.getElementById('colorName').textContent = name;
+  document.querySelectorAll('.color-swatch').forEach(s => {
+    s.classList.remove('ring-charcoal', 'ring-border', 'ring-dustypink');
+    s.classList.add('ring-transparent');
+  });
+  const map = { noir: 'ring-charcoal', ivory: 'ring-border', dustyrose: 'ring-dustypink' };
+  btn.classList.remove('ring-transparent');
+  btn.classList.add(map[btn.dataset.color] || 'ring-charcoal');
+}
+
+// Size
+function selectSize(btn) {
+  document.querySelectorAll('.size-btn').forEach(b => {
+    b.classList.remove('border-charcoal', 'bg-charcoal', 'text-cream');
+    b.classList.add('border-border');
+  });
+  btn.classList.remove('border-border');
+  btn.classList.add('border-charcoal', 'bg-charcoal', 'text-cream');
+}
+
+// Quantity
+let qty = 1;
+function changeQty(delta) {
+  qty = Math.max(1, Math.min(10, qty + delta));
+  document.getElementById('qtyDisplay').textContent = qty;
+}
+
+// Expandable details
+function toggleExpand(btn) {
+  const content = btn.nextElementSibling;
+  const icon = btn.querySelector('.expand-icon');
+  const isOpen = content.style.maxHeight && content.style.maxHeight !== '0px';
+  if (isOpen) {
+    content.style.maxHeight = '0px';
+    icon.style.transform = 'rotate(0deg)';
+  } else {
+    content.style.maxHeight = content.scrollHeight + 'px';
+    icon.style.transform = 'rotate(45deg)';
+  }
+}
+
+// Add to Bag
+function addToBag() {
+  const btn = document.getElementById('addToBagBtn');
+  const text = document.getElementById('addToBagText');
+  if (btn) {
+    btn.classList.add('bg-rose');
+    text.textContent = 'Added!';
+    setTimeout(() => { btn.classList.remove('bg-rose'); text.textContent = 'Add to Bag'; }, 2000);
+  }
+}
+
+// Wishlist
+function toggleWishlist(btn) {
+  const icon = btn.querySelector('.wishlist-icon');
+  const isFilled = icon.getAttribute('fill') === 'currentColor';
+  icon.setAttribute('fill', isFilled ? 'none' : 'currentColor');
+  btn.querySelector('svg + *') || null; // no-op
+}
+
+// Scroll indicators for image gallery
+const gallery = document.getElementById('imageGallery');
+const indicators = document.querySelectorAll('.scroll-indicator');
+gallery.addEventListener('scroll', () => {
+  const scrollLeft = gallery.scrollLeft;
+  const itemWidth = gallery.querySelector('div').offsetWidth + 12; // gap
+  const activeIndex = Math.round(scrollLeft / itemWidth);
+  indicators.forEach((ind, i) => {
+    ind.classList.toggle('bg-charcoal', i === activeIndex);
+    ind.classList.toggle('bg-border', i !== activeIndex);
+  });
+});
+
+// Mobile sticky bar — show when scrolled past Add to Bag
+const stickyBar = document.getElementById('stickyBar');
+const addToBagBtn = document.getElementById('addToBagBtn');
+function checkSticky() {
+  if (!addToBagBtn || window.innerWidth >= 1024) {
+    stickyBar.classList.add('translate-y-full');
+    return;
+  }
+  const rect = addToBagBtn.getBoundingClientRect();
+  if (rect.bottom < 0) {
+    stickyBar.classList.remove('translate-y-full');
+  } else {
+    stickyBar.classList.add('translate-y-full');
+  }
+}
+window.addEventListener('scroll', checkSticky, { passive: true });
+window.addEventListener('resize', checkSticky);
+checkSticky();
+</script>
+</body>
+</html>

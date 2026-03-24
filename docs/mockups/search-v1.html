@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MAISON — Women's Collection</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        cream: '#FAF8F5',
+        beige: '#F0EBE3',
+        charcoal: '#2C2C2C',
+        dbrown: '#3D3024',
+        rose: '#C4A88C',
+        dpink: '#D4B5A0',
+        border: '#E8E2DA',
+      },
+      fontFamily: {
+        display: ['Playfair Display', 'serif'],
+        body: ['Inter', 'sans-serif'],
+      }
+    }
+  }
+}
+</script>
+<style>
+  * { box-sizing: border-box; }
+  body { font-family: 'Inter', sans-serif; background: #FAF8F5; color: #2C2C2C; }
+  .font-display { font-family: 'Playfair Display', serif; }
+  input[type="checkbox"] { accent-color: #3D3024; }
+  input[type="radio"] { accent-color: #3D3024; }
+  .sidebar-drawer { transform: translateX(-100%); transition: transform 0.35s cubic-bezier(0.4,0,0.2,1); }
+  .sidebar-drawer.open { transform: translateX(0); }
+  .overlay { opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+  .overlay.active { opacity: 1; pointer-events: auto; }
+  .product-img-wrap:hover img { transform: scale(1.06); }
+  .product-img-wrap img { transition: transform 0.5s cubic-bezier(0.4,0,0.2,1); }
+  .size-btn.selected { background: #3D3024; color: #FAF8F5; }
+  .page-btn.active { background: #3D3024; color: #FAF8F5; }
+  .sort-dropdown { display: none; }
+  .sort-dropdown.open { display: block; }
+</style>
+</head>
+<body class="bg-cream min-h-screen">
+
+<!-- HEADER -->
+<header class="bg-cream border-b border-border sticky top-0 z-40">
+  <div class="max-w-[1400px] mx-auto px-4 lg:px-8">
+    <div class="flex items-center justify-between h-16 lg:h-20">
+      <!-- Logo -->
+      <a href="#" class="font-display text-2xl lg:text-3xl font-semibold text-dbrown tracking-wider">MAISON</a>
+      <!-- Nav -->
+      <nav class="hidden lg:flex items-center gap-8">
+        <a href="#" class="text-sm font-medium text-charcoal hover:text-rose transition-colors tracking-wide uppercase">New Arrivals</a>
+        <a href="#" class="text-sm font-medium text-dbrown border-b-2 border-dbrown tracking-wide uppercase">Women</a>
+        <a href="#" class="text-sm font-medium text-charcoal hover:text-rose transition-colors tracking-wide uppercase">Men</a>
+        <a href="#" class="text-sm font-medium text-charcoal hover:text-rose transition-colors tracking-wide uppercase">Beauty</a>
+        <a href="#" class="text-sm font-medium text-charcoal hover:text-rose transition-colors tracking-wide uppercase">Home</a>
+      </nav>
+      <!-- Icons -->
+      <div class="flex items-center gap-5">
+        <button class="text-charcoal hover:text-rose transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35" stroke-linecap="round"/></svg>
+        </button>
+        <button class="text-charcoal hover:text-rose transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke-linecap="round"/><circle cx="12" cy="7" r="4"/></svg>
+        </button>
+        <button class="relative text-charcoal hover:text-rose transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4ZM3 6h18M16 10a4 4 0 0 1-8 0" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span class="absolute -top-1.5 -right-2 bg-dbrown text-cream text-[10px] font-semibold w-4 h-4 rounded-full flex items-center justify-center">2</span>
+        </button>
+        <!-- Mobile menu toggle -->
+        <button class="lg:hidden text-charcoal" onclick="document.getElementById('mobileNav').classList.toggle('hidden')">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+    </div>
+    <!-- Mobile nav -->
+    <div id="mobileNav" class="hidden lg:hidden pb-4 border-t border-border pt-3 flex flex-col gap-2">
+      <a href="#" class="text-sm py-1 text-charcoal">New Arrivals</a>
+      <a href="#" class="text-sm py-1 font-semibold text-dbrown">Women</a>
+      <a href="#" class="text-sm py-1 text-charcoal">Men</a>
+      <a href="#" class="text-sm py-1 text-charcoal">Beauty</a>
+      <a href="#" class="text-sm py-1 text-charcoal">Home</a>
+    </div>
+  </div>
+</header>
+
+<!-- BREADCRUMB -->
+<div class="max-w-[1400px] mx-auto px-4 lg:px-8 py-4">
+  <nav class="text-xs text-rose font-body tracking-wide">
+    <a href="#" class="hover:text-dbrown transition-colors">Home</a>
+    <span class="mx-2">/</span>
+    <span class="text-charcoal">Women's Collection</span>
+  </nav>
+</div>
+
+<!-- PAGE HEADING -->
+<div class="max-w-[1400px] mx-auto px-4 lg:px-8 pb-4">
+  <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-2">
+    <div>
+      <h1 class="font-display text-3xl lg:text-4xl font-medium text-dbrown">Women's Collection</h1>
+      <p class="text-sm text-rose mt-1 tracking-wide">48 pieces</p>
+    </div>
+  </div>
+</div>
+
+<!-- ACTIVE FILTER PILLS -->
+<div class="max-w-[1400px] mx-auto px-4 lg:px-8 pb-6">
+  <div id="filterPills" class="flex flex-wrap items-center gap-2">
+    <span class="pill inline-flex items-center gap-1.5 px-3 py-1.5 bg-beige border border-border rounded-full text-xs font-medium text-dbrown cursor-pointer hover:bg-dpink/20 transition-colors" onclick="this.remove(); updatePillRow()">
+      Knitwear
+      <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12" stroke-linecap="round"/></svg>
+    </span>
+    <span class="pill inline-flex items-center gap-1.5 px-3 py-1.5 bg-beige border border-border rounded-full text-xs font-medium text-dbrown cursor-pointer hover:bg-dpink/20 transition-colors" onclick="this.remove(); updatePillRow()">
+      Under $300
+      <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12" stroke-linecap="round"/></svg>
+    </span>
+    <button id="clearAllBtn" class="text-xs text-rose underline underline-offset-2 hover:text-dbrown transition-colors ml-2" onclick="clearAllPills()">Clear all</button>
+  </div>
+</div>
+
+<!-- MOBILE FILTER BUTTON -->
+<div class="lg:hidden max-w-[1400px] mx-auto px-4 pb-4">
+  <button onclick="openDrawer()" class="w-full flex items-center justify-center gap-2 py-3 border border-border rounded text-sm font-medium text-dbrown hover:bg-beige transition-colors">
+    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M3 4h18M7 8h10M10 12h4" stroke-linecap="round"/></svg>
+    Filter &amp; Sort
+  </button>
+</div>
+
+<!-- MOBILE DRAWER OVERLAY -->
+<div id="drawerOverlay" class="overlay fixed inset-0 bg-black/40 z-50" onclick="closeDrawer()"></div>
+
+<!-- MOBILE SIDEBAR DRAWER -->
+<div id="sidebarDrawer" class="sidebar-drawer fixed top-0 left-0 h-full w-[300px] bg-cream z-50 overflow-y-auto shadow-2xl">
+  <div class="flex items-center justify-between p-4 border-b border-border">
+    <span class="font-display text-lg font-medium text-dbrown">Filters</span>
+    <button onclick="closeDrawer()" class="text-charcoal hover:text-rose transition-colors">
+      <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M18 6 6 18M6 6l12 12" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="p-4" id="drawerContent"></div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="max-w-[1400px] mx-auto px-4 lg:px-8 pb-20">
+  <div class="flex gap-8">
+    <!-- LEFT SIDEBAR (Desktop) -->
+    <aside id="desktopSidebar" class="hidden lg:block w-[250px] flex-shrink-0">
+      <div class="sticky top-24 space-y-8">
+        <!-- Category -->
+        <div>
+          <h3 class="font-display text-sm font-semibold text-dbrown uppercase tracking-wider mb-3">Category</h3>
+          <div class="space-y-2.5">
+            <label class="flex items-center gap-2.5 cursor-pointer group"><input type="checkbox" class="w-4 h-4 rounded border-border" checked><span class="text-sm text-charcoal group-hover:text-dbrown transition-colors">All</span></label>
+            <label class="flex items-center gap-2.5 cursor-pointer group"><input type="checkbox" class="w-4 h-4 rounded border-border"><span class="text-sm text-charcoal group-hover:text-dbrown transition-colors">Dresses</span></label>
+            <label class="flex items-center gap-2.5 cursor-pointer group"><input type="checkbox" class="w-4 h-4 rounded border-border"><span class="text-sm text-charcoal group-hover:text-dbrown transition-colors">Tops</span></label>
+            <label class="flex items-center gap-2.5 cursor-pointer group"><input type="checkbox" class="w-4 h-4 rounded border-border"><span class="text-sm text-charcoal group-hover:text-dbrown transition-colors">Bottoms</span></label>
+            <label class="flex items-center gap-2.5 cursor-pointer group"><input type="checkbox" class="w-4 h-4 rounded border-border"><span class="text-sm text-charcoal group-hover:text-dbrown transition-colors">Outerwear</span></label>
+            <label class="flex items-center gap-2.5 cursor-pointer group"><input type="checkbox" class="w-4 h-4 rounded border-border" checked><span class="text-sm text-charcoal group-hover:text-dbrown transition-colors">Knitwear</span></label>
+            <label class="flex items-center gap-2.5 cursor-pointer group"><input type="checkbox" class="w-4 h-4 rounded border-border"><span class="text-sm text-charcoal group-hover:text-dbrown transition-colors">Accessories</span></label>
+            <label class="flex items-center gap-2.5 cursor-pointer group"><input type="checkbox" class="w-4 h-4 rounded border-border"><span class="text-sm text-charcoal group-hover:text-dbrown transition-colors">Shoes</span></label>
+            <label class="flex items-center gap-2.5 cursor-pointer group"><input type="checkbox" class="w-4 h-4 rounded border-border"><span class="text-sm text-charcoal group-hover:text-dbrown transition-colors">Jewellery</span></label>
+          </div>
+        </div>
+        <!-- Price Range -->
+        <div>
+          <h3 class="font-display text-sm font-semibold text-dbrown uppercase tracking-wider mb-3">Price Range</h3>
+          <p class="text-xs text-rose mb-3">$0 — $500</p>
+          <div class="flex items-center gap-3">
+            <div class="flex-1">
+              <label class="text-[10px] text-rose uppercase tracking-wider">Min</label>
+              <input type="number" value="0" min="0" max="500" class="w-full mt-1 px-2.5 py-2 border border-border rounded bg-cream text-sm text-charcoal focus:outline-none focus:border-rose transition-colors">
+            </div>
+            <span class="mt-5 text-border">—</span>
+            <div class="flex-1">
+              <label class="text-[10px] text-rose uppercase tracking-wider">Max</label>
+              <input type="number" value="500" min="0" max="500" class="w-full mt-1 px-2.5 py-2 border border-border rounded bg-cream text-sm text-charcoal focus:outline-none focus:border-rose transition-colors">
+            </div>
+          </div>
+        </div>
+        <!-- Sort By -->
+        <div>
+          <h3 class="font-display text-sm font-semibold text-dbrown uppercase tracking-wider mb-3">Sort By</h3>
+          <div class="space-y-2.5">
+            <label class="flex items-center gap-2.5 cursor-pointer group"><input type="radio" name="sort" checked class="w-4 h-4"><span class="text-sm text-charcoal group-hover:text-dbrown transition-colors">Newest</span></label>
+            <label class="flex items-center gap-2.5 cursor-pointer group"><input type="radio" name="sort" class="w-4 h-4"><span class="text-sm text-charcoal group-hover:text-dbrown transition-colors">Price: Low to High</span></label>
+            <label class="flex items-center gap-2.5 cursor-pointer group"><input type="radio" name="sort" class="w-4 h-4"><span class="text-sm text-charcoal group-hover:text-dbrown transition-colors">Price: High to Low</span></label>
+            <label class="flex items-center gap-2.5 cursor-pointer group"><input type="radio" name="sort" class="w-4 h-4"><span class="text-sm text-charcoal group-hover:text-dbrown transition-colors">Best Selling</span></label>
+          </div>
+        </div>
+        <!-- Size -->
+        <div>
+          <h3 class="font-display text-sm font-semibold text-dbrown uppercase tracking-wider mb-3">Size</h3>
+          <div class="flex flex-wrap gap-2">
+            <button class="size-btn w-10 h-10 border border-border rounded text-xs font-medium text-charcoal hover:border-dbrown transition-colors" onclick="this.classList.toggle('selected')">XS</button>
+            <button class="size-btn w-10 h-10 border border-border rounded text-xs font-medium text-charcoal hover:border-dbrown transition-colors" onclick="this.classList.toggle('selected')">S</button>
+            <button class="size-btn selected w-10 h-10 border border-border rounded text-xs font-medium text-charcoal hover:border-dbrown transition-colors" onclick="this.classList.toggle('selected')">M</button>
+            <button class="size-btn w-10 h-10 border border-border rounded text-xs font-medium text-charcoal hover:border-dbrown transition-colors" onclick="this.classList.toggle('selected')">L</button>
+            <button class="size-btn w-10 h-10 border border-border rounded text-xs font-medium text-charcoal hover:border-dbrown transition-colors" onclick="this.classList.toggle('selected')">XL</button>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- RIGHT: PRODUCT GRID -->
+    <main class="flex-1 min-w-0">
+      <!-- Sort dropdown (top right) -->
+      <div class="flex justify-end mb-6 relative">
+        <div class="relative">
+          <button id="sortToggle" onclick="document.getElementById('sortMenu').classList.toggle('open')" class="flex items-center gap-2 text-sm text-charcoal hover:text-dbrown transition-colors">
+            Sort by: <span class="font-medium">Newest</span>
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="m6 9 6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div id="sortMenu" class="sort-dropdown absolute right-0 top-8 w-48 bg-cream border border-border rounded shadow-lg z-20">
+            <button class="block w-full text-left px-4 py-2.5 text-sm text-charcoal hover:bg-beige transition-colors font-medium">Newest</button>
+            <button class="block w-full text-left px-4 py-2.5 text-sm text-charcoal hover:bg-beige transition-colors">Price: Low to High</button>
+            <button class="block w-full text-left px-4 py-2.5 text-sm text-charcoal hover:bg-beige transition-colors">Price: High to Low</button>
+            <button class="block w-full text-left px-4 py-2.5 text-sm text-charcoal hover:bg-beige transition-colors">Best Selling</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Product Grid -->
+      <div class="grid grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-8 lg:gap-x-6 lg:gap-y-10">
+        <!-- Product 1 -->
+        <div class="group cursor-pointer">
+          <div class="product-img-wrap relative overflow-hidden rounded bg-beige aspect-[3/4] mb-3">
+            <img src="https://picsum.photos/seed/browse1/600/800" alt="Wool Line Coat" class="w-full h-full object-cover">
+          </div>
+          <h3 class="text-sm font-medium text-charcoal group-hover:text-dbrown transition-colors">Wool Line Coat</h3>
+          <p class="text-sm text-rose mt-0.5">$320</p>
+        </div>
+        <!-- Product 2 — SALE -->
+        <div class="group cursor-pointer">
+          <div class="product-img-wrap relative overflow-hidden rounded bg-beige aspect-[3/4] mb-3">
+            <img src="https://picsum.photos/seed/browse2/600/800" alt="Evening Column Dress" class="w-full h-full object-cover">
+            <span class="absolute top-3 left-3 bg-dbrown text-cream text-[10px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-sm">Sale</span>
+          </div>
+          <h3 class="text-sm font-medium text-charcoal group-hover:text-dbrown transition-colors">Evening Column Dress</h3>
+          <p class="text-sm mt-0.5"><span class="text-dbrown font-medium">$240</span> <span class="text-rose/60 line-through ml-1">$320</span></p>
+        </div>
+        <!-- Product 3 -->
+        <div class="group cursor-pointer">
+          <div class="product-img-wrap relative overflow-hidden rounded bg-beige aspect-[3/4] mb-3">
+            <img src="https://picsum.photos/seed/browse3/600/800" alt="Soft Rib Knit" class="w-full h-full object-cover">
+          </div>
+          <h3 class="text-sm font-medium text-charcoal group-hover:text-dbrown transition-colors">Soft Rib Knit</h3>
+          <p class="text-sm text-rose mt-0.5">$148</p>
+        </div>
+        <!-- Product 4 -->
+        <div class="group cursor-pointer">
+          <div class="product-img-wrap relative overflow-hidden rounded bg-beige aspect-[3/4] mb-3">
+            <img src="https://picsum.photos/seed/browse4/600/800" alt="Silk Wrap Blouse" class="w-full h-full object-cover">
+          </div>
+          <h3 class="text-sm font-medium text-charcoal group-hover:text-dbrown transition-colors">Silk Wrap Blouse</h3>
+          <p class="text-sm text-rose mt-0.5">$185</p>
+        </div>
+        <!-- Product 5 -->
+        <div class="group cursor-pointer">
+          <div class="product-img-wrap relative overflow-hidden rounded bg-beige aspect-[3/4] mb-3">
+            <img src="https://picsum.photos/seed/browse5/600/800" alt="Tailored Linen Trouser" class="w-full h-full object-cover">
+          </div>
+          <h3 class="text-sm font-medium text-charcoal group-hover:text-dbrown transition-colors">Tailored Linen Trouser</h3>
+          <p class="text-sm text-rose mt-0.5">$210</p>
+        </div>
+        <!-- Product 6 -->
+        <div class="group cursor-pointer">
+          <div class="product-img-wrap relative overflow-hidden rounded bg-beige aspect-[3/4] mb-3">
+            <img src="https://picsum.photos/seed/browse6/600/800" alt="Cashmere V-Neck" class="w-full h-full object-cover">
+          </div>
+          <h3 class="text-sm font-medium text-charcoal group-hover:text-dbrown transition-colors">Cashmere V-Neck</h3>
+          <p class="text-sm text-rose mt-0.5">$275</p>
+        </div>
+        <!-- Product 7 -->
+        <div class="group cursor-pointer">
+          <div class="product-img-wrap relative overflow-hidden rounded bg-beige aspect-[3/4] mb-3">
+            <img src="https://picsum.photos/seed/browse7/600/800" alt="Draped Midi Skirt" class="w-full h-full object-cover">
+          </div>
+          <h3 class="text-sm font-medium text-charcoal group-hover:text-dbrown transition-colors">Draped Midi Skirt</h3>
+          <p class="text-sm text-rose mt-0.5">$165</p>
+        </div>
+        <!-- Product 8 — NEW -->
+        <div class="group cursor-pointer">
+          <div class="product-img-wrap relative overflow-hidden rounded bg-beige aspect-[3/4] mb-3">
+            <img src="https://picsum.photos/seed/browse8/600/800" alt="Oversized Blazer" class="w-full h-full object-cover">
+            <span class="absolute top-3 left-3 bg-rose text-cream text-[10px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-sm">New</span>
+          </div>
+          <h3 class="text-sm font-medium text-charcoal group-hover:text-dbrown transition-colors">Oversized Blazer</h3>
+          <p class="text-sm text-rose mt-0.5">$290</p>
+        </div>
+        <!-- Product 9 -->
+        <div class="group cursor-pointer">
+          <div class="product-img-wrap relative overflow-hidden rounded bg-beige aspect-[3/4] mb-3">
+            <img src="https://picsum.photos/seed/browse9/600/800" alt="Cotton Poplin Shirt" class="w-full h-full object-cover">
+          </div>
+          <h3 class="text-sm font-medium text-charcoal group-hover:text-dbrown transition-colors">Cotton Poplin Shirt</h3>
+          <p class="text-sm text-rose mt-0.5">$125</p>
+        </div>
+        <!-- Product 10 -->
+        <div class="group cursor-pointer">
+          <div class="product-img-wrap relative overflow-hidden rounded bg-beige aspect-[3/4] mb-3">
+            <img src="https://picsum.photos/seed/browse10/600/800" alt="Leather Crossbody Bag" class="w-full h-full object-cover">
+          </div>
+          <h3 class="text-sm font-medium text-charcoal group-hover:text-dbrown transition-colors">Leather Crossbody Bag</h3>
+          <p class="text-sm text-rose mt-0.5">$350</p>
+        </div>
+        <!-- Product 11 -->
+        <div class="group cursor-pointer">
+          <div class="product-img-wrap relative overflow-hidden rounded bg-beige aspect-[3/4] mb-3">
+            <img src="https://picsum.photos/seed/browse11/600/800" alt="Pointed Kitten Heel" class="w-full h-full object-cover">
+          </div>
+          <h3 class="text-sm font-medium text-charcoal group-hover:text-dbrown transition-colors">Pointed Kitten Heel</h3>
+          <p class="text-sm text-rose mt-0.5">$195</p>
+        </div>
+        <!-- Product 12 -->
+        <div class="group cursor-pointer">
+          <div class="product-img-wrap relative overflow-hidden rounded bg-beige aspect-[3/4] mb-3">
+            <img src="https://picsum.photos/seed/browse12/600/800" alt="Gold Chain Necklace" class="w-full h-full object-cover">
+          </div>
+          <h3 class="text-sm font-medium text-charcoal group-hover:text-dbrown transition-colors">Gold Chain Necklace</h3>
+          <p class="text-sm text-rose mt-0.5">$89</p>
+        </div>
+      </div>
+
+      <!-- Pagination -->
+      <div class="flex items-center justify-center gap-2 mt-12">
+        <button class="page-btn w-10 h-10 border border-border rounded flex items-center justify-center text-sm text-charcoal hover:bg-beige transition-colors">
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="m15 18-6-6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button class="page-btn active w-10 h-10 border border-border rounded flex items-center justify-center text-sm font-medium transition-colors">1</button>
+        <button class="page-btn w-10 h-10 border border-border rounded flex items-center justify-center text-sm text-charcoal hover:bg-beige transition-colors">2</button>
+        <button class="page-btn w-10 h-10 border border-border rounded flex items-center justify-center text-sm text-charcoal hover:bg-beige transition-colors">3</button>
+        <button class="page-btn w-10 h-10 border border-border rounded flex items-center justify-center text-sm text-charcoal hover:bg-beige transition-colors">4</button>
+        <button class="page-btn w-10 h-10 border border-border rounded flex items-center justify-center text-sm text-charcoal hover:bg-beige transition-colors">5</button>
+        <button class="page-btn w-10 h-10 border border-border rounded flex items-center justify-center text-sm text-charcoal hover:bg-beige transition-colors">
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="m9 18 6-6-6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="bg-beige border-t border-border mt-12">
+  <div class="max-w-[1400px] mx-auto px-4 lg:px-8 py-12 lg:py-16">
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-8">
+      <div>
+        <h4 class="font-display text-sm font-semibold text-dbrown uppercase tracking-wider mb-4">Customer Care</h4>
+        <div class="space-y-2.5">
+          <a href="#" class="block text-sm text-charcoal hover:text-rose transition-colors">Contact Us</a>
+          <a href="#" class="block text-sm text-charcoal hover:text-rose transition-colors">Shipping & Returns</a>
+          <a href="#" class="block text-sm text-charcoal hover:text-rose transition-colors">Size Guide</a>
+          <a href="#" class="block text-sm text-charcoal hover:text-rose transition-colors">FAQ</a>
+        </div>
+      </div>
+      <div>
+        <h4 class="font-display text-sm font-semibold text-dbrown uppercase tracking-wider mb-4">About</h4>
+        <div class="space-y-2.5">
+          <a href="#" class="block text-sm text-charcoal hover:text-rose transition-colors">Our Story</a>
+          <a href="#" class="block text-sm text-charcoal hover:text-rose transition-colors">Sustainability</a>
+          <a href="#" class="block text-sm text-charcoal hover:text-rose transition-colors">Careers</a>
+          <a href="#" class="block text-sm text-charcoal hover:text-rose transition-colors">Press</a>
+        </div>
+      </div>
+      <div>
+        <h4 class="font-display text-sm font-semibold text-dbrown uppercase tracking-wider mb-4">Legal</h4>
+        <div class="space-y-2.5">
+          <a href="#" class="block text-sm text-charcoal hover:text-rose transition-colors">Privacy Policy</a>
+          <a href="#" class="block text-sm text-charcoal hover:text-rose transition-colors">Terms of Service</a>
+          <a href="#" class="block text-sm text-charcoal hover:text-rose transition-colors">Cookie Policy</a>
+        </div>
+      </div>
+      <div>
+        <h4 class="font-display text-sm font-semibold text-dbrown uppercase tracking-wider mb-4">Newsletter</h4>
+        <p class="text-sm text-charcoal mb-3">Receive updates on new arrivals and special offers.</p>
+        <div class="flex">
+          <input type="email" placeholder="Your email" class="flex-1 px-3 py-2 border border-border rounded-l bg-cream text-sm focus:outline-none focus:border-rose">
+          <button class="px-4 py-2 bg-dbrown text-cream text-sm font-medium rounded-r hover:bg-charcoal transition-colors">Join</button>
+        </div>
+      </div>
+    </div>
+    <div class="border-t border-border mt-10 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <p class="text-xs text-rose">&copy; 2026 MAISON. All rights reserved.</p>
+      <div class="flex items-center gap-4">
+        <a href="#" class="text-charcoal hover:text-rose transition-colors"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/></svg></a>
+        <a href="#" class="text-charcoal hover:text-rose transition-colors"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
+        <a href="#" class="text-charcoal hover:text-rose transition-colors"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.627 0-12 5.372-12 12 0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738.098.119.112.224.083.345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.631-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146 1.124.347 2.317.535 3.554.535 6.627 0 12-5.373 12-12 0-6.628-5.373-12-12-12z"/></svg></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Filter pill removal
+function updatePillRow() {
+  const pills = document.querySelectorAll('#filterPills .pill');
+  const clearBtn = document.getElementById('clearAllBtn');
+  if (pills.length === 0 && clearBtn) clearBtn.style.display = 'none';
+}
+
+function clearAllPills() {
+  const pills = document.querySelectorAll('#filterPills .pill');
+  pills.forEach(p => p.remove());
+  updatePillRow();
+}
+
+// Mobile drawer
+function openDrawer() {
+  document.getElementById('sidebarDrawer').classList.add('open');
+  document.getElementById('drawerOverlay').classList.add('active');
+  document.body.style.overflow = 'hidden';
+  // Clone sidebar content into drawer
+  const drawerContent = document.getElementById('drawerContent');
+  const sidebarContent = document.getElementById('desktopSidebar').querySelector('.sticky');
+  if (drawerContent.children.length === 0) {
+    drawerContent.innerHTML = sidebarContent.innerHTML;
+    // Re-bind size buttons
+    drawerContent.querySelectorAll('.size-btn').forEach(btn => {
+      btn.addEventListener('click', function() { this.classList.toggle('selected'); });
+    });
+  }
+}
+
+function closeDrawer() {
+  document.getElementById('sidebarDrawer').classList.remove('open');
+  document.getElementById('drawerOverlay').classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+// Close sort dropdown on outside click
+document.addEventListener('click', function(e) {
+  const sortMenu = document.getElementById('sortMenu');
+  const sortToggle = document.getElementById('sortToggle');
+  if (sortMenu && !sortToggle.contains(e.target) && !sortMenu.contains(e.target)) {
+    sortMenu.classList.remove('open');
+  }
+});
+
+// Pagination active state
+document.querySelectorAll('.page-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    if (this.textContent.trim() && !isNaN(this.textContent.trim())) {
+      document.querySelectorAll('.page-btn').forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+    }
+  });
+});
+</script>
+</body>
+</html>

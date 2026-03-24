@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MAISON — Design Mockups Gallery</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cream: '#FAF8F5',
+                        beige: '#F0EBE3',
+                        charcoal: '#2C2C2C',
+                        darkbrown: '#3D3024',
+                        rose: '#C4A88C',
+                        dustypink: '#D4B5A0',
+                        border: '#E8E2DA',
+                    },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'Georgia', 'serif'],
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .card-hover {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(60, 48, 36, 0.08);
+        }
+        .version-badge {
+            transition: background-color 0.2s ease;
+        }
+    </style>
+</head>
+<body class="bg-cream font-sans text-charcoal">
+
+    <!-- Header -->
+    <header class="border-b border-border bg-cream/80 backdrop-blur-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6 py-6 text-center">
+            <h1 class="font-serif text-3xl md:text-4xl font-semibold tracking-wide">MAISON</h1>
+            <p class="text-sm text-darkbrown/60 mt-1 font-light tracking-widest uppercase">Design Mockups Gallery</p>
+        </div>
+    </header>
+
+    <!-- Intro -->
+    <section class="max-w-4xl mx-auto px-6 py-12 text-center">
+        <h2 class="font-serif text-2xl md:text-3xl mb-4">Choose Your Direction</h2>
+        <p class="text-darkbrown/70 leading-relaxed max-w-2xl mx-auto">
+            Three design variations for each page of the webshop. Open each mockup in a new tab,
+            compare them side by side, and vote on which direction feels right for the brand.
+            All mockups are responsive — try resizing your browser window.
+        </p>
+    </section>
+
+    <!-- Home Page Section -->
+    <section class="max-w-7xl mx-auto px-6 pb-16">
+        <div class="flex items-center gap-4 mb-8">
+            <div class="h-px flex-1 bg-border"></div>
+            <h3 class="font-serif text-xl md:text-2xl text-darkbrown whitespace-nowrap">Home Page</h3>
+            <div class="h-px flex-1 bg-border"></div>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-8">
+            <!-- V1 -->
+            <a href="home-v1.html" target="_blank" class="group block card-hover rounded-lg overflow-hidden bg-white border border-border">
+                <div class="aspect-[4/3] bg-beige relative overflow-hidden">
+                    <img src="https://picsum.photos/seed/fashion1/800/600" alt="Home V1 Preview" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-charcoal/0 group-hover:bg-charcoal/20 transition-colors duration-300 flex items-center justify-center">
+                        <span class="opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-white text-charcoal px-6 py-2.5 text-sm font-medium tracking-wider uppercase">Open Mockup</span>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center gap-3 mb-2">
+                        <span class="version-badge bg-charcoal text-cream text-xs font-medium px-2.5 py-1 rounded-full tracking-wider">V1</span>
+                        <h4 class="font-serif text-lg">"The Editorial"</h4>
+                    </div>
+                    <p class="text-sm text-darkbrown/60 leading-relaxed">Full-bleed hero, 3-column new arrivals, brand story split, category grid. Classic editorial fashion layout.</p>
+                </div>
+            </a>
+
+            <!-- V2 -->
+            <a href="home-v2.html" target="_blank" class="group block card-hover rounded-lg overflow-hidden bg-white border border-border">
+                <div class="aspect-[4/3] bg-beige relative overflow-hidden">
+                    <img src="https://picsum.photos/seed/fashion4/800/600" alt="Home V2 Preview" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-charcoal/0 group-hover:bg-charcoal/20 transition-colors duration-300 flex items-center justify-center">
+                        <span class="opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-white text-charcoal px-6 py-2.5 text-sm font-medium tracking-wider uppercase">Open Mockup</span>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center gap-3 mb-2">
+                        <span class="version-badge bg-rose text-white text-xs font-medium px-2.5 py-1 rounded-full tracking-wider">V2</span>
+                        <h4 class="font-serif text-lg">"The Gallery"</h4>
+                    </div>
+                    <p class="text-sm text-darkbrown/60 leading-relaxed">Split hero, masonry featured grid, horizontal category scroll, testimonial highlight. Art gallery feel.</p>
+                </div>
+            </a>
+
+            <!-- V3 -->
+            <a href="home-v3.html" target="_blank" class="group block card-hover rounded-lg overflow-hidden bg-white border border-border">
+                <div class="aspect-[4/3] bg-beige relative overflow-hidden">
+                    <img src="https://picsum.photos/seed/fashion7/800/600" alt="Home V3 Preview" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-charcoal/0 group-hover:bg-charcoal/20 transition-colors duration-300 flex items-center justify-center">
+                        <span class="opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-white text-charcoal px-6 py-2.5 text-sm font-medium tracking-wider uppercase">Open Mockup</span>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center gap-3 mb-2">
+                        <span class="version-badge bg-darkbrown text-cream text-xs font-medium px-2.5 py-1 rounded-full tracking-wider">V3</span>
+                        <h4 class="font-serif text-lg">"The Storefront"</h4>
+                    </div>
+                    <p class="text-sm text-darkbrown/60 leading-relaxed">Dramatic hero, 4-column grid with quick view, editorial collection blocks, newsletter. Bold and immersive.</p>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <!-- Product Detail Section -->
+    <section class="max-w-7xl mx-auto px-6 pb-16">
+        <div class="flex items-center gap-4 mb-8">
+            <div class="h-px flex-1 bg-border"></div>
+            <h3 class="font-serif text-xl md:text-2xl text-darkbrown whitespace-nowrap">Product Detail</h3>
+            <div class="h-px flex-1 bg-border"></div>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-8">
+            <!-- V1 -->
+            <a href="product-v1.html" target="_blank" class="group block card-hover rounded-lg overflow-hidden bg-white border border-border">
+                <div class="aspect-[4/3] bg-beige relative overflow-hidden">
+                    <img src="https://picsum.photos/seed/product1/800/600" alt="Product V1 Preview" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-charcoal/0 group-hover:bg-charcoal/20 transition-colors duration-300 flex items-center justify-center">
+                        <span class="opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-white text-charcoal px-6 py-2.5 text-sm font-medium tracking-wider uppercase">Open Mockup</span>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center gap-3 mb-2">
+                        <span class="version-badge bg-charcoal text-cream text-xs font-medium px-2.5 py-1 rounded-full tracking-wider">V1</span>
+                        <h4 class="font-serif text-lg">"The Lookbook"</h4>
+                    </div>
+                    <p class="text-sm text-darkbrown/60 leading-relaxed">60/40 split with sticky info panel, thumbnail gallery, accordion details, reviews section, related carousel.</p>
+                </div>
+            </a>
+
+            <!-- V2 -->
+            <a href="product-v2.html" target="_blank" class="group block card-hover rounded-lg overflow-hidden bg-white border border-border">
+                <div class="aspect-[4/3] bg-beige relative overflow-hidden">
+                    <img src="https://picsum.photos/seed/product4/800/600" alt="Product V2 Preview" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-charcoal/0 group-hover:bg-charcoal/20 transition-colors duration-300 flex items-center justify-center">
+                        <span class="opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-white text-charcoal px-6 py-2.5 text-sm font-medium tracking-wider uppercase">Open Mockup</span>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center gap-3 mb-2">
+                        <span class="version-badge bg-rose text-white text-xs font-medium px-2.5 py-1 rounded-full tracking-wider">V2</span>
+                        <h4 class="font-serif text-lg">"The Showcase"</h4>
+                    </div>
+                    <p class="text-sm text-darkbrown/60 leading-relaxed">Full-width auto-advancing carousel, centered product info, tabbed content (description/specs/reviews).</p>
+                </div>
+            </a>
+
+            <!-- V3 -->
+            <a href="product-v3.html" target="_blank" class="group block card-hover rounded-lg overflow-hidden bg-white border border-border">
+                <div class="aspect-[4/3] bg-beige relative overflow-hidden">
+                    <img src="https://picsum.photos/seed/product7/800/600" alt="Product V3 Preview" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-charcoal/0 group-hover:bg-charcoal/20 transition-colors duration-300 flex items-center justify-center">
+                        <span class="opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-white text-charcoal px-6 py-2.5 text-sm font-medium tracking-wider uppercase">Open Mockup</span>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center gap-3 mb-2">
+                        <span class="version-badge bg-darkbrown text-cream text-xs font-medium px-2.5 py-1 rounded-full tracking-wider">V3</span>
+                        <h4 class="font-serif text-lg">"The Split"</h4>
+                    </div>
+                    <p class="text-sm text-darkbrown/60 leading-relaxed">50/50 horizontal scroll gallery, expandable details, mobile sticky cart bar, editorial related products.</p>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <!-- Search/Browse Section -->
+    <section class="max-w-7xl mx-auto px-6 pb-16">
+        <div class="flex items-center gap-4 mb-8">
+            <div class="h-px flex-1 bg-border"></div>
+            <h3 class="font-serif text-xl md:text-2xl text-darkbrown whitespace-nowrap">Search / Browse</h3>
+            <div class="h-px flex-1 bg-border"></div>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-8">
+            <!-- V1 -->
+            <a href="search-v1.html" target="_blank" class="group block card-hover rounded-lg overflow-hidden bg-white border border-border">
+                <div class="aspect-[4/3] bg-beige relative overflow-hidden">
+                    <img src="https://picsum.photos/seed/browse1/800/600" alt="Search V1 Preview" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-charcoal/0 group-hover:bg-charcoal/20 transition-colors duration-300 flex items-center justify-center">
+                        <span class="opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-white text-charcoal px-6 py-2.5 text-sm font-medium tracking-wider uppercase">Open Mockup</span>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center gap-3 mb-2">
+                        <span class="version-badge bg-charcoal text-cream text-xs font-medium px-2.5 py-1 rounded-full tracking-wider">V1</span>
+                        <h4 class="font-serif text-lg">"The Filter Sidebar"</h4>
+                    </div>
+                    <p class="text-sm text-darkbrown/60 leading-relaxed">Classic sidebar with filters, 3-column grid, active filter pills, pagination. Familiar and functional.</p>
+                </div>
+            </a>
+
+            <!-- V2 -->
+            <a href="search-v2.html" target="_blank" class="group block card-hover rounded-lg overflow-hidden bg-white border border-border">
+                <div class="aspect-[4/3] bg-beige relative overflow-hidden">
+                    <img src="https://picsum.photos/seed/browse4/800/600" alt="Search V2 Preview" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-charcoal/0 group-hover:bg-charcoal/20 transition-colors duration-300 flex items-center justify-center">
+                        <span class="opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-white text-charcoal px-6 py-2.5 text-sm font-medium tracking-wider uppercase">Open Mockup</span>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center gap-3 mb-2">
+                        <span class="version-badge bg-rose text-white text-xs font-medium px-2.5 py-1 rounded-full tracking-wider">V2</span>
+                        <h4 class="font-serif text-lg">"The Top Bar"</h4>
+                    </div>
+                    <p class="text-sm text-darkbrown/60 leading-relaxed">Horizontal filter dropdowns, 4-column grid, quick-view modal on hover, load more. Clean and spacious.</p>
+                </div>
+            </a>
+
+            <!-- V3 -->
+            <a href="search-v3.html" target="_blank" class="group block card-hover rounded-lg overflow-hidden bg-white border border-border">
+                <div class="aspect-[4/3] bg-beige relative overflow-hidden">
+                    <img src="https://picsum.photos/seed/browse7/800/600" alt="Search V3 Preview" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-charcoal/0 group-hover:bg-charcoal/20 transition-colors duration-300 flex items-center justify-center">
+                        <span class="opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-white text-charcoal px-6 py-2.5 text-sm font-medium tracking-wider uppercase">Open Mockup</span>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center gap-3 mb-2">
+                        <span class="version-badge bg-darkbrown text-cream text-xs font-medium px-2.5 py-1 rounded-full tracking-wider">V3</span>
+                        <h4 class="font-serif text-lg">"The Minimal"</h4>
+                    </div>
+                    <p class="text-sm text-darkbrown/60 leading-relaxed">Search-first, masonry Pinterest layout, scrollable category tabs, floating filter drawer. Modern and bold.</p>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <!-- How to use -->
+    <section class="bg-beige border-t border-border">
+        <div class="max-w-4xl mx-auto px-6 py-12 text-center">
+            <h3 class="font-serif text-xl mb-4">How to Compare</h3>
+            <div class="grid sm:grid-cols-3 gap-6 text-sm text-darkbrown/70">
+                <div>
+                    <div class="w-10 h-10 rounded-full bg-charcoal text-cream flex items-center justify-center mx-auto mb-3 font-serif">1</div>
+                    <p>Click any card to open the mockup in a new tab</p>
+                </div>
+                <div>
+                    <div class="w-10 h-10 rounded-full bg-charcoal text-cream flex items-center justify-center mx-auto mb-3 font-serif">2</div>
+                    <p>Resize your browser to test responsive behavior at different screen sizes</p>
+                </div>
+                <div>
+                    <div class="w-10 h-10 rounded-full bg-charcoal text-cream flex items-center justify-center mx-auto mb-3 font-serif">3</div>
+                    <p>Interact with hover effects, menus, tabs, and accordions — they're all functional</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-border py-8 text-center text-sm text-darkbrown/50">
+        <p>MAISON Webshop G6 — Design Mockups for Team Review</p>
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MAISON — Women's Collection</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        cream: '#FAF8F5',
+        beige: '#F0EBE3',
+        charcoal: '#2C2C2C',
+        dbrown: '#3D3024',
+        rose: '#C4A88C',
+        dpink: '#D4B5A0',
+        border: '#E8E2DA',
+      },
+      fontFamily: {
+        display: ['Playfair Display', 'serif'],
+        body: ['Inter', 'sans-serif'],
+      }
+    }
+  }
+}
+</script>
+<style>
+  * { box-sizing: border-box; }
+  body { font-family: 'Inter', sans-serif; background: #FAF8F5; color: #2C2C2C; }
+  .font-display { font-family: 'Playfair Display', serif; }
+  .product-img-wrap:hover img { transform: scale(1.05); }
+  .product-img-wrap img { transition: transform 0.6s cubic-bezier(0.4,0,0.2,1); }
+  .product-img-wrap .overlay-btn { opacity: 0; transform: translateY(8px); transition: all 0.3s ease; }
+  .product-img-wrap:hover .overlay-btn { opacity: 1; transform: translateY(0); }
+  .popover { display: none; opacity: 0; transform: translateY(-4px); transition: opacity 0.2s, transform 0.2s; }
+  .popover.open { display: block; opacity: 1; transform: translateY(0); }
+  .modal-overlay { opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+  .modal-overlay.active { opacity: 1; pointer-events: auto; }
+  .modal-content { transform: scale(0.95) translateY(10px); opacity: 0; transition: all 0.3s cubic-bezier(0.4,0,0.2,1); }
+  .modal-overlay.active .modal-content { transform: scale(1) translateY(0); opacity: 1; }
+  .size-opt.selected { background: #3D3024; color: #FAF8F5; border-color: #3D3024; }
+</style>
+</head>
+<body class="bg-cream min-h-screen">
+
+<!-- HEADER -->
+<header class="bg-cream border-b border-border">
+  <div class="max-w-[1400px] mx-auto px-4 lg:px-8">
+    <!-- Top row -->
+    <div class="flex items-center justify-between h-14 lg:h-16">
+      <div class="flex items-center gap-4">
+        <button class="text-charcoal hover:text-rose transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35" stroke-linecap="round"/></svg>
+        </button>
+        <button class="text-charcoal hover:text-rose transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke-linecap="round"/><circle cx="12" cy="7" r="4"/></svg>
+        </button>
+      </div>
+      <a href="#" class="font-display text-2xl lg:text-3xl font-semibold text-dbrown tracking-[0.15em]">MAISON</a>
+      <div class="flex items-center gap-4">
+        <button class="text-charcoal hover:text-rose transition-colors hidden sm:block">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button class="relative text-charcoal hover:text-rose transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4ZM3 6h18M16 10a4 4 0 0 1-8 0" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span class="absolute -top-1.5 -right-2 bg-dbrown text-cream text-[10px] font-semibold w-4 h-4 rounded-full flex items-center justify-center">2</span>
+        </button>
+      </div>
+    </div>
+    <!-- Nav row -->
+    <nav class="hidden md:flex items-center justify-center gap-8 pb-3">
+      <a href="#" class="text-xs font-medium text-charcoal hover:text-rose transition-colors tracking-[0.15em] uppercase">New Arrivals</a>
+      <a href="#" class="text-xs font-medium text-dbrown border-b border-dbrown pb-0.5 tracking-[0.15em] uppercase">Women</a>
+      <a href="#" class="text-xs font-medium text-charcoal hover:text-rose transition-colors tracking-[0.15em] uppercase">Men</a>
+      <a href="#" class="text-xs font-medium text-charcoal hover:text-rose transition-colors tracking-[0.15em] uppercase">Beauty</a>
+      <a href="#" class="text-xs font-medium text-charcoal hover:text-rose transition-colors tracking-[0.15em] uppercase">Home</a>
+    </nav>
+  </div>
+</header>
+
+<!-- PAGE HEADING -->
+<div class="max-w-[1400px] mx-auto px-4 lg:px-8 pt-10 pb-6 text-center">
+  <h1 class="font-display text-3xl lg:text-5xl font-medium text-dbrown">Women's Collection</h1>
+  <p class="text-sm text-rose mt-2 tracking-widest uppercase">48 pieces</p>
+</div>
+
+<!-- HORIZONTAL FILTER BAR -->
+<div class="max-w-[1400px] mx-auto px-4 lg:px-8 pb-8">
+  <div class="flex flex-wrap items-center justify-center gap-3">
+    <!-- Category Dropdown -->
+    <div class="relative">
+      <button onclick="togglePopover('catPop')" class="flex items-center gap-2 px-4 py-2.5 border border-border rounded-full text-sm text-charcoal hover:border-rose transition-colors">
+        Category
+        <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div id="catPop" class="popover absolute top-12 left-0 w-52 bg-cream border border-border rounded-lg shadow-xl z-30 p-4">
+        <div class="space-y-2.5">
+          <label class="flex items-center gap-2 cursor-pointer text-sm text-charcoal hover:text-dbrown"><input type="checkbox" class="w-3.5 h-3.5 accent-dbrown rounded"> All</label>
+          <label class="flex items-center gap-2 cursor-pointer text-sm text-charcoal hover:text-dbrown"><input type="checkbox" class="w-3.5 h-3.5 accent-dbrown rounded"> Dresses</label>
+          <label class="flex items-center gap-2 cursor-pointer text-sm text-charcoal hover:text-dbrown"><input type="checkbox" class="w-3.5 h-3.5 accent-dbrown rounded"> Tops</label>
+          <label class="flex items-center gap-2 cursor-pointer text-sm text-charcoal hover:text-dbrown"><input type="checkbox" class="w-3.5 h-3.5 accent-dbrown rounded"> Bottoms</label>
+          <label class="flex items-center gap-2 cursor-pointer text-sm text-charcoal hover:text-dbrown"><input type="checkbox" class="w-3.5 h-3.5 accent-dbrown rounded"> Outerwear</label>
+          <label class="flex items-center gap-2 cursor-pointer text-sm text-charcoal hover:text-dbrown"><input type="checkbox" class="w-3.5 h-3.5 accent-dbrown rounded"> Knitwear</label>
+          <label class="flex items-center gap-2 cursor-pointer text-sm text-charcoal hover:text-dbrown"><input type="checkbox" class="w-3.5 h-3.5 accent-dbrown rounded"> Accessories</label>
+          <label class="flex items-center gap-2 cursor-pointer text-sm text-charcoal hover:text-dbrown"><input type="checkbox" class="w-3.5 h-3.5 accent-dbrown rounded"> Shoes</label>
+          <label class="flex items-center gap-2 cursor-pointer text-sm text-charcoal hover:text-dbrown"><input type="checkbox" class="w-3.5 h-3.5 accent-dbrown rounded"> Jewellery</label>
+        </div>
+      </div>
+    </div>
+    <!-- Price Dropdown -->
+    <div class="relative">
+      <button onclick="togglePopover('pricePop')" class="flex items-center gap-2 px-4 py-2.5 border border-border rounded-full text-sm text-charcoal hover:border-rose transition-colors">
+        Price
+        <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div id="pricePop" class="popover absolute top-12 left-0 w-56 bg-cream border border-border rounded-lg shadow-xl z-30 p-4">
+        <div class="space-y-2.5">
+          <label class="flex items-center gap-2 cursor-pointer text-sm text-charcoal hover:text-dbrown"><input type="radio" name="price" class="accent-dbrown"> Under $100</label>
+          <label class="flex items-center gap-2 cursor-pointer text-sm text-charcoal hover:text-dbrown"><input type="radio" name="price" class="accent-dbrown"> $100 — $200</label>
+          <label class="flex items-center gap-2 cursor-pointer text-sm text-charcoal hover:text-dbrown"><input type="radio" name="price" class="accent-dbrown"> $200 — $300</label>
+          <label class="flex items-center gap-2 cursor-pointer text-sm text-charcoal hover:text-dbrown"><input type="radio" name="price" class="accent-dbrown"> $300+</label>
+        </div>
+      </div>
+    </div>
+    <!-- Size Dropdown -->
+    <div class="relative">
+      <button onclick="togglePopover('sizePop')" class="flex items-center gap-2 px-4 py-2.5 border border-border rounded-full text-sm text-charcoal hover:border-rose transition-colors">
+        Size
+        <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div id="sizePop" class="popover absolute top-12 left-0 w-48 bg-cream border border-border rounded-lg shadow-xl z-30 p-4">
+        <div class="flex flex-wrap gap-2">
+          <button class="size-opt px-3 py-1.5 border border-border rounded text-xs font-medium text-charcoal hover:border-dbrown transition-colors" onclick="this.classList.toggle('selected')">XS</button>
+          <button class="size-opt px-3 py-1.5 border border-border rounded text-xs font-medium text-charcoal hover:border-dbrown transition-colors" onclick="this.classList.toggle('selected')">S</button>
+          <button class="size-opt px-3 py-1.5 border border-border rounded text-xs font-medium text-charcoal hover:border-dbrown transition-colors" onclick="this.classList.toggle('selected')">M</button>
+          <button class="size-opt px-3 py-1.5 border border-border rounded text-xs font-medium text-charcoal hover:border-dbrown transition-colors" onclick="this.classList.toggle('selected')">L</button>
+          <button class="size-opt px-3 py-1.5 border border-border rounded text-xs font-medium text-charcoal hover:border-dbrown transition-colors" onclick="this.classList.toggle('selected')">XL</button>
+        </div>
+      </div>
+    </div>
+    <!-- Color Dropdown -->
+    <div class="relative">
+      <button onclick="togglePopover('colorPop')" class="flex items-center gap-2 px-4 py-2.5 border border-border rounded-full text-sm text-charcoal hover:border-rose transition-colors">
+        Color
+        <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div id="colorPop" class="popover absolute top-12 left-0 w-48 bg-cream border border-border rounded-lg shadow-xl z-30 p-4">
+        <div class="flex flex-wrap gap-3">
+          <button class="w-7 h-7 rounded-full bg-black border-2 border-transparent hover:border-dbrown transition-colors" title="Black"></button>
+          <button class="w-7 h-7 rounded-full bg-white border-2 border-border hover:border-dbrown transition-colors" title="White"></button>
+          <button class="w-7 h-7 rounded-full bg-[#C4A88C] border-2 border-transparent hover:border-dbrown transition-colors" title="Beige"></button>
+          <button class="w-7 h-7 rounded-full bg-[#8B6F4E] border-2 border-transparent hover:border-dbrown transition-colors" title="Brown"></button>
+          <button class="w-7 h-7 rounded-full bg-[#4A5568] border-2 border-transparent hover:border-dbrown transition-colors" title="Grey"></button>
+          <button class="w-7 h-7 rounded-full bg-[#9B2C2C] border-2 border-transparent hover:border-dbrown transition-colors" title="Red"></button>
+          <button class="w-7 h-7 rounded-full bg-[#2C5282] border-2 border-transparent hover:border-dbrown transition-colors" title="Blue"></button>
+          <button class="w-7 h-7 rounded-full bg-[#276749] border-2 border-transparent hover:border-dbrown transition-colors" title="Green"></button>
+        </div>
+      </div>
+    </div>
+    <!-- Clear Filters -->
+    <button class="px-4 py-2.5 text-sm text-rose hover:text-dbrown transition-colors underline underline-offset-2">Clear Filters</button>
+  </div>
+</div>
+
+<!-- PRODUCT GRID -->
+<div class="max-w-[1400px] mx-auto px-4 lg:px-8 pb-16">
+  <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-8 lg:gap-x-6 lg:gap-y-10" id="productGrid">
+
+    <!-- Product 1 -->
+    <div class="group cursor-pointer">
+      <div class="product-img-wrap relative overflow-hidden rounded bg-beige aspect-[3/4] mb-3">
+        <img src="https://picsum.photos/seed/browse1/600/800" alt="Wool Line Coat" class="w-full h-full object-cover">
+        <div class="absolute inset-0 bg-charcoal/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+          <button class="overlay-btn bg-cream text-dbrown text-xs font-semibold uppercase tracking-wider px-5 py-2.5 rounded-full hover:bg-dbrown hover:text-cream transition-colors" onclick="event.stopPropagation(); openQuickView(0)">Quick View</button>
+        </div>
+      </div>
+      <h3 class="text-sm font-medium text-charcoal">Wool Line Coat</h3>
+      <p class="text-sm text-rose mt-0.5">$320</p>
+    </div>
+
+    <!-- Product 2 — SALE -->
+    <div class="group cursor-pointer">
+      <div class="product-img-wrap relative overflow-hidden rounded bg-beige aspect-[3/4] mb-3">
+        <img src="https://picsum.photos/seed/browse2/600/800" alt="Evening Column Dress" class="w-full h-full object-cover">
+        <span class="absolute top-3 left-3 bg-dbrown text-cream text-[10px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-sm z-10">Sale</span>
+        <div class="absolute inset-0 bg-charcoal/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+          <button class="overlay-btn bg-cream text-dbrown text-xs font-semibold uppercase tracking-wider px-5 py-2.5 rounded-full hover:bg-dbrown hover:text-cream transition-colors" onclick="event.stopPropagation(); openQuickView(1)">Quick View</button>
+        </div>
+      </div>
+      <h3 class="text-sm font-medium text-charcoal">Evening Column Dress</h3>
+      <p class="text-sm mt-0.5"><span class="text-dbrown font-medium">$240</span> <span class="text-rose/60 line-through ml-1">$320</span></p>
+    </div>
+
+    <!-- Product 3 -->
+    <div class="group cursor-pointer">
+      <div class="product-img-wrap relative overflow-hidden rounded bg-beige aspect-[3/4] mb-3">
+        <img src="https://picsum.photos/seed/browse3/600/800" alt="Soft Rib Knit" class="w-full h-full object-cover">
+        <div class="absolute inset-0 bg-charcoal/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+          <button class="overlay-btn bg-cream text-dbrown text-xs font-semibold uppercase tracking-wider px-5 py-2.5 rounded-full hover:bg-dbrown hover:text-cream transition-colors" onclick="event.stopPropagation(); openQuickView(2)">Quick View</button>
+        </div>
+      </div>
+      <h3 class="text-sm font-medium text-charcoal">Soft Rib Knit</h3>
+      <p class="text-sm text-rose mt-0.5">$148</p>
+    </div>
+
+    <!-- Product 4 -->
+    <div class="group cursor-pointer">
+      <div class="product-img-wrap relative overflow-hidden rounded bg-beige aspect-[3/4] mb-3">
+        <img src="https://picsum.photos/seed/browse4/600/800" alt="Silk Wrap Blouse" class="w-full h-full object-cover">
+        <div class="absolute inset-0 bg-charcoal/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+          <button class="overlay-btn bg-cream text-dbrown text-xs font-semibold uppercase tracking-wider px-5 py-2.5 rounded-full hover:bg-dbrown hover:text-cream transition-colors" onclick="event.stopPropagation(); openQuickView(3)">Quick View</button>
+        </div>
+      </div>
+      <h3 class="text-sm font-medium text-charcoal">Silk Wrap Blouse</h3>
+      <p class="text-sm text-rose mt-0.5">$185</p>
+    </div>
+
+    <!-- Product 5 -->
+    <div class="group cursor-pointer">
+      <div class="product-img-wrap relative overflow-hidden rounded bg-beige aspect-[3/4] mb-3">
+        <img src="https://picsum.photos/seed/browse5/600/800" alt="Tailored Linen Trouser" class="w-full h-full object-cover">
+        <div class="absolute inset-0 bg-charcoal/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+          <button class="overlay-btn bg-cream text-dbrown text-xs font-semibold uppercase tracking-wider px-5 py-2.5 rounded-full hover:bg-dbrown hover:text-cream transition-colors" onclick="event.stopPropagation(); openQuickView(4)">Quick View</button>
+        </div>
+      </div>
+      <h3 class="text-sm font-medium text-charcoal">Tailored Linen Trouser</h3>
+      <p class="text-sm text-rose mt-0.5">$210</p>
+    </div>
+
+    <!-- Product 6 -->
+    <div class="group cursor-pointer">
+      <div class="product-img-wrap relative overflow-hidden rounded bg-beige aspect-[3/4] mb-3">
+        <img src="https://picsum.photos/seed/browse6/600/800" alt="Cashmere V-Neck" class="w-full h-full object-cover">
+        <div class="absolute inset-0 bg-charcoal/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+          <button class="overlay-btn bg-cream text-dbrown text-xs font-semibold uppercase tracking-wider px-5 py-2.5 rounded-full hover:bg-dbrown hover:text-cream transition-colors" onclick="event.stopPropagation(); openQuickView(5)">Quick View</button>
+        </div>
+      </div>
+      <h3 class="text-sm font-medium text-charcoal">Cashmere V-Neck</h3>
+      <p class="text-sm text-rose mt-0.5">$275</p>
+    </div>
+
+    <!-- Product 7 -->
+    <div class="group cursor-pointer">
+      <div class="product-img-wrap relative overflow-hidden rounded bg-beige aspect-[3/4] mb-3">
+        <img src="https://picsum.photos/seed/browse7/600/800" alt="Draped Midi Skirt" class="w-full h-full object-cover">
+        <div class="absolute inset-0 bg-charcoal/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+          <button class="overlay-btn bg-cream text-dbrown text-xs font-semibold uppercase tracking-wider px-5 py-2.5 rounded-full hover:bg-dbrown hover:text-cream transition-colors" onclick="event.stopPropagation(); openQuickView(6)">Quick View</button>
+        </div>
+      </div>
+      <h3 class="text-sm font-medium text-charcoal">Draped Midi Skirt</h3>
+      <p class="text-sm text-rose mt-0.5">$165</p>
+    </div>
+
+    <!-- Product 8 — NEW -->
+    <div class="group cursor-pointer">
+      <div class="product-img-wrap relative overflow-hidden rounded bg-beige aspect-[3/4] mb-3">
+        <img src="https://picsum.photos/seed/browse8/600/800" alt="Oversized Blazer" class="w-full h-full object-cover">
+        <span class="absolute top-3 left-3 bg-rose text-cream text-[10px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-sm z-10">New</span>
+        <div class="absolute inset-0 bg-charcoal/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+          <button class="overlay-btn bg-cream text-dbrown text-xs font-semibold uppercase tracking-wider px-5 py-2.5 rounded-full hover:bg-dbrown hover:text-cream transition-colors" onclick="event.stopPropagation(); openQuickView(7)">Quick View</button>
+        </div>
+      </div>
+      <h3 class="text-sm font-medium text-charcoal">Oversized Blazer</h3>
+      <p class="text-sm text-rose mt-0.5">$290</p>
+    </div>
+
+    <!-- Product 9 -->
+    <div class="group cursor-pointer">
+      <div class="product-img-wrap relative overflow-hidden rounded bg-beige aspect-[3/4] mb-3">
+        <img src="https://picsum.photos/seed/browse9/600/800" alt="Cotton Poplin Shirt" class="w-full h-full object-cover">
+        <div class="absolute inset-0 bg-charcoal/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+          <button class="overlay-btn bg-cream text-dbrown text-xs font-semibold uppercase tracking-wider px-5 py-2.5 rounded-full hover:bg-dbrown hover:text-cream transition-colors" onclick="event.stopPropagation(); openQuickView(8)">Quick View</button>
+        </div>
+      </div>
+      <h3 class="text-sm font-medium text-charcoal">Cotton Poplin Shirt</h3>
+      <p class="text-sm text-rose mt-0.5">$125</p>
+    </div>
+
+    <!-- Product 10 -->
+    <div class="group cursor-pointer">
+      <div class="product-img-wrap relative overflow-hidden rounded bg-beige aspect-[3/4] mb-3">
+        <img src="https://picsum.photos/seed/browse10/600/800" alt="Leather Crossbody Bag" class="w-full h-full object-cover">
+        <div class="absolute inset-0 bg-charcoal/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+          <button class="overlay-btn bg-cream text-dbrown text-xs font-semibold uppercase tracking-wider px-5 py-2.5 rounded-full hover:bg-dbrown hover:text-cream transition-colors" onclick="event.stopPropagation(); openQuickView(9)">Quick View</button>
+        </div>
+      </div>
+      <h3 class="text-sm font-medium text-charcoal">Leather Crossbody Bag</h3>
+      <p class="text-sm text-rose mt-0.5">$350</p>
+    </div>
+
+    <!-- Product 11 -->
+    <div class="group cursor-pointer">
+      <div class="product-img-wrap relative overflow-hidden rounded bg-beige aspect-[3/4] mb-3">
+        <img src="https://picsum.photos/seed/browse11/600/800" alt="Pointed Kitten Heel" class="w-full h-full object-cover">
+        <div class="absolute inset-0 bg-charcoal/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+          <button class="overlay-btn bg-cream text-dbrown text-xs font-semibold uppercase tracking-wider px-5 py-2.5 rounded-full hover:bg-dbrown hover:text-cream transition-colors" onclick="event.stopPropagation(); openQuickView(10)">Quick View</button>
+        </div>
+      </div>
+      <h3 class="text-sm font-medium text-charcoal">Pointed Kitten Heel</h3>
+      <p class="text-sm text-rose mt-0.5">$195</p>
+    </div>
+
+    <!-- Product 12 -->
+    <div class="group cursor-pointer">
+      <div class="product-img-wrap relative overflow-hidden rounded bg-beige aspect-[3/4] mb-3">
+        <img src="https://picsum.photos/seed/browse12/600/800" alt="Gold Chain Necklace" class="w-full h-full object-cover">
+        <div class="absolute inset-0 bg-charcoal/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+          <button class="overlay-btn bg-cream text-dbrown text-xs font-semibold uppercase tracking-wider px-5 py-2.5 rounded-full hover:bg-dbrown hover:text-cream transition-colors" onclick="event.stopPropagation(); openQuickView(11)">Quick View</button>
+        </div>
+      </div>
+      <h3 class="text-sm font-medium text-charcoal">Gold Chain Necklace</h3>
+      <p class="text-sm text-rose mt-0.5">$89</p>
+    </div>
+
+  </div>
+
+  <!-- Load More -->
+  <div class="flex justify-center mt-12">
+    <button class="px-10 py-3.5 border border-dbrown rounded-full text-sm font-medium text-dbrown uppercase tracking-wider hover:bg-dbrown hover:text-cream transition-colors">Load More</button>
+  </div>
+</div>
+
+<!-- QUICK VIEW MODAL -->
+<div id="quickViewModal" class="modal-overlay fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4" onclick="closeQuickView(event)">
+  <div class="modal-content bg-cream rounded-lg shadow-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto" onclick="event.stopPropagation()">
+    <div class="flex flex-col md:flex-row">
+      <!-- Image -->
+      <div class="md:w-1/2 aspect-[3/4] bg-beige flex-shrink-0">
+        <img id="qvImage" src="" alt="" class="w-full h-full object-cover rounded-t-lg md:rounded-l-lg md:rounded-tr-none">
+      </div>
+      <!-- Details -->
+      <div class="md:w-1/2 p-6 lg:p-8 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <span id="qvBadge" class="hidden text-[10px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-sm"></span>
+            <button onclick="closeQuickView()" class="ml-auto text-charcoal hover:text-rose transition-colors">
+              <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M18 6 6 18M6 6l12 12" stroke-linecap="round"/></svg>
+            </button>
+          </div>
+          <p class="text-xs text-rose uppercase tracking-widest mb-2" id="qvCategory">Category</p>
+          <h2 class="font-display text-2xl font-medium text-dbrown mb-2" id="qvTitle">Product Name</h2>
+          <p class="text-lg text-charcoal mb-6" id="qvPrice">$000</p>
+          <p class="text-sm text-charcoal/70 leading-relaxed mb-6">Crafted from the finest materials, this piece embodies effortless elegance. Perfect for day-to-night styling.</p>
+          <!-- Size Options -->
+          <div class="mb-6">
+            <p class="text-xs text-rose uppercase tracking-widest mb-3">Size</p>
+            <div class="flex flex-wrap gap-2">
+              <button class="size-opt px-4 py-2 border border-border rounded text-sm text-charcoal hover:border-dbrown transition-colors" onclick="selectQvSize(this)">XS</button>
+              <button class="size-opt px-4 py-2 border border-border rounded text-sm text-charcoal hover:border-dbrown transition-colors" onclick="selectQvSize(this)">S</button>
+              <button class="size-opt selected px-4 py-2 border border-border rounded text-sm text-charcoal hover:border-dbrown transition-colors" onclick="selectQvSize(this)">M</button>
+              <button class="size-opt px-4 py-2 border border-border rounded text-sm text-charcoal hover:border-dbrown transition-colors" onclick="selectQvSize(this)">L</button>
+              <button class="size-opt px-4 py-2 border border-border rounded text-sm text-charcoal hover:border-dbrown transition-colors" onclick="selectQvSize(this)">XL</button>
+            </div>
+          </div>
+        </div>
+        <button class="w-full py-3.5 bg-dbrown text-cream text-sm font-semibold uppercase tracking-wider rounded hover:bg-charcoal transition-colors">Add to Bag</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="bg-beige border-t border-border">
+  <div class="max-w-[1400px] mx-auto px-4 lg:px-8 py-8">
+    <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+      <a href="#" class="font-display text-xl font-semibold text-dbrown tracking-[0.15em]">MAISON</a>
+      <div class="flex items-center gap-6">
+        <a href="#" class="text-xs text-charcoal hover:text-rose transition-colors tracking-wide uppercase">Privacy</a>
+        <a href="#" class="text-xs text-charcoal hover:text-rose transition-colors tracking-wide uppercase">Terms</a>
+        <a href="#" class="text-xs text-charcoal hover:text-rose transition-colors tracking-wide uppercase">Contact</a>
+      </div>
+      <p class="text-xs text-rose">&copy; 2026 MAISON</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Product data
+const products = [
+  { name: 'Wool Line Coat', price: '$320', origPrice: null, category: 'Outerwear', badge: null, img: 'browse1' },
+  { name: 'Evening Column Dress', price: '$240', origPrice: '$320', category: 'Dresses', badge: 'Sale', img: 'browse2' },
+  { name: 'Soft Rib Knit', price: '$148', origPrice: null, category: 'Knitwear', badge: null, img: 'browse3' },
+  { name: 'Silk Wrap Blouse', price: '$185', origPrice: null, category: 'Tops', badge: null, img: 'browse4' },
+  { name: 'Tailored Linen Trouser', price: '$210', origPrice: null, category: 'Bottoms', badge: null, img: 'browse5' },
+  { name: 'Cashmere V-Neck', price: '$275', origPrice: null, category: 'Knitwear', badge: null, img: 'browse6' },
+  { name: 'Draped Midi Skirt', price: '$165', origPrice: null, category: 'Bottoms', badge: null, img: 'browse7' },
+  { name: 'Oversized Blazer', price: '$290', origPrice: null, category: 'Outerwear', badge: 'New', img: 'browse8' },
+  { name: 'Cotton Poplin Shirt', price: '$125', origPrice: null, category: 'Tops', badge: null, img: 'browse9' },
+  { name: 'Leather Crossbody Bag', price: '$350', origPrice: null, category: 'Accessories', badge: null, img: 'browse10' },
+  { name: 'Pointed Kitten Heel', price: '$195', origPrice: null, category: 'Shoes', badge: null, img: 'browse11' },
+  { name: 'Gold Chain Necklace', price: '$89', origPrice: null, category: 'Jewellery', badge: null, img: 'browse12' },
+];
+
+// Popover toggle
+let currentPopover = null;
+function togglePopover(id) {
+  const el = document.getElementById(id);
+  if (currentPopover && currentPopover !== el) {
+    currentPopover.classList.remove('open');
+  }
+  el.classList.toggle('open');
+  currentPopover = el.classList.contains('open') ? el : null;
+}
+
+document.addEventListener('click', function(e) {
+  if (currentPopover && !e.target.closest('.relative')) {
+    currentPopover.classList.remove('open');
+    currentPopover = null;
+  }
+});
+
+// Quick View Modal
+function openQuickView(idx) {
+  const p = products[idx];
+  document.getElementById('qvTitle').textContent = p.name;
+  document.getElementById('qvCategory').textContent = p.category;
+  document.getElementById('qvImage').src = `https://picsum.photos/seed/${p.img}/600/800`;
+  document.getElementById('qvImage').alt = p.name;
+
+  const badge = document.getElementById('qvBadge');
+  if (p.badge) {
+    badge.textContent = p.badge;
+    badge.className = 'text-[10px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-sm ' +
+      (p.badge === 'Sale' ? 'bg-dbrown text-cream' : 'bg-rose text-cream');
+  } else {
+    badge.className = 'hidden';
+  }
+
+  let priceHTML = p.price;
+  if (p.origPrice) {
+    priceHTML = `<span class="font-medium">${p.price}</span> <span class="text-rose/60 line-through ml-1">${p.origPrice}</span>`;
+  }
+  document.getElementById('qvPrice').innerHTML = priceHTML;
+
+  const modal = document.getElementById('quickViewModal');
+  modal.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeQuickView(e) {
+  if (e && e.target !== e.currentTarget) return;
+  document.getElementById('quickViewModal').classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+function selectQvSize(el) {
+  const modal = document.getElementById('quickViewModal');
+  modal.querySelectorAll('.size-opt').forEach(b => b.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+// Escape key closes modal
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    closeQuickView();
+    if (currentPopover) { currentPopover.classList.remove('open'); currentPopover = null; }
+  }
+});
+</script>
+</body>
+</html>
