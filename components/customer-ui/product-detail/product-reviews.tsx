@@ -1,5 +1,5 @@
 import type { Product } from "@/lib/types";
-import StarRating from "./star-rating";
+import StarRating from "../star-rating";
 
 export default function ProductReviews({ product }: { product: Product }) {
   const reviews = product.reviews;

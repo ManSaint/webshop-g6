@@ -1,6 +1,6 @@
 import { ArrowRight, Heart, ShoppingBag } from "lucide-react";
 import type { Product } from "@/lib/types";
-import StarRating from "./star-rating";
+import StarRating from "../star-rating";
 import ProductAccordions from "./product-accordions";
 
 export default function ProductInfo({ product }: { product: Product }) {

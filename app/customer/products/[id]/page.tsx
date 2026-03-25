@@ -1,10 +1,10 @@
 import { notFound } from "next/navigation";
 import { getProductById, getRelatedProducts } from "@/lib/db";
-import ProductBreadcrumb from "@/components/customer-ui/product-breadcrumb";
-import ProductImageGallery from "@/components/customer-ui/product-image-gallery";
-import ProductInfo from "@/components/customer-ui/product-info";
-import ProductReviews from "@/components/customer-ui/product-reviews";
-import RelatedProducts from "@/components/customer-ui/related-products";
+import ProductBreadcrumb from "@/components/customer-ui/product-detail/product-breadcrumb";
+import ProductImageGallery from "@/components/customer-ui/product-detail/product-image-gallery";
+import ProductInfo from "@/components/customer-ui/product-detail/product-info";
+import ProductReviews from "@/components/customer-ui/product-detail/product-reviews";
+import RelatedProducts from "@/components/customer-ui/product-detail/related-products";
 
 export default async function ProductDetailPage({
   params,
