@@ -18,7 +18,7 @@ export default function () {
             <h2 className="text-3xl font-serif text-(--color-darkbrown)">
               Built around drape, pace, and presence.
             </h2>
-            <p className="text-(--color-text-body) text-md">
+            <p className="text-(--color-charcoal)/70 text-md">
               Every piece in the MAISON collection begins with fabric. We source
               exceptional textiles from heritage mills across Italy, Japan, and
               Portugal &mdash; then shape them into garments designed to move
@@ -26,7 +26,7 @@ export default function () {
             </p>
             <a
               href="/"
-              className="bg-(--color-darkbrown) px-8 py-3 border w-full text-center md:w-fit uppercase font-medium text-(--color-text-inverted) hover:cursor-pointer hover:bg-(--color-charcoal) tracking-wider"
+              className="bg-(--color-darkbrown) px-8 py-3 border w-full text-center md:w-fit uppercase font-medium text-(--color-text-inverted) hover:cursor-pointer hover:bg-(--color-charcoal) tracking-wide"
             >
               Explore Wardrobe Edits
             </a>
