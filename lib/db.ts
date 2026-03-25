@@ -101,3 +101,38 @@ export async function updateProductById(id: string, product: ProductFormData) {
   return res;
 }
 //#endregion
+
+
+///////////////////////  Customer ////////////////////////////////
+
+export async function getProducts(
+  page = 1,
+  limit = 8,
+  sort = "id",
+  order = "desc"
+): Promise<ProductsResponse> {
+
+  const params = new URLSearchParams({
+    _page: page.toString(),
+    _limit: limit.toString(),
+    _sort: sort,
+    _order: order,
+    _expand: "category",
+  });
+
+  try {
+    const response = await fetch(
+      `${API_URL}/products?${params}`
+    
+    );
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch products");
+    }
+
+    return await response.json();
+
+  } catch {
+    throw new Error("API is down...");
+  }
+}
