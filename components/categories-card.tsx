@@ -17,7 +17,7 @@ export default function CategoryCard({ category }: CategoryCardProps) {
       <div className="absolute inset-0 bg-(--color-charcoal)/40" />
 
       <div className="relative flex items-center z-10 h-full p-4">
-        <h3 className="text-2xl text-(--color-text-inverted) font-normal font-serif tracking-wider text-shadow-lg">
+        <h3 className="text-lg leading-5 md:leading-normal md:text-2xl text-(--color-text-inverted) font-normal font-serif tracking-wider text-shadow-lg text-center">
           {category.name}
         </h3>
       </div>
