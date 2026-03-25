@@ -1,5 +1,5 @@
 import { API_URL } from "@/lib/config";
-import EditForm from "@/components/ui/edit-form";
+import EditForm from "@/components/admin-ui/edit-form";
 import type { Category, Product } from "@/lib/types";
 
 export default async function UpdatePage({
