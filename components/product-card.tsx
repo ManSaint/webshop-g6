@@ -7,7 +7,56 @@ export default function ProductCard({ product }: { product: Product }) {
     <div className="group">
       <Link href={`/product/${product.id}`}>
         
-       
+    
+
+        <div className="overflow-hidden relative w-full aspect-[2.7/3.6]  bg-[var(--color-beige)]">
+        <Image
+            src={product.thumbnail}
+            alt={product.title}
+            fill
+            className="object-contain transition duration-500 group-hover:scale-105"
+        />
+        </div>
+
+        <div className="mt-4 flex items-center justify-between">
+          
+          <h3
+            className="text-xs tracking-wide"
+            style={{
+              fontFamily: "var(--font-sans)",
+              color: "var(--color-charcoal)",
+            }}
+          >
+            {product.title}
+          </h3>
+
+          <p
+            className="text-xs"
+            style={{
+              color: "var(--color-text-secondary)",
+            }}
+          >
+            ${product.price}
+          </p>
+
+        </div>
+
+      </Link>
+    </div>
+  )
+}
+
+
+
+
+
+
+
+
+
+
+
+   
         {/* <div
         className="overflow-hidden relative w-full"
         style={{
@@ -23,40 +72,3 @@ export default function ProductCard({ product }: { product: Product }) {
             className="object-contain transition duration-500 group-hover:scale-105"
         />
         </div> */}
-
-        <div className="overflow-hidden relative w-full aspect-[2.7/3.6]  bg-[var(--color-beige)]">
-        <Image
-            src={product.thumbnail}
-            alt={product.title}
-            fill
-            className="object-contain transition duration-500 group-hover:scale-105"
-        />
-        </div>
-
-        <div className="mt-4 flex items-center justify-between">
-          
-          <h3
-            className="text-sm tracking-wide"
-            style={{
-              fontFamily: "var(--font-sans)",
-              color: "var(--color-charcoal)",
-            }}
-          >
-            {product.title}
-          </h3>
-
-          <p
-            className="text-sm"
-            style={{
-              color: "var(--color-text-secondary)",
-            }}
-          >
-            ${product.price}
-          </p>
-
-        </div>
-
-      </Link>
-    </div>
-  )
-}

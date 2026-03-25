@@ -27,9 +27,10 @@ export default async function ProductsGrid({ limit = 3 }: Props) {
           </h2>
 
           <p
-            className="text-sm"
+            className="text-xs"
             style={{
-              color: "var(--color-text-muted)",
+            //   color: "var(--color-text-muted)",
+              color: "#7c8594"
             }}
           >
             Thoughtfully designed pieces for every occasion,
