@@ -42,7 +42,7 @@ export interface Product {
     barcode?: string;
     qrCode?: string;
   };
-  images?: string[];
+  images: string[];
   thumbnail: string;
 }
 

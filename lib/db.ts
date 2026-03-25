@@ -1,5 +1,5 @@
 import { API_URL } from "@/lib/config";
-import type { Product, ProductFormData, ProductsResponse } from "@/lib/types";
+import type { ProductFormData, ProductsResponse } from "@/lib/types";
 import "server-only";
 
 //#region GET
@@ -101,73 +101,3 @@ export async function updateProductById(id: string, product: ProductFormData) {
   return res;
 }
 //#endregion
-
-
-///////////////////////  Customer ////////////////////////////////
-
-export async function getProducts(
-  page = 1,
-  limit = 8,
-  sort = "id",
-  order = "desc"
-): Promise<ProductsResponse> {
-
-  const params = new URLSearchParams({
-    _page: page.toString(),
-    _limit: limit.toString(),
-    _sort: sort,
-    _order: order,
-    _expand: "category",
-  });
-
-  try {
-    const response = await fetch(
-      `${API_URL}/products?${params}`
-
-    );
-
-    if (!response.ok) {
-      throw new Error("Failed to fetch products");
-    }
-
-    return await response.json();
-
-  } catch {
-    throw new Error("API is down...");
-  }
-}
-
-export async function getProductById(id: string): Promise<Product | null> {
-  try {
-    const response = await fetch(
-      `${API_URL}/products/${id}?_expand=category`,
-      { cache: "no-store" }
-    );
-
-    if (!response.ok) return null;
-
-    return await response.json();
-  } catch {
-    return null;
-  }
-}
-
-export async function getRelatedProducts(
-  categoryId: number,
-  excludeId: number
-): Promise<Product[]> {
-  try {
-    const response = await fetch(
-      `${API_URL}/products?categoryId=${categoryId}&_limit=5&_expand=category`,
-      { cache: "no-store" }
-    );
-
-    if (!response.ok) return [];
-
-    const data = await response.json();
-    const products: Product[] = data.products || data;
-    return products.filter((p) => p.id !== excludeId).slice(0, 4);
-  } catch {
-    return [];
-  }
-}

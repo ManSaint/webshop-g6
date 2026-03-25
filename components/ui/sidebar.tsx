@@ -20,7 +20,7 @@ export default function Sidebar() {
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
   
   const links = [
-    { href: "/admin/products", icon: <Package2 width={18} height={18}/>, label: "Products" },
+    { href: "/products", icon: <Package2 width={18} height={18}/>, label: "Products" },
     { href: "/analytics", icon: <ChartLine width={18} height={18}/>, label: "Analytics" },
     { href: "/orders", icon: <ShoppingCart width={18} height={18}/>, label: "Orders" },
     { href: "/customers", icon: <Users width={18} height={18}/>, label: "Customers" },
