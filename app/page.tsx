@@ -10,10 +10,6 @@ export default async function Home() {
     <main>
       <ImageTextCTA />
 
-      {/*       {categories.map((category) => (
-        <CategoryCard key={category.id} category={category} />
-      ))} */}
-
       <CategoriesGrid />
     </main>
   );

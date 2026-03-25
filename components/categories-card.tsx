@@ -14,10 +14,10 @@ export default function CategoryCard({ category }: CategoryCardProps) {
         backgroundImage: `url(${category.image})`,
       }}
     >
-      <div className="absolute inset-0 bg-neutral-800/40" />
+      <div className="absolute inset-0 bg-(--color-charcoal)/40" />
 
       <div className="relative flex items-center z-10 h-full p-4">
-        <h3 className="text-2xl text-(--color-text-inverted) font-normal font-serif tracking-wider">
+        <h3 className="text-2xl text-(--color-text-inverted) font-normal font-serif tracking-wider text-shadow-lg">
           {category.name}
         </h3>
       </div>
