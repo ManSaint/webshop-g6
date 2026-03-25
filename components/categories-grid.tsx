@@ -19,8 +19,8 @@ export default function CategoriesGrid() {
   );
 
   return (
-    <section className="flex flex-col gap-4 w-full container mx-auto px-4 py-10">
-      <h2 className="mx-auto text-(--color-darkbrown) text-5xl font-serif px-2 py-6">
+    <section className="flex flex-col gap-4 w-full container mx-auto py-10">
+      <h2 className="mx-auto text-(--color-darkbrown) text-3xl md:text-5xl font-serif px-2 py-6">
         Shop by Category
       </h2>
       <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
