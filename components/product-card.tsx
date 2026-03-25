@@ -5,7 +5,7 @@ import type { Product } from "@/lib/types"
 export default function ProductCard({ product }: { product: Product }) {
   return (
     <div className="group">
-      <Link href={`/product/${product.id}`}>
+      <Link href={`/customer/products/${product.id}`}>
         
     
 
