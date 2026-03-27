@@ -3,8 +3,6 @@
 import {
   ChevronLeft,
   ChevronRight,
-  ChevronsLeft,
-  ChevronsRight,
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
@@ -33,15 +31,6 @@ export default function Pagination({
 
   return (
     <nav aria-label="Pagination" className="flex justify-center items-center gap-1 py-8">
-      {/* First */}
-      <PaginationLink
-        href={createPageURL(1)}
-        disabled={isFirst}
-        aria-label="First page"
-      >
-        <ChevronsLeft size={18} />
-      </PaginationLink>
-
       {/* Previous */}
       <PaginationLink
         href={createPageURL(Math.max(1, currentPage - 1))}
@@ -80,15 +69,6 @@ export default function Pagination({
         aria-label="Next page"
       >
         <ChevronRight size={18} />
-      </PaginationLink>
-
-      {/* Last */}
-      <PaginationLink
-        href={createPageURL(totalPages)}
-        disabled={isLast}
-        aria-label="Last page"
-      >
-        <ChevronsRight size={18} />
       </PaginationLink>
     </nav>
   );
