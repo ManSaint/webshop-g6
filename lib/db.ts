@@ -107,7 +107,7 @@ export async function updateProductById(id: string, product: ProductFormData) {
 
 export async function getProducts(
   page = 1,
-  limit = 8,
+  limit = 9,
   sort = "id",
   order = "desc"
 ): Promise<ProductsResponse> {

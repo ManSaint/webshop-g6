@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from "react";
+import Link from "next/link";
  
 function CartIcon({ count }) {
   return (
@@ -48,7 +49,13 @@ const CloseIcon = () => (
   </svg>
 );
  
-const navLinks = ["NEW ARRIVALS", "WOMEN", "MEN", "BEAUTY", "HOME"];
+const navLinks = [
+  { label: "NEW ARRIVALS", href: "/customer/collection" },
+  { label: "WOMEN", href: "/" },
+  { label: "MEN", href: "/" },
+  { label: "BEAUTY", href: "/" },
+  { label: "HOME", href: "/" },
+];
  
 export default function MaisonHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -70,13 +77,13 @@ export default function MaisonHeader() {
           <nav className="hidden md:block">
             <ul className="flex gap-9 list-none m-0 p-0">
               {navLinks.map((link) => (
-                <li key={link}>
-                  <a
-                    href="#"
+                <li key={link.label}>
+                  <Link
+                    href={link.href}
                     className="text-[11px] tracking-[0.15em] text-[#2a1f17] font-semibold no-underline transition-opacity duration-200 hover:opacity-50"
                   >
-                    {link}
-                  </a>
+                    {link.label}
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -110,13 +117,14 @@ export default function MaisonHeader() {
         }`}
       >
         {navLinks.map((link) => (
-          <div
-            key={link}
-            className="text-[22px] tracking-[0.12em] text-[#2a1f17] font-medium py-[18px] border-b border-[#e0d8d0] cursor-pointer"
+          <Link
+            key={link.label}
+            href={link.href}
+            className="text-[22px] tracking-[0.12em] text-[#2a1f17] font-medium py-[18px] border-b border-[#e0d8d0] cursor-pointer no-underline"
             onClick={() => setMenuOpen(false)}
           >
-            {link}
-          </div>
+            {link.label}
+          </Link>
         ))}
         <div className="text-[22px] tracking-[0.12em] text-[#2a1f17] font-medium py-[18px] cursor-pointer mt-2">
           ACCOUNT

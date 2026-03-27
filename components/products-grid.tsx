@@ -49,7 +49,8 @@ export default async function ProductsGrid({ limit = 3 }: Props) {
         </ul>
 
         <div className="text-center mt-16">
-          <button
+          {/** biome-ignore lint/a11y/useButtonType: <explanation> */}
+            <button
             className="text-xs tracking-widest border-b pb-1 transition hover:opacity-70"
             style={{
                color: "var(--color-charcoal)",
