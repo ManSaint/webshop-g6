@@ -79,77 +79,89 @@ export default function Cart() {
   }
 
   return (
-    <div className="max-w-3xl mx-auto flex flex-col gap-10 md:gap-20">
-      <h1 className="text-4xl font-serif mb-6 text-(--color-darkbrown)">
-        Shopping Cart
-      </h1>
+    <div className="max-w-6xl my-10 md:mb-20 mx-auto flex flex-col md:flex-row gap-10 md:gap-20">
+      <div className="basis-3/5 flex flex-col gap-6 md:gap-12">
+        <h1 className="text-4xl font-serif mb-6 text-(--color-darkbrown)">
+          Shopping Cart
+        </h1>
 
-      <div className="space-y-6">
-        {enrichedItems.map((item) => {
-          if (!item.product) {
+        <div className="space-y-6">
+          {enrichedItems.map((item) => {
+            if (!item.product) {
+              return (
+                <div key={item.productId} className="border-b pb-4">
+                  <p>Produkt kunde inte laddas (ID: {item.productId})</p>
+                </div>
+              );
+            }
+
             return (
-              <div key={item.productId} className="border-b pb-4">
-                <p>Produkt kunde inte laddas (ID: {item.productId})</p>
-              </div>
-            );
-          }
+              <div key={item.productId} className="flex gap-4 border-b pb-4">
+                {/* Bild */}
+                <Image
+                  src={item.product.thumbnail}
+                  alt={item.product.title}
+                  width={96}
+                  height={96}
+                  className="object-cover rounded"
+                />
 
-          return (
-            <div key={item.productId} className="flex gap-4 border-b pb-4">
-              {/* Bild */}
-              <Image
-                src={item.product.thumbnail}
-                alt={item.product.title}
-                width={96}
-                height={96}
-                className="object-cover rounded"
-              />
+                {/* Info */}
+                <div className="flex-1 flex flex-col">
+                  <h3 className="font-semibold">{item.product.title}</h3>
 
-              {/* Info */}
-              <div className="flex-1 flex flex-col">
-                <h3 className="font-semibold">{item.product.title}</h3>
+                  <p className="text-sm text-gray-600">
+                    $ {item.product.price}
+                  </p>
 
-                <p className="text-sm text-gray-600">$ {item.product.price}</p>
+                  {/* Quantity controls */}
+                  <div className="flex items-center gap-3 mt-2">
+                    <button
+                      onClick={() => decrease(item.productId)}
+                      type="button"
+                      className="px-2 shadow-sm border border-(--color-border)/50 rounded-sm hover:cursor-pointer"
+                    >
+                      –
+                    </button>
 
-                {/* Quantity controls */}
-                <div className="flex items-center gap-3 mt-2">
+                    <span>{item.quantity}</span>
+
+                    <button
+                      onClick={() => increase(item.productId)}
+                      type="button"
+                      className="px-2 shadow-sm border border-(--color-border)/50 rounded-sm hover:cursor-pointer"
+                    >
+                      +
+                    </button>
+                  </div>
+
+                  {/* Remove */}
                   <button
-                    onClick={() => decrease(item.productId)}
+                    onClick={() => removeItem(item.productId)}
                     type="button"
-                    className="px-2 shadow-sm border border-(--color-border)/50 rounded-sm hover:cursor-pointer"
+                    className="text-red-700/80 text-sm mt-2 w-fit flex gap-1 items- content-center self-end hover:cursor-pointer"
                   >
-                    –
-                  </button>
-
-                  <span>{item.quantity}</span>
-
-                  <button
-                    onClick={() => increase(item.productId)}
-                    type="button"
-                    className="px-2 shadow-sm border border-(--color-border)/50 rounded-sm hover:cursor-pointer"
-                  >
-                    +
+                    Remove
+                    <Trash2 className="w-4 h-4" />
                   </button>
                 </div>
-
-                {/* Remove */}
-                <button
-                  onClick={() => removeItem(item.productId)}
-                  type="button"
-                  className="text-red-700/80 text-sm mt-2 w-fit flex gap-1 items- content-center self-end hover:cursor-pointer"
-                >
-                  Remove
-                  <Trash2 className="w-4 h-4" />
-                </button>
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
       </div>
-
-      {/* Total */}
-      <div className="mt-8 text-right">
-        <p className="text-lg font-semibold">Total: ${total} </p>
+      {/* Total + check out*/}
+      <div className="basis-2/5 mt-8 w-full justify-between flex flex-col gap-6 h-fit p-6 border-(--color-border)/50 border shadow-lg bg-(--color-cream) rounded-md">
+        <p className="text-lg font-semibold text-(--color-darkbrown)">
+          Total: <span className="font-normal">${total.toFixed(2)} </span>
+        </p>
+        <button
+          className=" basis-1/2 w-full border py-4 text-sm tracking-[0.2em] uppercase font-medium hover:bg-[var(--color-charcoal)] hover:text-[var(--color-cream)] transition-all duration-500 flex items-center justify-center gap-2 hover:cursor-pointer"
+          type="button"
+          style={{ borderColor: "var(--color-charcoal)" }}
+        >
+          Check out
+        </button>
       </div>
     </div>
   );
