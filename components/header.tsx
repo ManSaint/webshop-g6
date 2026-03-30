@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useCartStore } from "@/lib/cart-store";
+import { Heart } from "lucide-react";
 
 function CartIcon({ count }) {
   return (
@@ -146,6 +147,13 @@ export default function MaisonHeader() {
             <span className="hidden md:flex cursor-pointer hover:opacity-60 transition-opacity duration-200">
               <SearchIcon />
             </span>
+            <Link
+              href="/customer/wishlist"
+              className="hidden md:flex cursor-pointer hover:opacity-60 transition-opacity duration-200"
+            >
+              <Heart className="stroke-1 fill-(--color-darkbrown)" />
+            </Link>
+
             <span className="hidden md:flex cursor-pointer hover:opacity-60 transition-opacity duration-200">
               <AccountIcon />
             </span>
