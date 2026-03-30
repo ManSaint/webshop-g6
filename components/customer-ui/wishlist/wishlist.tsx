@@ -39,7 +39,7 @@ export default function Wishlist() {
           ),
         );
 
-        // filtrera bort misslyckade fetches
+        // filtrera bort misslyckade fetches, just in case
         setProducts(results.filter(Boolean));
       } catch (err) {
         console.error(err);
@@ -60,16 +60,16 @@ export default function Wishlist() {
   });
 
   if (loading) {
-    return <p>Laddar önskelista...</p>;
+    return <p>Loading wishlist...</p>;
   }
   console.log(items);
   console.log(products);
   if (items.length === 0) {
-    return <p>Din önskelista är tom</p>;
+    return <p>Your wishlist is empty</p>;
   }
 
   return (
-    <div className="max-w-4xl mx-auto">
+    <div className="max-w-4xl mx-auto flex flex-col gap-8 md:gap-12">
       <h1 className="text-4xl my-8 font-serif text-(--color-darkbrown)">
         Wishlist
       </h1>
@@ -79,7 +79,7 @@ export default function Wishlist() {
           if (!item.product) {
             return (
               <div key={item.productId}>
-                <p>Produkt saknas (ID: {item.productId})</p>
+                <p>Product not found (ID: {item.productId})</p>
               </div>
             );
           }
@@ -97,7 +97,7 @@ export default function Wishlist() {
               <div className="flex-1">
                 <h3 className="font-semibold">{item.product.title}</h3>
 
-                <p className="text-sm text-gray-600">{item.product.price} kr</p>
+                <p className="text-sm text-gray-600">${item.product.price} </p>
               </div>
               <div className="w-50 flex flex-col justify-center">
                 <AddToCartButton
