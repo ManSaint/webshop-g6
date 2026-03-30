@@ -3,6 +3,7 @@ import type { Product } from "@/lib/types";
 import StarRating from "../star-rating";
 import ProductAccordions from "./product-accordions";
 import AddToCartButton from "./cart-button";
+import WishlistButton from "./wishlist-button";
 
 export default function ProductInfo({ product }: { product: Product }) {
   const hasDiscount =
@@ -110,14 +111,7 @@ export default function ProductInfo({ product }: { product: Product }) {
         {/* Buttons */}
 
         <AddToCartButton productId={product.id} price={product.price} />
-        <button
-          type="button"
-          className="w-full border py-4 text-sm tracking-[0.2em] uppercase font-medium hover:bg-[var(--color-charcoal)] hover:text-[var(--color-cream)] transition-all duration-500 flex items-center justify-center gap-2"
-          style={{ borderColor: "var(--color-charcoal)" }}
-        >
-          <Heart className="w-4 h-4" />
-          Add to Wishlist
-        </button>
+        <WishlistButton productId={product.id} />
 
         {/* Shipping note */}
         {product.shippingInformation && (
