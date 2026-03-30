@@ -139,7 +139,7 @@ export default function Cart() {
                   <button
                     onClick={() => removeItem(item.productId)}
                     type="button"
-                    className="text-red-700/80 text-sm mt-2 w-fit flex gap-1 items- content-center self-end hover:cursor-pointer"
+                    className="text-(--color-text-muted) text-sm mt-2 w-fit px-4 border py-2 flex gap-1 justify-center rounded-xs border-(--color-border) hover:shadow-md content-center self-end hover:cursor-pointer"
                   >
                     Remove
                     <Trash2 className="w-4 h-4" />

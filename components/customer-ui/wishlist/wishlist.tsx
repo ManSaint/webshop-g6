@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react";
 import { useWishlistStore } from "@/lib/wishlist-store";
 import Image from "next/image";
+import { Trash2 } from "lucide-react";
+import AddToCartButton from "../product-detail/cart-button";
 
 type Product = {
   id: number;
@@ -67,8 +69,10 @@ export default function Wishlist() {
   }
 
   return (
-    <div className="max-w-3xl mx-auto">
-      <h2 className="text-xl font-bold mb-6">Önskelista</h2>
+    <div className="max-w-4xl mx-auto">
+      <h1 className="text-4xl my-8 font-serif text-(--color-darkbrown)">
+        Wishlist
+      </h1>
 
       <div className="space-y-6">
         {enrichedItems.map((item) => {
@@ -94,13 +98,19 @@ export default function Wishlist() {
                 <h3 className="font-semibold">{item.product.title}</h3>
 
                 <p className="text-sm text-gray-600">{item.product.price} kr</p>
-
+              </div>
+              <div className="w-50 flex flex-col justify-center">
+                <AddToCartButton
+                  productId={item.product.id}
+                  price={item.product.price}
+                />
                 <button
                   onClick={() => removeItem(item.productId)}
                   type="button"
-                  className="text-red-500 text-sm mt-2"
+                  className="text-(--color-text-muted) text-sm mt-2 w-full border py-2 flex gap-1 justify-center rounded-xs border-(--color-border) hover:shadow-md content-center self-end hover:cursor-pointer"
                 >
-                  Ta bort
+                  Remove
+                  <Trash2 className="w-4 h-4" />
                 </button>
               </div>
             </div>

@@ -3,7 +3,32 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useCartStore } from "@/lib/cart-store";
-import { Heart } from "lucide-react";
+import { useWishlistStore } from "@/lib/wishlist-store";
+
+function WishlistIcon({ count }: { count: number }) {
+  return (
+    <div className="relative cursor-pointer">
+      <svg
+        width="22"
+        height="22"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="M20.8 4.6a5.5 5.5 0 00-7.8 0L12 5.6l-1-1a5.5 5.5 0 10-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 000-7.8z" />
+      </svg>
+
+      {count > 0 && (
+        <span className="absolute -top-1.5 -right-1.5 bg-[#5c3d2e] text-white rounded-full w-4 h-4 text-[10px] font-semibold flex items-center justify-center font-sans">
+          {count}
+        </span>
+      )}
+    </div>
+  );
+}
 
 function CartIcon({ count }) {
   return (
@@ -115,6 +140,10 @@ export default function MaisonHeader() {
 
   const cartCount = items.reduce((sum, item) => sum + item.quantity, 0);
 
+  const wishlistItems = useWishlistStore((state) => state.items);
+
+  const wishlistCount = wishlistItems.length;
+
   return (
     <>
       <style>{`@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&display=swap');`}</style>
@@ -149,9 +178,9 @@ export default function MaisonHeader() {
             </span>
             <Link
               href="/customer/wishlist"
-              className="hidden md:flex cursor-pointer hover:opacity-60 transition-opacity duration-200"
+              className="cursor-pointer hover:opacity-60 transition-opacity duration-200"
             >
-              <Heart className="stroke-1 fill-(--color-darkbrown)" />
+              <WishlistIcon count={wishlistCount} />
             </Link>
 
             <span className="hidden md:flex cursor-pointer hover:opacity-60 transition-opacity duration-200">
