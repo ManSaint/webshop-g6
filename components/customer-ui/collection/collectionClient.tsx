@@ -4,6 +4,8 @@ import Sidebar from "./sidebar"
 import ProductGrid from "./ProductGrid";
 import ActiveFilters from "./filters"
 import Link from "next/link"
+import { useSearchParams } from "next/navigation"
+import Pagination from "@/components/customer-ui/pagination"
 
 import { useState } from "react"
 
@@ -37,7 +39,9 @@ const CATEGORIES = [
   "Women's Shoes",
   "Women's Watches",
 ]
- 
+
+const ITEMS_PER_PAGE = 9
+
 type Props = {
   allProducts: Product[]
   selectedCategories: string[]
@@ -46,6 +50,8 @@ type Props = {
  
 export default function CollectionClient({ allProducts, selectedCategories, sortOrder }: Props) {
   const [searchQuery, setSearchQuery] = useState("")
+  const searchParams = useSearchParams()
+  const currentPage = Number(searchParams.get("page")) || 1
 
   let filtered = selectedCategories.includes("All")
     ? allProducts
@@ -67,6 +73,13 @@ export default function CollectionClient({ allProducts, selectedCategories, sort
   } else if (sortOrder === "high-to-low") {
     filtered = [...filtered].sort((a, b) => b.price - a.price)
   }
+
+  const totalPages = Math.ceil(filtered.length / ITEMS_PER_PAGE)
+  const safePage = Math.max(1, Math.min(currentPage, totalPages || 1))
+  const paginatedProducts = filtered.slice(
+    (safePage - 1) * ITEMS_PER_PAGE,
+    safePage * ITEMS_PER_PAGE
+  )
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: "var(--color-cream)" }}>
@@ -114,7 +127,10 @@ export default function CollectionClient({ allProducts, selectedCategories, sort
             selectedCategories={selectedCategories}
             sort={sortOrder as SortOption}
           />
-          <ProductGrid products={filtered} />
+          <div className="flex-1">
+            <ProductGrid products={paginatedProducts} />
+            <Pagination totalPages={totalPages} />
+          </div>
         </div>
 
       </div>

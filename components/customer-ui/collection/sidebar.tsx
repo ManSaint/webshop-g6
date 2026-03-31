@@ -16,6 +16,7 @@ export default function Sidebar({ categories, selectedCategories, sort }: Props)
   const selectCategory = (cat: string) => {
     const params = new URLSearchParams(searchParams.toString())
     params.delete("category")
+    params.delete("page")
  
     if (cat === "All") {
       router.push(`?${params.toString()}`)
@@ -33,6 +34,7 @@ export default function Sidebar({ categories, selectedCategories, sort }: Props)
  
   const selectSort = (s: string) => {
     const params = new URLSearchParams(searchParams.toString())
+    params.delete("page")
     if (s) params.set("sort", s)
     else params.delete("sort")
     router.push(`?${params.toString()}`)

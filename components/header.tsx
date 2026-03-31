@@ -1,13 +1,52 @@
-'use client'
+/** biome-ignore-all lint/a11y/useKeyWithClickEvents: <explanation> */
+"use client";
 
 import { useState } from "react";
 import Link from "next/link";
 import { SignInButton, useAuth, useUser } from "@clerk/nextjs";
+import { useCartStore } from "@/lib/cart-store";
+import { useWishlistStore } from "@/lib/wishlist-store";
 
-function CartIcon({ count }) {
+function WishlistIcon({ count }: { count: number }) {
   return (
     <div className="relative cursor-pointer">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      {/** biome-ignore lint/a11y/noSvgWithoutTitle: <explanation> */}
+<svg
+        width="22"
+        height="22"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="M20.8 4.6a5.5 5.5 0 00-7.8 0L12 5.6l-1-1a5.5 5.5 0 10-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 000-7.8z" />
+      </svg>
+
+      {count > 0 && (
+        <span className="absolute -top-1.5 -right-1.5 bg-[#5c3d2e] text-white rounded-full w-4 h-4 text-[10px] font-semibold flex items-center justify-center font-sans">
+          {count}
+        </span>
+      )}
+    </div>
+  );
+}
+
+function CartIcon({ count }: { count: number }) {
+  return (
+    <div className="relative cursor-pointer">
+      {/** biome-ignore lint/a11y/noSvgWithoutTitle: <explanation> */}
+<svg
+        width="22"
+        height="22"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
         <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" />
         <line x1="3" y1="6" x2="21" y2="6" />
         <path d="M16 10a4 4 0 01-8 0" />
@@ -22,21 +61,54 @@ function CartIcon({ count }) {
 }
 
 const SearchIcon = () => (
-  <svg className="cursor-pointer" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+  // biome-ignore lint/a11y/noSvgWithoutTitle: <explanation>
+<svg
+    className="cursor-pointer"
+    width="20"
+    height="20"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.5"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
     <circle cx="11" cy="11" r="8" />
     <line x1="21" y1="21" x2="16.65" y2="16.65" />
   </svg>
 );
 
 const AccountIcon = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+  // biome-ignore lint/a11y/noSvgWithoutTitle: <explanation>
+<svg
+    className="cursor-pointer"
+    width="20"
+    height="20"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.5"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
     <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
     <circle cx="12" cy="7" r="4" />
   </svg>
 );
 
 const HamburgerIcon = () => (
-  <svg className="cursor-pointer" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+  // biome-ignore lint/a11y/noSvgWithoutTitle: <explanation>
+<svg
+    className="cursor-pointer"
+    width="22"
+    height="22"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.5"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
     <line x1="3" y1="6" x2="21" y2="6" />
     <line x1="3" y1="12" x2="21" y2="12" />
     <line x1="3" y1="18" x2="21" y2="18" />
@@ -44,7 +116,18 @@ const HamburgerIcon = () => (
 );
 
 const CloseIcon = () => (
-  <svg className="cursor-pointer" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+  // biome-ignore lint/a11y/noSvgWithoutTitle: <explanation>
+<svg
+    className="cursor-pointer"
+    width="22"
+    height="22"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.5"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
     <line x1="18" y1="6" x2="6" y2="18" />
     <line x1="6" y1="6" x2="18" y2="18" />
   </svg>
@@ -63,7 +146,12 @@ export default function MaisonHeader() {
   const { isSignedIn, signOut } = useAuth();
   const { user } = useUser();
   const isAdmin = user?.publicMetadata?.role === "admin";
-  const cartCount = 2;
+
+  const cartCount = useCartStore((state) =>
+    state.items.reduce((sum, item) => sum + item.quantity, 0)
+  );
+
+  const wishlistCount = useWishlistStore((state) => state.items.length);
 
   return (
     <>
@@ -71,10 +159,8 @@ export default function MaisonHeader() {
 
       <header className="sticky top-0 z-50 bg-[#f5f0eb] border-b border-[#e0d8d0] [font-family:'Cormorant_Garamond',Georgia,serif]">
         <div className="max-w-[1400px] mx-auto px-5 md:px-10 h-[58px] md:h-[68px] flex items-center justify-between">
-
-          {/* Logo */}
           <span className="text-[17px] md:text-[19px] font-semibold tracking-[0.25em] text-[#2a1f17] cursor-pointer">
-            MAISON
+            <Link href="/">MAISON</Link>
           </span>
 
           {/* Desktop Nav */}
@@ -90,6 +176,7 @@ export default function MaisonHeader() {
                   </Link>
                 </li>
               ))}
+
               {isAdmin && (
                 <li>
                   <Link
@@ -99,12 +186,7 @@ export default function MaisonHeader() {
                     ADMIN
                   </Link>
                 </li>
-
-
               )}
-
-
-
             </ul>
           </nav>
 
@@ -114,19 +196,36 @@ export default function MaisonHeader() {
               <SearchIcon />
             </span>
 
+            <Link
+              href="/customer/wishlist"
+              className="cursor-pointer hover:opacity-60 transition-opacity duration-200"
+            >
+              <WishlistIcon count={wishlistCount} />
+            </Link>
+
+            <span className="hidden md:flex cursor-pointer hover:opacity-60 transition-opacity duration-200">
+              <AccountIcon />
+            </span>
+
+            <Link
+              href="/cart"
+              className="cursor-pointer hover:opacity-60 transition-opacity duration-200"
+            >
+              <CartIcon count={cartCount} />
+            </Link>
+
             {/* Desktop Auth */}
             <div className="hidden md:flex items-center gap-2">
-              <AccountIcon />
               {!isSignedIn ? (
                 <SignInButton mode="modal">
                   {/** biome-ignore lint/a11y/useButtonType: <explanation> */}
-                  <button className="text-[11px] tracking-[0.12em] text-[#2a1f17] font-semibold hover:opacity-50 transition-opacity duration-200 bg-transparent border-none cursor-pointer">
+                <button className="text-[11px] tracking-[0.12em] text-[#2a1f17] font-semibold hover:opacity-50 transition-opacity duration-200 bg-transparent border-none cursor-pointer">
                     SIGN IN / SIGN UP
                   </button>
                 </SignInButton>
               ) : (
                 // biome-ignore lint/a11y/useButtonType: <explanation>
-                 <button
+              <button
                   onClick={() => signOut()}
                   className="text-[11px] tracking-[0.12em] text-[#2a1f17] font-semibold hover:opacity-50 transition-opacity duration-200 bg-transparent border-none cursor-pointer"
                 >
@@ -135,11 +234,7 @@ export default function MaisonHeader() {
               )}
             </div>
 
-            <span className="cursor-pointer hover:opacity-60 transition-opacity duration-200">
-              <CartIcon count={cartCount} />
-            </span>
-
-          
+            {/** biome-ignore lint/a11y/noStaticElementInteractions: <explanation> */}
             <span
               className="flex md:hidden cursor-pointer hover:opacity-60 transition-opacity duration-200"
               onClick={() => setMenuOpen(!menuOpen)}
@@ -177,7 +272,7 @@ export default function MaisonHeader() {
           </Link>
         )}
 
-        {/* Mobile Auth */}
+      
         {!isSignedIn ? (
           <SignInButton mode="modal">
             <div className="text-[22px] tracking-[0.12em] text-[#2a1f17] font-medium py-[18px] cursor-pointer mt-2">
@@ -197,5 +292,10 @@ export default function MaisonHeader() {
     </>
   );
 }
+
+
+
+
+
 
 

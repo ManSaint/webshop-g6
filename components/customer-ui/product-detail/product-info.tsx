@@ -2,6 +2,8 @@ import { ArrowRight, Heart, ShoppingBag } from "lucide-react";
 import type { Product } from "@/lib/types";
 import StarRating from "../star-rating";
 import ProductAccordions from "./product-accordions";
+import AddToCartButton from "./cart-button";
+import WishlistButton from "./wishlist-button";
 
 export default function ProductInfo({ product }: { product: Product }) {
   const hasDiscount =
@@ -87,38 +89,29 @@ export default function ProductInfo({ product }: { product: Product }) {
 
         {/* Availability */}
         {product.availabilityStatus && (
-          <p className="text-xs tracking-wider uppercase mb-6" style={{
-            color: product.availabilityStatus === "In Stock"
-              ? "var(--color-success)"
-              : "var(--color-warning)"
-          }}>
+          <p
+            className="text-xs tracking-wider uppercase mb-6"
+            style={{
+              color:
+                product.availabilityStatus === "In Stock"
+                  ? "var(--color-success)"
+                  : "var(--color-warning)",
+            }}
+          >
             {product.availabilityStatus}
             {product.stock !== undefined && product.stock > 0 && (
-              <span style={{ color: "rgba(44,44,44,0.4)" }}> — {product.stock} left</span>
+              <span style={{ color: "rgba(44,44,44,0.4)" }}>
+                {" "}
+                — {product.stock} left
+              </span>
             )}
           </p>
         )}
 
         {/* Buttons */}
-        <button
-          type="button"
-          className="w-full py-4 text-sm tracking-[0.2em] uppercase font-medium transition-all duration-500 mb-3 flex items-center justify-center gap-2"
-          style={{
-            backgroundColor: "var(--color-darkbrown)",
-            color: "var(--color-cream)",
-          }}
-        >
-          <ShoppingBag className="w-4 h-4" />
-          Add to Bag
-        </button>
-        <button
-          type="button"
-          className="w-full border py-4 text-sm tracking-[0.2em] uppercase font-medium hover:bg-[var(--color-charcoal)] hover:text-[var(--color-cream)] transition-all duration-500 flex items-center justify-center gap-2"
-          style={{ borderColor: "var(--color-charcoal)" }}
-        >
-          <Heart className="w-4 h-4" />
-          Add to Wishlist
-        </button>
+
+        <AddToCartButton productId={product.id} price={product.price} />
+        <WishlistButton productId={product.id} />
 
         {/* Shipping note */}
         {product.shippingInformation && (

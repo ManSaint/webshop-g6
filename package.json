@@ -18,7 +18,8 @@
     "nodemailer": "^8.0.4",
     "react": "19.2.3",
     "react-dom": "19.2.3",
-    "react-hot-toast": "^2.6.0"
+    "react-hot-toast": "^2.6.0",
+    "zustand": "^5.0.12"
   },
   "devDependencies": {
     "@biomejs/biome": "2.2.0",

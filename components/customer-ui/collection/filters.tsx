@@ -15,6 +15,7 @@ export default function ActiveFilters({ activeCategories, sort }: Props) {
   const removeCategoryURL = (catToRemove: string) => {
     const params = new URLSearchParams(searchParams.toString())
     params.delete("category")
+    params.delete("page")
     const remaining = activeCategories.filter((c) => c !== catToRemove && c !== "All")
     for (const c of remaining) params.append("category", c)
     return `?${params.toString()}`
@@ -23,6 +24,7 @@ export default function ActiveFilters({ activeCategories, sort }: Props) {
   const removeSortURL = () => {
     const params = new URLSearchParams(searchParams.toString())
     params.delete("sort")
+    params.delete("page")
     return `?${params.toString()}`
   }
 
