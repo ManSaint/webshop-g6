@@ -1,14 +1,17 @@
+/** biome-ignore-all lint/a11y/useKeyWithClickEvents: <explanation> */
 "use client";
 
 import { useState } from "react";
 import Link from "next/link";
+import { SignInButton, useAuth, useUser } from "@clerk/nextjs";
 import { useCartStore } from "@/lib/cart-store";
 import { useWishlistStore } from "@/lib/wishlist-store";
 
 function WishlistIcon({ count }: { count: number }) {
   return (
     <div className="relative cursor-pointer">
-      <svg
+      {/** biome-ignore lint/a11y/noSvgWithoutTitle: <explanation> */}
+<svg
         width="22"
         height="22"
         viewBox="0 0 24 24"
@@ -30,10 +33,11 @@ function WishlistIcon({ count }: { count: number }) {
   );
 }
 
-function CartIcon({ count }) {
+function CartIcon({ count }: { count: number }) {
   return (
     <div className="relative cursor-pointer">
-      <svg
+      {/** biome-ignore lint/a11y/noSvgWithoutTitle: <explanation> */}
+<svg
         width="22"
         height="22"
         viewBox="0 0 24 24"
@@ -57,7 +61,8 @@ function CartIcon({ count }) {
 }
 
 const SearchIcon = () => (
-  <svg
+  // biome-ignore lint/a11y/noSvgWithoutTitle: <explanation>
+<svg
     className="cursor-pointer"
     width="20"
     height="20"
@@ -74,7 +79,8 @@ const SearchIcon = () => (
 );
 
 const AccountIcon = () => (
-  <svg
+  // biome-ignore lint/a11y/noSvgWithoutTitle: <explanation>
+<svg
     className="cursor-pointer"
     width="20"
     height="20"
@@ -91,7 +97,8 @@ const AccountIcon = () => (
 );
 
 const HamburgerIcon = () => (
-  <svg
+  // biome-ignore lint/a11y/noSvgWithoutTitle: <explanation>
+<svg
     className="cursor-pointer"
     width="22"
     height="22"
@@ -109,7 +116,8 @@ const HamburgerIcon = () => (
 );
 
 const CloseIcon = () => (
-  <svg
+  // biome-ignore lint/a11y/noSvgWithoutTitle: <explanation>
+<svg
     className="cursor-pointer"
     width="22"
     height="22"
@@ -135,14 +143,15 @@ const navLinks = [
 
 export default function MaisonHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const { isSignedIn, signOut } = useAuth();
+  const { user } = useUser();
+  const isAdmin = user?.publicMetadata?.role === "admin";
 
-  const items = useCartStore((state) => state.items);
+  const cartCount = useCartStore((state) =>
+    state.items.reduce((sum, item) => sum + item.quantity, 0)
+  );
 
-  const cartCount = items.reduce((sum, item) => sum + item.quantity, 0);
-
-  const wishlistItems = useWishlistStore((state) => state.items);
-
-  const wishlistCount = wishlistItems.length;
+  const wishlistCount = useWishlistStore((state) => state.items.length);
 
   return (
     <>
@@ -150,7 +159,6 @@ export default function MaisonHeader() {
 
       <header className="sticky top-0 z-50 bg-[#f5f0eb] border-b border-[#e0d8d0] [font-family:'Cormorant_Garamond',Georgia,serif]">
         <div className="max-w-[1400px] mx-auto px-5 md:px-10 h-[58px] md:h-[68px] flex items-center justify-between">
-          {/* Logo */}
           <span className="text-[17px] md:text-[19px] font-semibold tracking-[0.25em] text-[#2a1f17] cursor-pointer">
             <Link href="/">MAISON</Link>
           </span>
@@ -168,14 +176,26 @@ export default function MaisonHeader() {
                   </Link>
                 </li>
               ))}
+
+              {isAdmin && (
+                <li>
+                  <Link
+                    href="/admin"
+                    className="text-[11px] tracking-[0.15em] text-[#2a1f17] font-semibold no-underline transition-opacity duration-200 hover:opacity-50"
+                  >
+                    ADMIN
+                  </Link>
+                </li>
+              )}
             </ul>
           </nav>
 
           {/* Icons */}
-          <div className="flex items-center gap-5 text-[#2a1f17]">
+          <div className="flex items-center gap-4 text-[#2a1f17]">
             <span className="hidden md:flex cursor-pointer hover:opacity-60 transition-opacity duration-200">
               <SearchIcon />
             </span>
+
             <Link
               href="/customer/wishlist"
               className="cursor-pointer hover:opacity-60 transition-opacity duration-200"
@@ -186,12 +206,35 @@ export default function MaisonHeader() {
             <span className="hidden md:flex cursor-pointer hover:opacity-60 transition-opacity duration-200">
               <AccountIcon />
             </span>
+
             <Link
               href="/cart"
               className="cursor-pointer hover:opacity-60 transition-opacity duration-200"
             >
               <CartIcon count={cartCount} />
             </Link>
+
+            {/* Desktop Auth */}
+            <div className="hidden md:flex items-center gap-2">
+              {!isSignedIn ? (
+                <SignInButton mode="modal">
+                  {/** biome-ignore lint/a11y/useButtonType: <explanation> */}
+                <button className="text-[11px] tracking-[0.12em] text-[#2a1f17] font-semibold hover:opacity-50 transition-opacity duration-200 bg-transparent border-none cursor-pointer">
+                    SIGN IN / SIGN UP
+                  </button>
+                </SignInButton>
+              ) : (
+                // biome-ignore lint/a11y/useButtonType: <explanation>
+              <button
+                  onClick={() => signOut()}
+                  className="text-[11px] tracking-[0.12em] text-[#2a1f17] font-semibold hover:opacity-50 transition-opacity duration-200 bg-transparent border-none cursor-pointer"
+                >
+                  SIGN OUT
+                </button>
+              )}
+            </div>
+
+            {/** biome-ignore lint/a11y/noStaticElementInteractions: <explanation> */}
             <span
               className="flex md:hidden cursor-pointer hover:opacity-60 transition-opacity duration-200"
               onClick={() => setMenuOpen(!menuOpen)}
@@ -218,10 +261,41 @@ export default function MaisonHeader() {
             {link.label}
           </Link>
         ))}
-        <div className="text-[22px] tracking-[0.12em] text-[#2a1f17] font-medium py-[18px] cursor-pointer mt-2">
-          ACCOUNT
-        </div>
+
+        {isAdmin && (
+          <Link
+            href="/admin"
+            className="text-[22px] tracking-[0.12em] text-[#2a1f17] font-medium py-[18px] border-b border-[#e0d8d0] cursor-pointer no-underline"
+            onClick={() => setMenuOpen(false)}
+          >
+            ADMIN
+          </Link>
+        )}
+
+      
+        {!isSignedIn ? (
+          <SignInButton mode="modal">
+            <div className="text-[22px] tracking-[0.12em] text-[#2a1f17] font-medium py-[18px] cursor-pointer mt-2">
+              SIGN IN / SIGN UP
+            </div>
+          </SignInButton>
+        ) : (
+          // biome-ignore lint/a11y/useButtonType: <explanation>
+          <button
+            onClick={() => signOut()}
+            className="text-left text-[22px] tracking-[0.12em] text-[#2a1f17] font-medium py-[18px] cursor-pointer mt-2 bg-transparent border-none"
+          >
+            SIGN OUT
+          </button>
+        )}
       </div>
     </>
   );
 }
+
+
+
+
+
+
+
