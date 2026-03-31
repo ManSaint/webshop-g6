@@ -1,15 +1,17 @@
-import { Product, Category } from "@/lib/types";
-import Image from "next/image";
 import { FilePenLine, Trash } from "lucide-react";
-import ProductTablePagination from "./product-table-pagination";
+import Image from "next/image";
 import Link from "next/link";
-import { getSearchParamsAsNumber, getSearchParamsAsString } from "@/utils/getSearchParams";
-import { getProductsFromParams } from "@/lib/db";
 import { ProductActions } from "@/components/admin-ui/delete-actions";
-import { API_URL } from "@/lib/config";
+import { getCategories, getProductsFromParams } from "@/lib/db";
+import {
+  getSearchParamsAsNumber,
+  getSearchParamsAsString,
+} from "@/utils/getSearchParams";
+import ProductTablePagination from "./product-table-pagination";
 
 const thStyle = "p-4 text-sm font-semibold text-gray-500";
-const tdStyle = "border-t border-gray-300 text-center p-4 text-ellipsis truncate";
+const tdStyle =
+  "border-t border-gray-300 text-center p-4 text-ellipsis truncate";
 
 const getColourFromAvailabilityStatus = (stock: number): string => {
   if (stock === 0) {
@@ -42,9 +44,13 @@ export default async function ProductTable({
   const currentQuery = getSearchParamsAsString(q);
   console.log(currentLimit, currentPage, q);
 
-  const { products, pages } = await getProductsFromParams(currentLimit ?? "", currentPage ?? "", currentQuery ?? "");
+  const { products, pages } = await getProductsFromParams(
+    currentLimit ?? "",
+    currentPage ?? "",
+    currentQuery ?? "",
+  );
 
-  const categories: Category[] = await fetch(`${API_URL}/categories`).then((res) => res.json());
+  const categories = await getCategories();
 
   return (
     <div className="border border-gray-300 rounded-2xl">
@@ -61,10 +67,7 @@ export default async function ProductTable({
         </thead>
         <tbody>
           {products.map((product) => (
-            <tr
-              key={product.id}
-              className="bg-white"
-            >
+            <tr key={product.id} className="bg-white">
               <td className={`${tdStyle} text-start`}>
                 <div className="flex">
                   <Image
@@ -83,24 +86,27 @@ export default async function ProductTable({
               </td>
 
               <td className={`${tdStyle}`}>
-                {categories.find((cat) => cat.id === product.categoryId)?.name ?? titleCaseWord(product.tags![0]) ?? ""}
+                {categories.find((cat) => cat.id === product.categoryId)
+                  ?.name ??
+                  titleCaseWord(product.tags![0]) ??
+                  ""}
               </td>
               <td className={`${tdStyle}`}> {`${product.price} kr`}</td>
               <td className={`${tdStyle}`}>{product.stock}</td>
 
-              <td className={`${tdStyle} ${getColourFromAvailabilityStatus(product.stock ?? 0)}`}>
-                {(product.stock ?? 0) === 0 ? "Out of Stock" : (product.stock ?? 0) < 45 ? "Low Stock" : "In Stock"}
+              <td
+                className={`${tdStyle} ${getColourFromAvailabilityStatus(product.stock ?? 0)}`}
+              >
+                {(product.stock ?? 0) === 0
+                  ? "Out of Stock"
+                  : (product.stock ?? 0) < 45
+                    ? "Low Stock"
+                    : "In Stock"}
               </td>
               <td className={`${tdStyle}`}>
                 <Link href={`/admin/products/edit/${product.id}`}>
-                  <button
-                    type="button"
-                    className="mr-1"
-                  >
-                    <FilePenLine
-                      color="purple"
-                      size={24}
-                    />
+                  <button type="button" className="mr-1">
+                    <FilePenLine color="purple" size={24} />
                   </button>
                 </Link>
 

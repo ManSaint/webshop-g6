@@ -1,13 +1,8 @@
-
-
-import { API_URL } from "@/lib/config";
 import CreateForm from "@/components/admin-ui/create-form";
-import type { Category } from "@/lib/types";
+import { getCategories } from "@/lib/db";
 
 export default async function CreatePage() {
-  const categories: Category[] = await fetch(
-    `${API_URL}/categories`
-  ).then((res) => res.json());
+  const categories = await getCategories();
 
   return (
     <main className="bg-[var(--color-bg-muted)] flex justify-center px-6 py-16">
