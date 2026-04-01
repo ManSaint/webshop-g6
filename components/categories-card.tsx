@@ -8,7 +8,7 @@ interface CategoryCardProps {
 export default function CategoryCard({ category }: CategoryCardProps) {
   return (
     <Link
-      href={`/customer/collection?category=${category.slug}`}
+      href={{ pathname: "/customer/collection", query: { category: category.name } }}
       className="relative flex justify-center items-center overflow-hidden border border-(--color-cream) hover:shadow-lg/10 transition bg-cover bg-center aspect-4/3 "
       style={{
         backgroundImage: `url(${category.image})`,
