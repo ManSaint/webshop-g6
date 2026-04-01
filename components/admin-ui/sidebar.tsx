@@ -1,6 +1,6 @@
 "use client";
 
-import { ChartLine, Package2, Settings, ShoppingCart,User,Users } from "lucide-react";
+import { ChartLine, ExternalLink, Package2, Settings, ShoppingCart, User, Users } from "lucide-react";
 import Link from "next/link";
 import ProfileDropdown from "./profile-dropdown";
 import { useState } from "react";
@@ -43,6 +43,12 @@ export default function Sidebar() {
             />
           ))}
         </ul>
+        <div className="mt-6 pt-6 border-t border-gray-300">
+          <Link href="/" className="flex items-center gap-3 text-sm text-gray-500 hover:text-purple-800 transition-colors p-2 rounded-md hover:bg-purple-50">
+            <ExternalLink width={18} height={18} />
+            Back to store
+          </Link>
+        </div>
       </nav>
       <footer className="p-6 border-t border-gray-300">
         <button type="button" className={`hover:bg-gray-100 p-4 rounded-md flex flex-row gap-2 items-center text-left cursor-pointer relative ${isProfileDropdownOpen ? 'bg-gray-200 hover:bg-gray-200' : ''}`} onClick={() => setIsProfileDropdownOpen(!isProfileDropdownOpen)}>
