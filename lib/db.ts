@@ -94,7 +94,7 @@ export async function getProductsFromQuery(query: string): Promise<ProductsRespo
 
 //#region POST
 
-export async function addProduct(newProduct: ProductFormData): Promise<{ ok: boolean }> {
+export async function addProduct(newProduct: ProductFormData): Promise<void> {
   // Generate SKU: CAT-BRA-TIT
   const { data: cat } = await supabase.from("categories").select("slug").eq("id", newProduct.categoryId).single();
 
@@ -113,11 +113,10 @@ export async function addProduct(newProduct: ProductFormData): Promise<{ ok: boo
     sku: `${catCode}-${braCode}-${titleCode}`,
   });
 
-  if (error) console.error("[addProduct]", error.message);
-  return { ok: !error };
+  if (error) throw new Error(`[addProduct] ${error.message}`);
 }
 
-export async function updateProductById(id: string, product: ProductFormData): Promise<{ ok: boolean }> {
+export async function updateProductById(id: string, product: ProductFormData): Promise<void> {
   const { error } = await supabase
     .from("products")
     .update({
@@ -132,13 +131,13 @@ export async function updateProductById(id: string, product: ProductFormData): P
     })
     .eq("id", Number(id));
 
-  return { ok: !error };
+  if (error) throw new Error(`[updateProductById] ${error.message}`);
 }
 
-export async function deleteProduct(id: string): Promise<{ ok: boolean }> {
+export async function deleteProduct(id: string): Promise<void> {
   const { error } = await supabase.from("products").delete().eq("id", Number(id));
 
-  return { ok: !error };
+  if (error) throw new Error(`[deleteProduct] ${error.message}`);
 }
 
 //#endregion
@@ -243,36 +242,33 @@ export async function getWishlistItems(userId: string): Promise<WishlistItem[]> 
   return (data || []).map((row) => ({ productId: row.product_id as number }));
 }
 
-export async function addWishlistItem(userId: string, productId: number): Promise<{ ok: boolean }> {
+export async function addWishlistItem(userId: string, productId: number): Promise<void> {
   const { error } = await supabase
     .from("wishlist")
     .upsert({ user_id: userId, product_id: productId }, { onConflict: "user_id,product_id" });
 
-  if (error) console.error("[addWishlistItem]", error.message);
-  return { ok: !error };
+  if (error) throw new Error(`[addWishlistItem] ${error.message}`);
 }
 
-export async function removeWishlistItem(userId: string, productId: number): Promise<{ ok: boolean }> {
+export async function removeWishlistItem(userId: string, productId: number): Promise<void> {
   const { error } = await supabase
     .from("wishlist")
     .delete()
     .eq("user_id", userId)
     .eq("product_id", productId);
 
-  if (error) console.error("[removeWishlistItem]", error.message);
-  return { ok: !error };
+  if (error) throw new Error(`[removeWishlistItem] ${error.message}`);
 }
 
-export async function mergeWishlistItems(userId: string, productIds: number[]): Promise<{ ok: boolean }> {
-  if (productIds.length === 0) return { ok: true };
+export async function mergeWishlistItems(userId: string, productIds: number[]): Promise<void> {
+  if (productIds.length === 0) return;
 
   const rows = productIds.map((pid) => ({ user_id: userId, product_id: pid }));
   const { error } = await supabase
     .from("wishlist")
     .upsert(rows, { onConflict: "user_id,product_id" });
 
-  if (error) console.error("[mergeWishlistItems]", error.message);
-  return { ok: !error };
+  if (error) throw new Error(`[mergeWishlistItems] ${error.message}`);
 }
 
 //#endregion
@@ -297,7 +293,7 @@ export async function getCartItems(userId: string): Promise<CartItem[]> {
 export async function upsertCartItem(
   userId: string,
   item: CartItem,
-): Promise<{ ok: boolean }> {
+): Promise<void> {
   const { error } = await supabase
     .from("cart")
     .upsert(
@@ -311,38 +307,36 @@ export async function upsertCartItem(
       { onConflict: "user_id,product_id" },
     );
 
-  if (error) console.error("[upsertCartItem]", error.message);
-  return { ok: !error };
+  if (error) throw new Error(`[upsertCartItem] ${error.message}`);
 }
 
-export async function removeCartItem(userId: string, productId: number): Promise<{ ok: boolean }> {
+export async function removeCartItem(userId: string, productId: number): Promise<void> {
   const { error } = await supabase
     .from("cart")
     .delete()
     .eq("user_id", userId)
     .eq("product_id", productId);
 
-  if (error) console.error("[removeCartItem]", error.message);
-  return { ok: !error };
+  if (error) throw new Error(`[removeCartItem] ${error.message}`);
 }
 
-export async function clearCartItems(userId: string): Promise<{ ok: boolean }> {
+export async function clearCartItems(userId: string): Promise<void> {
   const { error } = await supabase
     .from("cart")
     .delete()
     .eq("user_id", userId);
 
-  if (error) console.error("[clearCartItems]", error.message);
-  return { ok: !error };
+  if (error) throw new Error(`[clearCartItems] ${error.message}`);
 }
 
 export async function updateCartItemQuantity(
   userId: string,
   productId: number,
   quantity: number,
-): Promise<{ ok: boolean }> {
+): Promise<void> {
   if (quantity <= 0) {
-    return removeCartItem(userId, productId);
+    await removeCartItem(userId, productId);
+    return;
   }
 
   const { error } = await supabase
@@ -351,15 +345,14 @@ export async function updateCartItemQuantity(
     .eq("user_id", userId)
     .eq("product_id", productId);
 
-  if (error) console.error("[updateCartItemQuantity]", error.message);
-  return { ok: !error };
+  if (error) throw new Error(`[updateCartItemQuantity] ${error.message}`);
 }
 
 export async function mergeCartItems(
   userId: string,
   localItems: CartItem[],
-): Promise<{ ok: boolean }> {
-  if (localItems.length === 0) return { ok: true };
+): Promise<void> {
+  if (localItems.length === 0) return;
 
   const serverItems = await getCartItems(userId);
   const serverMap = new Map(serverItems.map((i) => [i.productId, i]));
@@ -379,8 +372,7 @@ export async function mergeCartItems(
     .from("cart")
     .upsert(upsertRows, { onConflict: "user_id,product_id" });
 
-  if (error) console.error("[mergeCartItems]", error.message);
-  return { ok: !error };
+  if (error) throw new Error(`[mergeCartItems] ${error.message}`);
 }
 
 //#endregion

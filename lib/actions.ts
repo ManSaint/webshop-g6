@@ -63,11 +63,11 @@ export async function addProductActionState(
   //   };
   // }
 
-  const res = await addProduct(newProduct);
-  if (!res.ok) {
+  try {
+    await addProduct(newProduct);
+  } catch (error) {
     return {
-      message: "Something went wrong... ",
-      // data: formData,
+      message: "Something went wrong... " + (error instanceof Error ? error.message : ""),
       data: newProduct,
       timestamp: Date.now(),
     };
@@ -97,7 +97,11 @@ export async function updateProduct(formData: FormData) {
     stock: parseInt(stock, 10),
   };
 
-  await updateProductById(id, newProduct);
+  try {
+    await updateProductById(id, newProduct);
+  } catch (error) {
+    throw error;
+  }
 
   revalidatePath("/");
   redirect("/?status=updated");
@@ -111,11 +115,11 @@ export async function deleteProductActionState(
 ): Promise<ActionState> {
   const id = formData.get("id") as string;
 
-  const result = await deleteProduct(id);
-
-  if (!result.ok) {
+  try {
+    await deleteProduct(id);
+  } catch (error) {
     return {
-      message: "Failed to delete product",
+      message: "Failed to delete product: " + (error instanceof Error ? error.message : ""),
       data: null,
       timestamp: Date.now(),
     };
