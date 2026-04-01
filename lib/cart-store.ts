@@ -2,12 +2,9 @@
 
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import type { CartItem } from "@/lib/types";
 
-export type CartItem = {
-  productId: number;
-  quantity: number;
-  priceAtAdd: number;
-};
+export type { CartItem };
 
 type CartStore = {
   items: CartItem[];
@@ -17,6 +14,7 @@ type CartStore = {
   clearCart: () => void;
   increaseQuantity: (productId: number) => void;
   decreaseQuantity: (productId: number) => void;
+  setItems: (items: CartItem[]) => void;
 };
 
 export const useCartStore = create<CartStore>()(
@@ -69,6 +67,8 @@ export const useCartStore = create<CartStore>()(
         }),
 
       clearCart: () => set({ items: [] }),
+
+      setItems: (items) => set({ items }),
     }),
 
     {

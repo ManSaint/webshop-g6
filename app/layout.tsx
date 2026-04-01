@@ -6,6 +6,7 @@ import { ToastListener } from "@/components/toast-listener";
 import MaisonHeader from "@/components/header";
 import Footer from "@/components/footer";
 import { ClerkProvider } from "@clerk/nextjs";
+import { SyncProvider } from "@/components/sync-provider";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -34,6 +35,7 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body className={`${inter.variable} antialiased flex flex-col min-h-screen`}>
+          <SyncProvider />
           <MaisonHeader />
           <Toaster position="top-center" />
           <ToastListener />

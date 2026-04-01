@@ -1,7 +1,7 @@
 "use client";
 import { ShoppingBag } from "lucide-react";
 
-import { useCartStore } from "@/lib/cart-store";
+import { useCart } from "@/lib/use-cart";
 
 type Props = {
   productId: number;
@@ -9,7 +9,7 @@ type Props = {
 };
 
 export default function AddToCartButton({ productId, price }: Props) {
-  const addItem = useCartStore((state) => state.addItem);
+  const { addItem } = useCart();
 
   return (
     <button

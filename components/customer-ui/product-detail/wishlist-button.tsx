@@ -1,15 +1,14 @@
 "use client";
 import { Heart } from "lucide-react";
 
-import { useWishlistStore } from "@/lib/wishlist-store";
+import { useWishlist } from "@/lib/use-wishlist";
 
 type Props = {
   productId: number;
 };
 
 export default function WishlistButton({ productId }: Props) {
-  const items = useWishlistStore((state) => state.items);
-  const toggleItem = useWishlistStore((state) => state.toggleItem);
+  const { items, toggle: toggleItem } = useWishlist();
 
   const isInWishlist = items.some((item) => item.productId === productId);
 
