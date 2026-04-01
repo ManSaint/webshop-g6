@@ -54,6 +54,16 @@ export interface ProductsResponse {
   pages: number;
 }
 
+export type WishlistItem = {
+  productId: number;
+};
+
+export type CartItem = {
+  productId: number;
+  quantity: number;
+  priceAtAdd: number;
+};
+
 export type ProductFormData = Pick<
   Product,
   | "title"

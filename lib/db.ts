@@ -1,5 +1,5 @@
 import { createAdminSupabaseClient } from "@/lib/supabase/admin";
-import type { Category, Product, ProductFormData, ProductsResponse } from "@/lib/types";
+import type { CartItem, Category, Product, ProductFormData, ProductsResponse, WishlistItem } from "@/lib/types";
 import "server-only";
 
 const supabase = createAdminSupabaseClient();
@@ -213,3 +213,174 @@ export async function getRelatedProducts(categoryId: number, excludeId: number):
     return [];
   }
 }
+
+//#region Batch product fetch
+
+export async function getProductsByIds(ids: number[]): Promise<Product[]> {
+  if (ids.length === 0) return [];
+
+  const { data, error } = await supabase
+    .from("products")
+    .select("*, categories(*)")
+    .in("id", ids);
+
+  if (error) throw new Error(`Supabase error: ${error.message}`);
+  return (data || []).map(mapProduct);
+}
+
+//#endregion
+
+//#region Wishlist
+
+export async function getWishlistItems(userId: string): Promise<WishlistItem[]> {
+  const { data, error } = await supabase
+    .from("wishlist")
+    .select("product_id")
+    .eq("user_id", userId)
+    .order("created_at", { ascending: false });
+
+  if (error) throw new Error(`Supabase error: ${error.message}`);
+  return (data || []).map((row) => ({ productId: row.product_id as number }));
+}
+
+export async function addWishlistItem(userId: string, productId: number): Promise<{ ok: boolean }> {
+  const { error } = await supabase
+    .from("wishlist")
+    .upsert({ user_id: userId, product_id: productId }, { onConflict: "user_id,product_id" });
+
+  if (error) console.error("[addWishlistItem]", error.message);
+  return { ok: !error };
+}
+
+export async function removeWishlistItem(userId: string, productId: number): Promise<{ ok: boolean }> {
+  const { error } = await supabase
+    .from("wishlist")
+    .delete()
+    .eq("user_id", userId)
+    .eq("product_id", productId);
+
+  if (error) console.error("[removeWishlistItem]", error.message);
+  return { ok: !error };
+}
+
+export async function mergeWishlistItems(userId: string, productIds: number[]): Promise<{ ok: boolean }> {
+  if (productIds.length === 0) return { ok: true };
+
+  const rows = productIds.map((pid) => ({ user_id: userId, product_id: pid }));
+  const { error } = await supabase
+    .from("wishlist")
+    .upsert(rows, { onConflict: "user_id,product_id" });
+
+  if (error) console.error("[mergeWishlistItems]", error.message);
+  return { ok: !error };
+}
+
+//#endregion
+
+//#region Cart
+
+export async function getCartItems(userId: string): Promise<CartItem[]> {
+  const { data, error } = await supabase
+    .from("cart")
+    .select("product_id, quantity, price_at_add")
+    .eq("user_id", userId)
+    .order("created_at", { ascending: false });
+
+  if (error) throw new Error(`Supabase error: ${error.message}`);
+  return (data || []).map((row) => ({
+    productId: row.product_id as number,
+    quantity: row.quantity as number,
+    priceAtAdd: Number(row.price_at_add),
+  }));
+}
+
+export async function upsertCartItem(
+  userId: string,
+  item: CartItem,
+): Promise<{ ok: boolean }> {
+  const { error } = await supabase
+    .from("cart")
+    .upsert(
+      {
+        user_id: userId,
+        product_id: item.productId,
+        quantity: item.quantity,
+        price_at_add: item.priceAtAdd,
+        updated_at: new Date().toISOString(),
+      },
+      { onConflict: "user_id,product_id" },
+    );
+
+  if (error) console.error("[upsertCartItem]", error.message);
+  return { ok: !error };
+}
+
+export async function removeCartItem(userId: string, productId: number): Promise<{ ok: boolean }> {
+  const { error } = await supabase
+    .from("cart")
+    .delete()
+    .eq("user_id", userId)
+    .eq("product_id", productId);
+
+  if (error) console.error("[removeCartItem]", error.message);
+  return { ok: !error };
+}
+
+export async function clearCartItems(userId: string): Promise<{ ok: boolean }> {
+  const { error } = await supabase
+    .from("cart")
+    .delete()
+    .eq("user_id", userId);
+
+  if (error) console.error("[clearCartItems]", error.message);
+  return { ok: !error };
+}
+
+export async function updateCartItemQuantity(
+  userId: string,
+  productId: number,
+  quantity: number,
+): Promise<{ ok: boolean }> {
+  if (quantity <= 0) {
+    return removeCartItem(userId, productId);
+  }
+
+  const { error } = await supabase
+    .from("cart")
+    .update({ quantity, updated_at: new Date().toISOString() })
+    .eq("user_id", userId)
+    .eq("product_id", productId);
+
+  if (error) console.error("[updateCartItemQuantity]", error.message);
+  return { ok: !error };
+}
+
+export async function mergeCartItems(
+  userId: string,
+  localItems: CartItem[],
+): Promise<{ ok: boolean }> {
+  if (localItems.length === 0) return { ok: true };
+
+  const serverItems = await getCartItems(userId);
+  const serverMap = new Map(serverItems.map((i) => [i.productId, i]));
+
+  const upsertRows = localItems.map((local) => {
+    const existing = serverMap.get(local.productId);
+    return {
+      user_id: userId,
+      product_id: local.productId,
+      quantity: existing ? existing.quantity + local.quantity : local.quantity,
+      price_at_add: existing ? existing.priceAtAdd : local.priceAtAdd,
+      updated_at: new Date().toISOString(),
+    };
+  });
+
+  const { error } = await supabase
+    .from("cart")
+    .upsert(upsertRows, { onConflict: "user_id,product_id" });
+
+  if (error) console.error("[mergeCartItems]", error.message);
+  return { ok: !error };
+}
+
+//#endregion

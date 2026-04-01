@@ -1,21 +1,15 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useWishlistStore } from "@/lib/wishlist-store";
+import { useWishlist } from "@/lib/use-wishlist";
+import { fetchProductsByIds } from "@/lib/sync-actions";
+import type { Product } from "@/lib/types";
 import Image from "next/image";
 import { Trash2 } from "lucide-react";
 import AddToCartButton from "../product-detail/cart-button";
 
-type Product = {
-  id: number;
-  title: string;
-  price: number;
-  thumbnail: string;
-};
-
 export default function Wishlist() {
-  const items = useWishlistStore((state) => state.items);
-  const removeItem = useWishlistStore((state) => state.removeItem);
+  const { items, remove } = useWishlist();
 
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
@@ -31,16 +25,10 @@ export default function Wishlist() {
       setLoading(true);
 
       try {
-        const results = await Promise.all(
-          items.map((item) =>
-            fetch(`http://localhost:4000/products/${item.productId}`)
-              .then((res) => res.json())
-              .catch(() => null),
-          ),
+        const results = await fetchProductsByIds(
+          items.map((item) => item.productId),
         );
-
-        // filtrera bort misslyckade fetches, just in case
-        setProducts(results.filter(Boolean));
+        setProducts(results);
       } catch (err) {
         console.error(err);
       } finally {
@@ -62,8 +50,6 @@ export default function Wishlist() {
   if (loading) {
     return <p>Loading wishlist...</p>;
   }
-  console.log(items);
-  console.log(products);
   if (items.length === 0) {
     return <p>Your wishlist is empty</p>;
   }
@@ -105,7 +91,7 @@ export default function Wishlist() {
                   price={item.product.price}
                 />
                 <button
-                  onClick={() => removeItem(item.productId)}
+                  onClick={() => remove(item.productId)}
                   type="button"
                   className="text-(--color-text-muted) text-sm mt-2 w-full border py-2 flex gap-1 justify-center rounded-xs border-(--color-border) hover:shadow-md content-center self-end hover:cursor-pointer"
                 >

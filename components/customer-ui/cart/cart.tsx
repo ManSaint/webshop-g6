@@ -1,29 +1,18 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useCartStore } from "@/lib/cart-store";
+import { useCart } from "@/lib/use-cart";
+import { fetchProductsByIds } from "@/lib/sync-actions";
+import type { Product } from "@/lib/types";
 import Image from "next/image";
 import { Trash2 } from "lucide-react";
 
-type Product = {
-  id: number;
-  title: string;
-  price: number;
-  thumbnail: string;
-};
-
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
-
 export default function Cart() {
-  const items = useCartStore((state) => state.items);
-  const removeItem = useCartStore((state) => state.removeItem);
-  const increase = useCartStore((state) => state.increaseQuantity);
-  const decrease = useCartStore((state) => state.decreaseQuantity);
+  const { items, removeItem, increaseQuantity: increase, decreaseQuantity: decrease } = useCart();
 
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // 🔹 Hämta ENDAST produkter i cart
   useEffect(() => {
     async function fetchProducts() {
       if (items.length === 0) {
@@ -33,15 +22,10 @@ export default function Cart() {
       }
 
       try {
-        const params = new URLSearchParams();
-        items.forEach((item) => {
-          params.append("id", String(item.productId));
-        });
-
-        const res = await fetch(`${API_URL}/products?${params.toString()}`);
-        const data = await res.json();
-
-        setProducts(data.products || data || []);
+        const results = await fetchProductsByIds(
+          items.map((item) => item.productId),
+        );
+        setProducts(results);
       } catch (err) {
         console.error("Failed to fetch products", err);
       } finally {

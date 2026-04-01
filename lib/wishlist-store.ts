@@ -2,10 +2,7 @@
 
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-
-type WishlistItem = {
-  productId: number;
-};
+import type { WishlistItem } from "@/lib/types";
 
 type WishlistStore = {
   items: WishlistItem[];
