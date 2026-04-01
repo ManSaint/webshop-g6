@@ -6,9 +6,15 @@ import { fetchProductsByIds } from "@/lib/sync-actions";
 import type { Product } from "@/lib/types";
 import Image from "next/image";
 import { Trash2 } from "lucide-react";
+import Link from "next/link";
 
 export default function Cart() {
-  const { items, removeItem, increaseQuantity: increase, decreaseQuantity: decrease } = useCart();
+  const {
+    items,
+    removeItem,
+    increaseQuantity: increase,
+    decreaseQuantity: decrease,
+  } = useCart();
 
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
@@ -55,11 +61,39 @@ export default function Cart() {
 
   // 🔹 Loading state
   if (loading) {
-    return <p>Laddar varukorg...</p>;
+    return (
+      <div className="w-full mx-auto text-center md:max-w-3xl">
+        <p>Loading cart...</p>
+      </div>
+    );
   }
 
   if (items.length === 0) {
-    return <p>Varukorgen är tom</p>;
+    return (
+      <div className="flex flex-col gap-16 max-w-4xl mx-auto md:min-h-140  p-4">
+        <div className="md:w-2xl justify-center w-full mx-auto flex flex-col  items-center text-center gap-10 md:gap-16 rounded-lg my-auto">
+          <h2 className="text-3xl font-medium font-serif text-(--color-darkbrown) leading-12">
+            <span className="text-5xl font-semibold">Your cart is empty</span>{" "}
+            <br />
+            ...this is{" "}
+            <span className="font-serif font-normal">
+              <em>highly unusual</em>
+            </span>
+          </h2>
+
+          <Link
+            href="collection"
+            className="text-xs tracking-widest border-b pb-1 transition hover:opacity-70"
+            style={{
+              color: "var(--color-charcoal)",
+              borderColor: "var(--color-border-store)",
+            }}
+          >
+            VIEW ALL PRODUCTS
+          </Link>
+        </div>
+      </div>
+    );
   }
 
   return (

@@ -5,8 +5,9 @@ import { useWishlist } from "@/lib/use-wishlist";
 import { fetchProductsByIds } from "@/lib/sync-actions";
 import type { Product } from "@/lib/types";
 import Image from "next/image";
-import { Trash2 } from "lucide-react";
+import { Heart, Trash2 } from "lucide-react";
 import AddToCartButton from "../product-detail/cart-button";
+import Link from "next/link";
 
 export default function Wishlist() {
   const { items, remove } = useWishlist();
@@ -51,7 +52,32 @@ export default function Wishlist() {
     return <p>Loading wishlist...</p>;
   }
   if (items.length === 0) {
-    return <p>Your wishlist is empty</p>;
+    return (
+      <div className="flex flex-col gap-16 max-w-4xl mx-auto md:min-h-140  p-4">
+        <div className=" md:w-2xl justify-center w-full mx-auto flex flex-col  items-center text-center gap-10 md:gap-16 rounded-lg my-auto">
+          <h2 className="text-3xl font-medium font-serif text-(--color-darkbrown) leading-12">
+            <span className="text-5xl font-semibold">Wishlist is empty</span>{" "}
+            <br />
+            ...you haven't saved{" "}
+            <span className="font-serif">
+              <em>anything</em>
+            </span>
+            ?
+          </h2>
+
+          <Link
+            href="collection"
+            className="text-xs tracking-widest border-b pb-1 transition hover:opacity-70"
+            style={{
+              color: "var(--color-charcoal)",
+              borderColor: "var(--color-border-store)",
+            }}
+          >
+            VIEW ALL PRODUCTS
+          </Link>
+        </div>
+      </div>
+    );
   }
 
   return (
