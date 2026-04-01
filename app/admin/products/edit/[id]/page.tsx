@@ -1,6 +1,6 @@
-import { API_URL } from "@/lib/config";
+import { notFound } from "next/navigation";
 import EditForm from "@/components/admin-ui/edit-form";
-import type { Category, Product } from "@/lib/types";
+import { getProductById } from "@/lib/db";
 
 export default async function UpdatePage({
   params,
@@ -8,26 +8,17 @@ export default async function UpdatePage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
+  const product = await getProductById(id);
 
-  const product: Product = await fetch(
-    `${API_URL}/products/${id}`
-  ).then((res) => res.json());
-
-
+  if (!product) notFound();
 
   return (
     <main className="bg-[var(--color-bg-muted)] flex justify-center px-6 py-16">
       <div className="w-full max-w-4xl">
-        <h1 className="text-4xl font-bold mb-12 text-center">
-          Edit Product
-        </h1>
-          
-          <EditForm product={product} />
-    
-         
+        <h1 className="text-4xl font-bold mb-12 text-center">Edit Product</h1>
+
+        <EditForm product={product} />
       </div>
     </main>
   );
 }
-
-

@@ -1,23 +1,12 @@
-import type { ProductsResponse } from "../../lib/types";
-import InventoryWidget from "../../components/admin-ui/dashboard-widget";
-import Sidebar from "@/components/admin-ui/sidebar";
-import ProductTable from "@/components/admin-ui/product-table";
 import Header from "@/components/admin-ui/header";
+import ProductTable from "@/components/admin-ui/product-table";
+import Sidebar from "@/components/admin-ui/sidebar";
+import { getProducts } from "@/lib/db";
+import InventoryWidget from "../../components/admin-ui/dashboard-widget";
 import SearchWidget from "../../components/admin-ui/search-widget";
 
-const API_URL = "http://localhost:4000";
-const defaultLimit = "6";
-
 export default async function Home(params: PageProps<"/">) {
-  // we use the fetch() method to get the products from the API
-  // in this fetch we sort using _sort and _order and we limit the number of products using _limit
-  // we also use _expand to get the relational category data
-  // we can use the other destructed variables like page, total and so on to create pagination or show info
-  const { products, total, page, pages, limit }: ProductsResponse = await fetch(
-    `${API_URL}/products/?_limit=${defaultLimit}&_sort=id&_order=desc&_expand=category`,
-  ).then((res) => res.json());
-
-  console.log(total);
+  const { total } = await getProducts(1, 6);
 
   return (
     <main className="flex flex-row min-h-screen">
@@ -28,10 +17,7 @@ export default async function Home(params: PageProps<"/">) {
         <div className="pr-4 pl-4 pb-4 flex flex-col gap-4">
           <InventoryWidget />
           <SearchWidget />
-          <ProductTable
-            searchParams={params.searchParams}
-            total={total}
-          />
+          <ProductTable searchParams={params.searchParams} total={total} />
         </div>
       </section>
 

@@ -2,10 +2,8 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { addProduct, updateProductById } from "@/lib/db";
+import { addProduct, deleteProduct, updateProductById } from "@/lib/db";
 import type { ProductFormData } from "@/lib/types";
-import { API_URL } from "@/lib/config";
-
 
 export type ActionState = {
   message?: string;
@@ -13,7 +11,6 @@ export type ActionState = {
   errors?: Record<string, string[]>;
   timestamp: number;
 } | null;
-
 
 export async function addProductActionState(
   _prevState: ActionState,
@@ -26,7 +23,6 @@ export async function addProductActionState(
   const categoryId = formData.get("categoryId") as string;
   const stock = formData.get("stock") as string;
   const brand = formData.get("brand") as string;
-
 
   const newProduct: ProductFormData = {
     title,
@@ -41,7 +37,11 @@ export async function addProductActionState(
   if (!/^https?:\/\/.+/.test(newProduct.thumbnail)) {
     const state: ActionState = {
       data: newProduct,
-      errors: { thumbnail: ["Please enter a valid image URL starting with http or https"] },
+      errors: {
+        thumbnail: [
+          "Please enter a valid image URL starting with http or https",
+        ],
+      },
       timestamp: Date.now(),
     };
     return state;
@@ -87,7 +87,6 @@ export async function updateProduct(formData: FormData) {
   const stock = formData.get("stock") as string;
   const brand = formData.get("brand") as string;
 
-
   const newProduct = {
     title,
     brand,
@@ -98,16 +97,11 @@ export async function updateProduct(formData: FormData) {
     stock: parseInt(stock, 10),
   };
 
-  const res = await updateProductById(id, newProduct);
-
-  const data = await res.json();
-  // we can do things here to see if we have a success or not later on
-  console.log(data);
+  await updateProductById(id, newProduct);
 
   revalidatePath("/");
   redirect("/?status=updated");
 }
-
 
 /* Delete product */
 
@@ -116,15 +110,10 @@ export async function deleteProductActionState(
   formData: FormData,
 ): Promise<ActionState> {
   const id = formData.get("id") as string;
-  console.log("Deleting product with id:", id);
 
-  const res = await fetch(`${API_URL}/products/${id}`, {
-    method: "DELETE",
-  });
+  const result = await deleteProduct(id);
 
-  console.log("Response status:", res.status);
-
-  if (!res.ok) {
+  if (!result.ok) {
     return {
       message: "Failed to delete product",
       data: null,
@@ -134,7 +123,6 @@ export async function deleteProductActionState(
 
   revalidatePath("/", "layout");
 
-  console.log("Returning state:", { message: "Product deleted successfully" });
   return {
     message: "Product deleted successfully",
     data: null,
