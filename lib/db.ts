@@ -202,6 +202,30 @@ export async function getProducts(
   sort = "id",
   order = "desc",
 ): Promise<ProductsResponse> {
+  const params = new URLSearchParams({
+    _page: page.toString(),
+    _limit: limit.toString(),
+    _sort: sort,
+    _order: order,
+    _expand: "category",
+  });
+
+  try {
+    const response = await fetch(`${API_URL}/products?${params}`);
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch products (${response.status})`);
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error("[lib/db] getProducts failed:", error);
+    throw new Error(
+      error instanceof Error
+        ? error.message
+        : "API is down. Please try again later."
+    );
+  }
   const from = (page - 1) * limit;
   const to = from + limit - 1;
 
