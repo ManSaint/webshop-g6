@@ -1,10 +1,5 @@
 import { createAdminSupabaseClient } from "@/lib/supabase/admin";
-import type {
-  Category,
-  Product,
-  ProductFormData,
-  ProductsResponse,
-} from "@/lib/types";
+import type { Category, Product, ProductFormData, ProductsResponse } from "@/lib/types";
 import "server-only";
 
 const supabase = createAdminSupabaseClient();
@@ -19,13 +14,9 @@ function mapProduct(row: Record<string, unknown>): Product {
     title: row.title as string,
     description: row.description as string,
     categoryId: row.category_id as number,
-    category: row.categories
-      ? (row.categories as Product["category"])
-      : undefined,
+    category: row.categories ? (row.categories as Product["category"]) : undefined,
     price: Number(row.price),
-    discountPercentage: row.discount_percentage
-      ? Number(row.discount_percentage)
-      : undefined,
+    discountPercentage: row.discount_percentage ? Number(row.discount_percentage) : undefined,
     rating: row.rating ? Number(row.rating) : undefined,
     stock: row.stock as number | undefined,
     tags: row.tags as string[] | undefined,
@@ -59,36 +50,25 @@ function mapProduct(row: Record<string, unknown>): Product {
 //#region GET
 
 export async function getInventoryProducts(): Promise<Product[]> {
-  const { data, error } = await supabase
-    .from("products")
-    .select("*")
-    .order("id", { ascending: false });
+  const { data, error } = await supabase.from("products").select("*").order("id", { ascending: false });
 
   if (error) throw new Error(`Supabase error: ${error.message}`);
   return (data || []).map(mapProduct);
 }
 
-export async function getProductsFromParams(
-  limit: string,
-  page: string,
-  query: string,
-): Promise<ProductsResponse> {
+export async function getProductsFromParams(limit: string, page: string, query: string): Promise<ProductsResponse> {
   const pageNum = Number.parseInt(page, 10) || 1;
   const limitNum = Number.parseInt(limit, 10) || 10;
   const from = (pageNum - 1) * limitNum;
   const to = from + limitNum - 1;
 
-  let q = supabase
-    .from("products")
-    .select("*, categories(*)", { count: "exact" });
+  let q = supabase.from("products").select("*, categories(*)", { count: "exact" });
 
   if (query) {
     q = q.ilike("title", `%${query}%`);
   }
 
-  const { data, count, error } = await q
-    .range(from, to)
-    .order("id", { ascending: false });
+  const { data, count, error } = await q.range(from, to).order("id", { ascending: false });
 
   if (error) throw new Error(`Supabase error: ${error.message}`);
 
@@ -102,16 +82,11 @@ export async function getProductsFromParams(
   };
 }
 
-export async function getProductsWithLimitAndPage(
-  limit = "5",
-  page = "1",
-): Promise<ProductsResponse> {
+export async function getProductsWithLimitAndPage(limit = "5", page = "1"): Promise<ProductsResponse> {
   return getProductsFromParams(limit, page, "");
 }
 
-export async function getProductsFromQuery(
-  query: string,
-): Promise<ProductsResponse> {
+export async function getProductsFromQuery(query: string): Promise<ProductsResponse> {
   return getProductsFromParams("10", "1", query);
 }
 
@@ -119,15 +94,9 @@ export async function getProductsFromQuery(
 
 //#region POST
 
-export async function addProduct(
-  newProduct: ProductFormData,
-): Promise<{ ok: boolean }> {
+export async function addProduct(newProduct: ProductFormData): Promise<{ ok: boolean }> {
   // Generate SKU: CAT-BRA-TIT
-  const { data: cat } = await supabase
-    .from("categories")
-    .select("slug")
-    .eq("id", newProduct.categoryId)
-    .single();
+  const { data: cat } = await supabase.from("categories").select("slug").eq("id", newProduct.categoryId).single();
 
   const catCode = (cat?.slug || "CAT").slice(0, 3).toUpperCase();
   const braCode = (newProduct.brand || "BRD").slice(0, 3).toUpperCase();
@@ -148,10 +117,7 @@ export async function addProduct(
   return { ok: !error };
 }
 
-export async function updateProductById(
-  id: string,
-  product: ProductFormData,
-): Promise<{ ok: boolean }> {
+export async function updateProductById(id: string, product: ProductFormData): Promise<{ ok: boolean }> {
   const { error } = await supabase
     .from("products")
     .update({
@@ -170,10 +136,7 @@ export async function updateProductById(
 }
 
 export async function deleteProduct(id: string): Promise<{ ok: boolean }> {
-  const { error } = await supabase
-    .from("products")
-    .delete()
-    .eq("id", Number(id));
+  const { error } = await supabase.from("products").delete().eq("id", Number(id));
 
   return { ok: !error };
 }
@@ -183,10 +146,7 @@ export async function deleteProduct(id: string): Promise<{ ok: boolean }> {
 //#region Categories
 
 export async function getCategories(): Promise<Category[]> {
-  const { data, error } = await supabase
-    .from("categories")
-    .select("*")
-    .order("name");
+  const { data, error } = await supabase.from("categories").select("*").order("name");
 
   if (error) throw new Error(`Supabase error: ${error.message}`);
   return (data || []) as Category[];
@@ -196,36 +156,7 @@ export async function getCategories(): Promise<Category[]> {
 
 ///////////////////////  Customer ////////////////////////////////
 
-export async function getProducts(
-  page = 1,
-  limit = 9,
-  sort = "id",
-  order = "desc",
-): Promise<ProductsResponse> {
-  const params = new URLSearchParams({
-    _page: page.toString(),
-    _limit: limit.toString(),
-    _sort: sort,
-    _order: order,
-    _expand: "category",
-  });
-
-  try {
-    const response = await fetch(`${API_URL}/products?${params}`);
-
-    if (!response.ok) {
-      throw new Error(`Failed to fetch products (${response.status})`);
-    }
-
-    return await response.json();
-  } catch (error) {
-    console.error("[lib/db] getProducts failed:", error);
-    throw new Error(
-      error instanceof Error
-        ? error.message
-        : "API is down. Please try again later."
-    );
-  }
+export async function getProducts(page = 1, limit = 9, sort = "id", order = "desc"): Promise<ProductsResponse> {
   const from = (page - 1) * limit;
   const to = from + limit - 1;
 
@@ -266,10 +197,7 @@ export async function getProductById(id: string): Promise<Product | null> {
   }
 }
 
-export async function getRelatedProducts(
-  categoryId: number,
-  excludeId: number,
-): Promise<Product[]> {
+export async function getRelatedProducts(categoryId: number, excludeId: number): Promise<Product[]> {
   try {
     const { data, error } = await supabase
       .from("products")
