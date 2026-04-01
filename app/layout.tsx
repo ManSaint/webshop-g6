@@ -3,7 +3,7 @@ import { Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "react-hot-toast";
 import { ToastListener } from "@/components/toast-listener";
-import MaisonHeader from "@/components/header";
+import GeeSixHeader from "@/components/header";
 import Footer from "@/components/footer";
 import { ClerkProvider } from "@clerk/nextjs";
 import { SyncProvider } from "@/components/sync-provider";
@@ -36,7 +36,7 @@ export default function RootLayout({
       <html lang="en">
         <body className={`${inter.variable} antialiased flex flex-col min-h-screen`}>
           <SyncProvider />
-          <MaisonHeader />
+          <GeeSixHeader />
           <Toaster position="top-center" />
           <ToastListener />
           <main className="flex-1">{children}</main>

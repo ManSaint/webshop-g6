@@ -53,7 +53,7 @@ export default function ContactPage() {
           style={{ background: "radial-gradient(ellipse at 70% 40%, #7a8c6a 0%, transparent 55%), radial-gradient(ellipse at 15% 75%, #b5a882 0%, transparent 50%)" }}
         />
         <div className="relative z-10 px-10 pb-8 md:px-16">
-          <p className="text-[10px] tracking-[0.3em] uppercase font-sans text-white/50 mb-2">Maison</p>
+          <p className="text-[10px] tracking-[0.3em] uppercase font-sans text-white/50 mb-2">GeeSix</p>
           <h1 className="text-5xl md:text-6xl font-serif text-white tracking-tight leading-none">Contact</h1>
           <p className="mt-2 text-sm italic text-white/60 font-serif">We'd love to hear from you.</p>
         </div>
@@ -74,9 +74,9 @@ export default function ContactPage() {
  
           <div>
             <p className="text-[10px] tracking-[0.22em] uppercase font-sans text-[#9a8f82] mb-2">Email</p>
-            <a href="mailto:hello@maison.com"
+            <a href="mailto:hello@geesix.com"
               className="text-sm text-[#3a3530] border-b border-[#3a3530]/30 hover:border-[#3a3530] transition-colors pb-px">
-              hello@maison.com
+              hello@geesix.com
             </a>
           </div>
  

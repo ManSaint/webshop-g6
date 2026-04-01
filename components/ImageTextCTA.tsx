@@ -19,7 +19,7 @@ export default function () {
               Built around drape, pace, and presence.
             </h2>
             <p className="text-(--color-charcoal)/70 text-sm">
-              Every piece in the MAISON collection begins with fabric. We source
+              Every piece in the GEESIX collection begins with fabric. We source
               exceptional textiles from heritage mills across Italy, Japan, and
               Portugal &mdash; then shape them into garments designed to move
               with you, age with grace, and feel unmistakably yours.

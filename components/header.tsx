@@ -1,17 +1,19 @@
 /** biome-ignore-all lint/a11y/useKeyWithClickEvents: <explanation> */
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { SignInButton, useAuth, useUser } from "@clerk/nextjs";
 import { useCartStore } from "@/lib/cart-store";
 import { useWishlistStore } from "@/lib/wishlist-store";
+import { LogIn, LogOut } from "lucide-react";
 
 function WishlistIcon({ count }: { count: number }) {
   return (
     <div className="relative cursor-pointer">
       {/** biome-ignore lint/a11y/noSvgWithoutTitle: <explanation> */}
-<svg
+      <svg
         width="22"
         height="22"
         viewBox="0 0 24 24"
@@ -37,7 +39,7 @@ function CartIcon({ count }: { count: number }) {
   return (
     <div className="relative cursor-pointer">
       {/** biome-ignore lint/a11y/noSvgWithoutTitle: <explanation> */}
-<svg
+      <svg
         width="22"
         height="22"
         viewBox="0 0 24 24"
@@ -48,7 +50,12 @@ function CartIcon({ count }: { count: number }) {
         strokeLinejoin="round"
       >
         <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" />
-        <line x1="3" y1="6" x2="21" y2="6" />
+        <line
+          x1="3"
+          y1="6"
+          x2="21"
+          y2="6"
+        />
         <path d="M16 10a4 4 0 01-8 0" />
       </svg>
       {count > 0 && (
@@ -62,7 +69,7 @@ function CartIcon({ count }: { count: number }) {
 
 const SearchIcon = () => (
   // biome-ignore lint/a11y/noSvgWithoutTitle: <explanation>
-<svg
+  <svg
     className="cursor-pointer"
     width="20"
     height="20"
@@ -73,14 +80,23 @@ const SearchIcon = () => (
     strokeLinecap="round"
     strokeLinejoin="round"
   >
-    <circle cx="11" cy="11" r="8" />
-    <line x1="21" y1="21" x2="16.65" y2="16.65" />
+    <circle
+      cx="11"
+      cy="11"
+      r="8"
+    />
+    <line
+      x1="21"
+      y1="21"
+      x2="16.65"
+      y2="16.65"
+    />
   </svg>
 );
 
 const AccountIcon = () => (
   // biome-ignore lint/a11y/noSvgWithoutTitle: <explanation>
-<svg
+  <svg
     className="cursor-pointer"
     width="20"
     height="20"
@@ -92,13 +108,17 @@ const AccountIcon = () => (
     strokeLinejoin="round"
   >
     <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
-    <circle cx="12" cy="7" r="4" />
+    <circle
+      cx="12"
+      cy="7"
+      r="4"
+    />
   </svg>
 );
 
 const HamburgerIcon = () => (
   // biome-ignore lint/a11y/noSvgWithoutTitle: <explanation>
-<svg
+  <svg
     className="cursor-pointer"
     width="22"
     height="22"
@@ -109,15 +129,30 @@ const HamburgerIcon = () => (
     strokeLinecap="round"
     strokeLinejoin="round"
   >
-    <line x1="3" y1="6" x2="21" y2="6" />
-    <line x1="3" y1="12" x2="21" y2="12" />
-    <line x1="3" y1="18" x2="21" y2="18" />
+    <line
+      x1="3"
+      y1="6"
+      x2="21"
+      y2="6"
+    />
+    <line
+      x1="3"
+      y1="12"
+      x2="21"
+      y2="12"
+    />
+    <line
+      x1="3"
+      y1="18"
+      x2="21"
+      y2="18"
+    />
   </svg>
 );
 
 const CloseIcon = () => (
   // biome-ignore lint/a11y/noSvgWithoutTitle: <explanation>
-<svg
+  <svg
     className="cursor-pointer"
     width="22"
     height="22"
@@ -128,30 +163,55 @@ const CloseIcon = () => (
     strokeLinecap="round"
     strokeLinejoin="round"
   >
-    <line x1="18" y1="6" x2="6" y2="18" />
-    <line x1="6" y1="6" x2="18" y2="18" />
+    <line
+      x1="18"
+      y1="6"
+      x2="6"
+      y2="18"
+    />
+    <line
+      x1="6"
+      y1="6"
+      x2="18"
+      y2="18"
+    />
   </svg>
 );
 
 const navLinks = [
-  { label: "NEW ARRIVALS", href: "/customer/collection" },
-  { label: "WOMEN", href: "/" },
-  { label: "MEN", href: "/" },
-  { label: "BEAUTY", href: "/" },
   { label: "HOME", href: "/" },
+  { label: "PRODUCTS", href: "/customer/collection" },
+  { label: "CONTACT", href: "/contact" },
 ];
 
-export default function MaisonHeader() {
+export default function GeeSixHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [searchValue, setSearchValue] = useState("");
+  const searchInputRef = useRef<HTMLInputElement>(null);
+  const router = useRouter();
   const { isSignedIn, signOut } = useAuth();
   const { user } = useUser();
   const isAdmin = user?.publicMetadata?.role === "admin";
 
-  const cartCount = useCartStore((state) =>
-    state.items.reduce((sum, item) => sum + item.quantity, 0)
-  );
+  const cartCount = useCartStore((state) => state.items.reduce((sum, item) => sum + item.quantity, 0));
 
   const wishlistCount = useWishlistStore((state) => state.items.length);
+
+  useEffect(() => {
+    if (searchOpen && searchInputRef.current) {
+      searchInputRef.current.focus();
+    }
+  }, [searchOpen]);
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    const q = searchValue.trim();
+    if (!q) return;
+    setSearchOpen(false);
+    setSearchValue("");
+    router.push(`/customer/collection?q=${encodeURIComponent(q)}`);
+  };
 
   return (
     <>
@@ -160,7 +220,7 @@ export default function MaisonHeader() {
       <header className="sticky top-0 z-50 bg-[#f5f0eb] border-b border-[#e0d8d0] [font-family:'Cormorant_Garamond',Georgia,serif]">
         <div className="max-w-[1400px] mx-auto px-5 md:px-10 h-[58px] md:h-[68px] flex items-center justify-between">
           <span className="text-[17px] md:text-[19px] font-semibold tracking-[0.25em] text-[#2a1f17] cursor-pointer">
-            <Link href="/">MAISON</Link>
+            <Link href="/">GEESIX</Link>
           </span>
 
           {/* Desktop Nav */}
@@ -192,7 +252,11 @@ export default function MaisonHeader() {
 
           {/* Icons */}
           <div className="flex items-center gap-4 text-[#2a1f17]">
-            <span className="hidden md:flex cursor-pointer hover:opacity-60 transition-opacity duration-200">
+            {/** biome-ignore lint/a11y/noStaticElementInteractions: <explanation> */}
+            <span
+              className="hidden md:flex cursor-pointer hover:opacity-60 transition-opacity duration-200"
+              onClick={() => setSearchOpen((prev) => !prev)}
+            >
               <SearchIcon />
             </span>
 
@@ -203,10 +267,6 @@ export default function MaisonHeader() {
               <WishlistIcon count={wishlistCount} />
             </Link>
 
-            <span className="hidden md:flex cursor-pointer hover:opacity-60 transition-opacity duration-200">
-              <AccountIcon />
-            </span>
-
             <Link
               href="/cart"
               className="cursor-pointer hover:opacity-60 transition-opacity duration-200"
@@ -215,21 +275,27 @@ export default function MaisonHeader() {
             </Link>
 
             {/* Desktop Auth */}
-            <div className="hidden md:flex items-center gap-2">
+            <div className="hidden md:flex items-center">
               {!isSignedIn ? (
                 <SignInButton mode="modal">
                   {/** biome-ignore lint/a11y/useButtonType: <explanation> */}
-                <button className="text-[11px] tracking-[0.12em] text-[#2a1f17] font-semibold hover:opacity-50 transition-opacity duration-200 bg-transparent border-none cursor-pointer">
-                    SIGN IN / SIGN UP
+                  <button className="hover:opacity-50 transition-opacity duration-200 bg-transparent border-none cursor-pointer p-0">
+                    <LogIn
+                      size={20}
+                      strokeWidth={1.5}
+                    />
                   </button>
                 </SignInButton>
               ) : (
                 // biome-ignore lint/a11y/useButtonType: <explanation>
-              <button
+                <button
                   onClick={() => signOut()}
-                  className="text-[11px] tracking-[0.12em] text-[#2a1f17] font-semibold hover:opacity-50 transition-opacity duration-200 bg-transparent border-none cursor-pointer"
+                  className="hover:opacity-50 transition-opacity duration-200 bg-transparent border-none cursor-pointer p-0"
                 >
-                  SIGN OUT
+                  <LogOut
+                    size={20}
+                    strokeWidth={1.5}
+                  />
                 </button>
               )}
             </div>
@@ -244,6 +310,38 @@ export default function MaisonHeader() {
           </div>
         </div>
       </header>
+
+      {/* Search Popup */}
+      {searchOpen && (
+        <>
+          {/** biome-ignore lint/a11y/noStaticElementInteractions: backdrop */}
+          <div
+            className="fixed inset-0 z-40 bg-black/20"
+            onClick={() => setSearchOpen(false)}
+          />
+          <div className="fixed top-[58px] md:top-[68px] left-0 right-0 z-50 bg-[#f5f0eb] border-t border-b border-[#e0d8d0] px-5 md:px-10 py-5 [font-family:'Cormorant_Garamond',Georgia,serif] shadow-sm">
+            <form
+              onSubmit={handleSearch}
+              className="max-w-[600px] mx-auto flex items-center gap-3"
+            >
+              <input
+                ref={searchInputRef}
+                type="text"
+                value={searchValue}
+                onChange={(e) => setSearchValue(e.target.value)}
+                placeholder="Search products..."
+                className="flex-1 bg-transparent border-b border-[#2a1f17]/30 focus:border-[#2a1f17] outline-none py-2 text-[16px] text-[#2a1f17] placeholder-[#2a1f17]/40 transition-colors"
+              />
+              <button
+                type="submit"
+                className="bg-[#2a1f17] text-[#f5f0eb] px-5 py-2 text-[11px] tracking-[0.15em] uppercase font-semibold hover:bg-[#1a1209] transition-colors"
+              >
+                Search
+              </button>
+            </form>
+          </div>
+        </>
+      )}
 
       {/* Mobile Slide-in Menu */}
       <div
@@ -272,19 +370,26 @@ export default function MaisonHeader() {
           </Link>
         )}
 
-      
         {!isSignedIn ? (
           <SignInButton mode="modal">
-            <div className="text-[22px] tracking-[0.12em] text-[#2a1f17] font-medium py-[18px] cursor-pointer mt-2">
-              SIGN IN / SIGN UP
+            <div className="flex items-center gap-3 text-[22px] tracking-[0.12em] text-[#2a1f17] font-medium py-[18px] cursor-pointer mt-2">
+              <LogIn
+                size={22}
+                strokeWidth={1.5}
+              />
+              SIGN IN
             </div>
           </SignInButton>
         ) : (
           // biome-ignore lint/a11y/useButtonType: <explanation>
           <button
             onClick={() => signOut()}
-            className="text-left text-[22px] tracking-[0.12em] text-[#2a1f17] font-medium py-[18px] cursor-pointer mt-2 bg-transparent border-none"
+            className="flex items-center gap-3 text-left text-[22px] tracking-[0.12em] text-[#2a1f17] font-medium py-[18px] cursor-pointer mt-2 bg-transparent border-none"
           >
+            <LogOut
+              size={22}
+              strokeWidth={1.5}
+            />
             SIGN OUT
           </button>
         )}
@@ -292,10 +397,3 @@ export default function MaisonHeader() {
     </>
   );
 }
-
-
-
-
-
-
-

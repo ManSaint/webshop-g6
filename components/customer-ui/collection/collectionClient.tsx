@@ -49,8 +49,8 @@ type Props = {
 }
  
 export default function CollectionClient({ allProducts, selectedCategories, sortOrder }: Props) {
-  const [searchQuery, setSearchQuery] = useState("")
   const searchParams = useSearchParams()
+  const [searchQuery, setSearchQuery] = useState(searchParams.get("q") ?? "")
   const currentPage = Number(searchParams.get("page")) || 1
 
   let filtered = selectedCategories.includes("All")

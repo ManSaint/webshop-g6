@@ -134,7 +134,7 @@ export default function Footer() {
             </ul>
           </nav>
           <p className="text-[14px] text-[#c4a882]">
-            &copy; 2026 MAISON. All rights reserved.
+            &copy; 2026 GEESIX. All rights reserved.
           </p>
         </div>
       </footer>
