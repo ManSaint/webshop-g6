@@ -22,14 +22,14 @@ export async function POST(req: NextRequest) {
 
   try {
     await transporter.sendMail({
-      from: `"MAISON Contact Form" <${process.env.GMAIL_USER}>`,
+      from: `"GEESIX Contact Form" <${process.env.GMAIL_USER}>`,
       to: process.env.CONTACT_RECEIVER_EMAIL,
       replyTo: email,
-      subject: `[MAISON] ${subject} — from ${name}`,
+      subject: `[GEESIX] ${subject} — from ${name}`,
       html: `
         <div style="font-family: Georgia, serif; max-width: 560px; color: #3a3530;">
           <p style="font-size:11px; letter-spacing:0.18em; text-transform:uppercase; color:#9a8f82; margin-bottom:24px;">
-            New Message via MAISON Contact Form
+            New Message via GEESIX Contact Form
           </p>
           <table style="width:100%; font-size:14px; margin-bottom:24px;">
             <tr><td style="color:#9a8f82; width:80px; padding:6px 0;">Name</td><td>${name}</td></tr>
@@ -39,7 +39,7 @@ export async function POST(req: NextRequest) {
           <hr style="border:none; border-top:1px solid #e0dbd3; margin-bottom:24px;" />
           <p style="font-size:14px; line-height:1.7; white-space:pre-line;">${message}</p>
           <hr style="border:none; border-top:1px solid #e0dbd3; margin-top:32px;" />
-          <p style="font-size:11px; color:#c8bfb3; margin-top:12px;">MAISON</p>
+          <p style="font-size:11px; color:#c8bfb3; margin-top:12px;">GEESIX</p>
         </div>
       `,
     });

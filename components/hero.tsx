@@ -15,7 +15,7 @@ export default function Hero() {
       <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-10 md:p-16 lg:p-20">
         <div className="flex flex-col gap-2">
           <h1 className="font-serif text-(--color-text-inverted) text-7xl md:text-8xl mb-4">
-            MAISON
+            GEESIX
           </h1>
           <p className="font-serif italic text-(--color-text-inverted)/80 text-lg sm:text-xl md:text-2xl mb-6 md:mb-8 max-w-lg">
             Sharp silhouettes for a quieter kind of statement.
