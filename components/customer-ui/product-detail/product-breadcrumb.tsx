@@ -23,7 +23,7 @@ export default function ProductBreadcrumb({
           <>
             <li>
               <Link
-                href={`/customer/categories/${category.slug}`}
+                href={`/customer/collection?category=${encodeURIComponent(category.name)}`}
                 className="hover:text-[var(--color-charcoal)] transition-colors"
               >
                 {category.name}
