@@ -1,9 +1,8 @@
-import { Category } from "@/lib/types";
-import data from "@/server/products.json";
+import { getCategories } from "@/lib/db";
 import CategoryCard from "./categories-card";
 
-export default function CategoriesGrid() {
-  const categories: Category[] = data.categories;
+export default async function CategoriesGrid() {
+  const categories = await getCategories();
 
   const selectedSlugs = [
     "beauty",

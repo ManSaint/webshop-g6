@@ -1,6 +1,6 @@
-import data from "@/server/products.json";
-import type { Category, Product } from "@/lib/types";
+import { getCategories, getProductsByCategoryId } from "@/lib/db";
 import Image from "next/image";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 
 interface PageProps {
@@ -11,30 +11,27 @@ interface PageProps {
 
 export default async function CategoryPage({ params }: PageProps) {
   const { slug } = await params;
-  const categories: Category[] = data.categories;
-  const products: Product[] = data.products;
-
+  const categories = await getCategories();
   const category = categories.find((cat) => cat.slug === slug);
 
   if (!category) {
     return notFound();
   }
 
-  const filteredProducts = products.filter(
-    (product) => product.categoryId === category.id,
-  );
+  const products = await getProductsByCategoryId(category.id);
 
   return (
     <main className="max-w-6xl mx-auto px-4 py-10">
       <div className="mb-8">
         <h1 className="text-3xl font-semibold mb-2">{category.name}</h1>
-        <p className="text-gray-500">{filteredProducts.length} products</p>
+        <p className="text-gray-500">{products.length} products</p>
       </div>
 
       <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
-        {filteredProducts.map((product) => (
-          <div
+        {products.map((product) => (
+          <Link
             key={product.id}
+            href={`/customer/products/${product.id}`}
             className="border rounded-2xl overflow-hidden hover:shadow-md transition"
           >
             <div className="relative w-full h-48">
@@ -52,22 +49,13 @@ export default async function CategoryPage({ params }: PageProps) {
               </h2>
               <p className="mt-2 font-semibold">${product.price}</p>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
 
-      {/* if no result */}
-      {filteredProducts.length === 0 && (
+      {products.length === 0 && (
         <p className="text-gray-500 mt-6">Nope. Nothing to see.</p>
       )}
     </main>
   );
-}
-
-export async function generateStaticParams() {
-  const categories = data.categories;
-
-  return categories.map((category) => ({
-    slug: category.slug,
-  }));
 }

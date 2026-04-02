@@ -151,6 +151,17 @@ export async function getCategories(): Promise<Category[]> {
   return (data || []) as Category[];
 }
 
+export async function getProductsByCategoryId(categoryId: number): Promise<Product[]> {
+  const { data, error } = await supabase
+    .from("products")
+    .select("*, categories(*)")
+    .eq("category_id", categoryId)
+    .order("id", { ascending: false });
+
+  if (error) throw new Error(`Supabase error: ${error.message}`);
+  return (data || []).map(mapProduct);
+}
+
 //#endregion
 
 ///////////////////////  Customer ////////////////////////////////

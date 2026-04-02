@@ -1,6 +1,7 @@
 import { FilePenLine, Trash } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { Suspense } from "react";
 import { ProductActions } from "@/components/admin-ui/delete-actions";
 import { getCategories, getProductsFromParams } from "@/lib/db";
 import {
@@ -117,7 +118,9 @@ export default async function ProductTable({
         </tbody>
       </table>
       <div className="p-4 bg-gray-50 border-t border-t-gray-300 rounded-b-2xl">
-        <ProductTablePagination totalPages={pages}></ProductTablePagination>
+        <Suspense>
+          <ProductTablePagination totalPages={pages}></ProductTablePagination>
+        </Suspense>
       </div>
     </div>
   );

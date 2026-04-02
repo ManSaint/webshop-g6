@@ -2,6 +2,7 @@ import Header from "@/components/admin-ui/header";
 import ProductTable from "@/components/admin-ui/product-table";
 import Sidebar from "@/components/admin-ui/sidebar";
 import { getProducts } from "@/lib/db";
+import { Suspense } from "react";
 import InventoryWidget from "../../components/admin-ui/dashboard-widget";
 import SearchWidget from "../../components/admin-ui/search-widget";
 
@@ -16,7 +17,9 @@ export default async function Home(params: PageProps<"/">) {
         <Header />
         <div className="pr-4 pl-4 pb-4 flex flex-col gap-4">
           <InventoryWidget />
-          <SearchWidget />
+          <Suspense>
+            <SearchWidget />
+          </Suspense>
           <ProductTable searchParams={params.searchParams} total={total} />
         </div>
       </section>

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
+import { Suspense } from "react";
 import { Toaster } from "react-hot-toast";
 import { ToastListener } from "@/components/toast-listener";
 import GeeSixHeader from "@/components/header";
@@ -76,7 +77,9 @@ export default function RootLayout({
           <SyncProvider />
           <GeeSixHeader />
           <Toaster position="top-center" />
-          <ToastListener />
+          <Suspense>
+            <ToastListener />
+          </Suspense>
           <main className="flex-1">{children}</main>
           <Footer />
         </body>
