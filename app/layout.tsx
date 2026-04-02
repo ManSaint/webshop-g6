@@ -4,8 +4,7 @@ import "./globals.css";
 import { Suspense } from "react";
 import { Toaster } from "react-hot-toast";
 import { ToastListener } from "@/components/toast-listener";
-import GeeSixHeader from "@/components/header";
-import Footer from "@/components/footer";
+import StoreShell from "@/components/store-shell";
 import { ClerkProvider } from "@clerk/nextjs";
 import { SyncProvider } from "@/components/sync-provider";
 
@@ -75,13 +74,11 @@ export default function RootLayout({
           className={`${inter.variable} ${playfair.variable} antialiased flex flex-col min-h-screen`}
         >
           <SyncProvider />
-          <GeeSixHeader />
           <Toaster position="top-center" />
           <Suspense>
             <ToastListener />
           </Suspense>
-          <main className="flex-1">{children}</main>
-          <Footer />
+          <StoreShell>{children}</StoreShell>
         </body>
       </html>
     </ClerkProvider>
