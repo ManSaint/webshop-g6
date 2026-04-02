@@ -1,116 +1,198 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+<div align="center">
 
-This project uses [json-server](https://github.com/typicode/json-server/tree/v0.17.4) to mock a backend API.
+# ✦ GEESIX ✦
 
-Data in the json for the server is from [dummyjson.com](https://dummyjson.com/docs/products) but modified to fit the needs of this project. Most of the endpoints mirrors those in that documentation.
+**Sharp silhouettes for a quieter kind of statement.**
+
+A modern, full-stack fashion webshop built as a group project at [Lexicon](https://lexicon.se) — Frontend System Development 2025–2026.
+
+[![Live App](https://img.shields.io/badge/▶_Live_App-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://webshop-g6-theta.vercel.app)
+[![Design Mockups](https://img.shields.io/badge/✦_Design_Mockups-3D3024?style=for-the-badge&logo=github&logoColor=white)](https://mansaint.github.io/webshop-g6/mockups/)
+
+---
+
+![Next.js](https://img.shields.io/badge/Next.js_16-000000?style=flat-square&logo=nextdotjs&logoColor=white)
+![React](https://img.shields.io/badge/React_19-61DAFB?style=flat-square&logo=react&logoColor=black)
+![TypeScript](https://img.shields.io/badge/TypeScript_5-3178C6?style=flat-square&logo=typescript&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS_v4-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white)
+![Supabase](https://img.shields.io/badge/Supabase-3FCF8E?style=flat-square&logo=supabase&logoColor=white)
+![Clerk](https://img.shields.io/badge/Clerk-6C47FF?style=flat-square&logo=clerk&logoColor=white)
+![Biome](https://img.shields.io/badge/Biome_2-60A5FA?style=flat-square&logo=biome&logoColor=white)
+![Zustand](https://img.shields.io/badge/Zustand-433E38?style=flat-square&logo=react&logoColor=white)
+
+</div>
+
+---
+
+## About
+
+GEESIX is a fashion-forward e-commerce platform featuring curated collections, category browsing, cart management, user authentication, and an admin panel. The project emphasizes clean editorial design, responsive layouts, and a modern developer experience powered by the React 19 + Next.js 16 stack with the React Compiler enabled.
+
+> **Data source** — Product data originates from [dummyjson.com](https://dummyjson.com/docs/products), modified to fit the store's aesthetic. A local [json-server](https://github.com/typicode/json-server/tree/v0.17.4) instance mirrors those endpoints during development.
+
+---
+
+## Features
+
+| Area | Highlights |
+|---|---|
+| **Storefront** | Hero banner, new arrivals grid, category browsing, full-text product search with filtering & sorting |
+| **Product Detail** | Image gallery, pricing, add-to-cart with toast notifications |
+| **Cart** | Persistent cart state via Zustand, quantity controls, order summary |
+| **Authentication** | Clerk-powered sign-in/sign-up with protected routes via middleware |
+| **Admin Panel** | Product management (CRUD), category oversight |
+| **Contact** | Contact form with server-side email delivery (Nodemailer) |
+| **Database** | Supabase integration with Row-Level Security policies |
+| **DX** | Biome linting & formatting, TypeScript strict mode, Tailwind CSS v4, React Compiler |
+
+---
+
+## Project Structure
+
+```
+webshop-g6/
+├── app/
+│   ├── admin/          # Admin dashboard & product management
+│   ├── api/            # API routes (Next.js Route Handlers)
+│   ├── cart/           # Shopping cart page
+│   ├── contact/        # Contact form page
+│   ├── customer/       # Customer-facing collection & product pages
+│   ├── globals.css     # Tailwind v4 theme & global styles
+│   ├── layout.tsx      # Root layout (Clerk provider, header, footer)
+│   └── page.tsx        # Home page (hero, arrivals, categories)
+├── components/         # Shared UI components
+│   ├── admin-ui/       # Admin-specific components
+│   ├── customer-ui/    # Customer-specific components
+│   ├── header.tsx      # Site header with navigation & auth
+│   ├── footer.tsx      # Site footer
+│   ├── hero.tsx        # Hero banner component
+│   └── ...
+├── data/               # Static data & type definitions
+├── docs/
+│   └── mockups/        # Interactive HTML design mockups (9 variants)
+├── lib/                # Supabase client, utilities
+├── server/             # json-server config & product database
+├── supabase/           # Supabase migrations & seed data
+├── utils/              # Shared helper functions
+├── middleware.ts        # Clerk auth middleware
+├── biome.json          # Biome linter/formatter config
+└── package.json
+```
+
+---
 
 ## Getting Started
 
-First, install the dependencies:
+### Prerequisites
+
+- **Node.js** 18+ (or [Bun](https://bun.sh))
+- A [Clerk](https://clerk.com) application (for authentication)
+- A [Supabase](https://supabase.com) project (for database)
+
+### 1. Clone & install
 
 ```bash
+git clone https://github.com/ManSaint/webshop-g6.git
+cd webshop-g6
 npm install
-# or
-yarn install
-# or
-pnpm install
-# or
-bun install
 ```
 
-To start the full development environment (Next.js frontend + JSON Server backend), use:
+### 2. Configure environment
+
+Copy the example env file and fill in your keys:
+
+```bash
+cp .env.local.example .env.local
+```
+
+### 3. Run the full dev environment
+
+This starts both the Next.js frontend (port 3000) and the json-server mock API (port 4000) concurrently:
 
 ```bash
 npm run dev:full
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open **http://localhost:3000** to view the store.
+The mock API is available at **http://localhost:4000**.
 
-The JSON server is running on [http://localhost:4000](http://localhost:4000). Here you can see the API endpoints and test them.
+### Available Scripts
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| Command | Description |
+|---|---|
+| `npm run dev` | Next.js dev server only |
+| `npm run dev:full` | Next.js + json-server concurrently |
+| `npm run mock-server` | json-server on port 4000 |
+| `npm run build` | Production build |
+| `npm run lint` | Biome check |
+| `npm run format` | Biome format (auto-fix) |
 
-## JSON Server Setup
+---
 
-This project uses [json-server](https://github.com/typicode/json-server/tree/v0.17.4) to mock a backend API.
+## API Reference
 
-### Configuration
+The mock server (port 4000) exposes the following endpoints:
 
-The server configuration files are located in the `server/` directory:
+**Products** — `GET /products` · `GET /products/:id` · `POST /products`
 
-- `server/products.json`: The database file containing the product data.
-- `server/middleware.js`: Custom middleware for the server.
+**Categories** — `GET /categories` · `GET /categories/:id` · `GET /categories?slug=:slug`
 
-### Scripts
+**Pagination** — `GET /products?_page=1&_limit=10` (includes `X-Total-Count` header and pagination metadata)
 
-The following scripts are available in `package.json`:
+**Sorting** — `GET /products?_sort=price&_order=asc`
 
-- `npm run mock-server`: Starts the json-server on port 4000.
-- `npm run dev:full`: Runs both the Next.js development server and the json-server concurrently.
+**Filtering** — `GET /products?price_gte=10&price_lte=50` · `GET /products?q=mascara`
 
-## API Endpoints
+> See [json-server v0.17.4 docs](https://github.com/typicode/json-server/tree/v0.17.4) for the full query syntax.
 
-The mock server (running on port 4000) provides the following endpoints:
+---
 
-### Resources
+## Design Mockups
 
-- `GET /products`: Get all products
-- `GET /products/:id`: Get a single product by ID
-- `GET /categories`: Get all categories
-- `GET /categories/:id`: Get a category by ID
-- `GET /categories?slug=:slug`: Get a category by slug
+Before writing code, the team explored **9 interactive HTML mockups** — 3 design directions for each core page — to align on visual identity and layout decisions. All mockups are fully responsive with working hover effects, menus, tabs, and accordions.
 
-### Create Product
+<div align="center">
 
-- `POST /products`: Create a new product
+[![Browse the Mockup Gallery](https://img.shields.io/badge/✦_Browse_Mockup_Gallery-3D3024?style=for-the-badge&logo=github&logoColor=white)](https://mansaint.github.io/webshop-g6/mockups/)
 
-**Required Fields:**
+</div>
 
-- `title`: String
-- `price`: Number
-- `description`: String
-- `thumbnail`: URL String
-- `categoryId`: Number (ID of an existing category)
-- `brand`: String
+| Page | V1 | V2 | V3 |
+|---|---|---|---|
+| **Home** | "The Editorial" — full-bleed hero, 3-col arrivals | "The Gallery" — split hero, masonry grid | "The Storefront" — dramatic hero, 4-col grid |
+| **Product** | "The Lookbook" — sticky info panel, accordion | "The Showcase" — auto-advancing carousel, tabs | "The Split" — 50/50 scroll gallery |
+| **Search** | "The Filter Sidebar" — classic sidebar + grid | "The Top Bar" — horizontal dropdowns, quick-view | "The Minimal" — search-first, masonry Pinterest |
 
-**Auto-generated Fields:**
+> **GitHub Pages setup** — The mockups live in `docs/mockups/`. To host them, enable GitHub Pages in your repo settings → **Source: Deploy from a branch** → **Branch: `main`** → **Folder: `/docs`**. The gallery will be available at `https://mansaint.github.io/webshop-g6/mockups/`.
 
-- `id`: Sequential ID
-- `sku`: Generated SKU (format: CAT-BRA-TIT-ID)
-- `meta`: Creation and update timestamps
+---
 
-### Pagination & Sorting (json-server 0.17.4)
+## Tech Stack
 
-See [json-server documentation](https://github.com/typicode/json-server/tree/v0.17.4) for more information.
+| Layer | Technology |
+|---|---|
+| **Framework** | [Next.js 16](https://nextjs.org) with App Router & Turbopack |
+| **UI** | [React 19](https://react.dev) with the React Compiler (`babel-plugin-react-compiler`) |
+| **Language** | [TypeScript 5](https://typescriptlang.org) (strict mode) |
+| **Styling** | [Tailwind CSS v4](https://tailwindcss.com) |
+| **State** | [Zustand](https://zustand.docs.pmnd.rs) |
+| **Auth** | [Clerk](https://clerk.com) |
+| **Database** | [Supabase](https://supabase.com) (Postgres + RLS) |
+| **Icons** | [Lucide React](https://lucide.dev) |
+| **Notifications** | [react-hot-toast](https://react-hot-toast.com) |
+| **Email** | [Nodemailer](https://nodemailer.com) |
+| **Mock API** | [json-server v0.17.4](https://github.com/typicode/json-server/tree/v0.17.4) |
+| **Linting** | [Biome 2](https://biomejs.dev) |
+| **Deployment** | [Vercel](https://vercel.com) |
 
-#### Pagination
+---
 
-Use `_page` and `_limit` to paginate data:
+## Acknowledgements
 
-- `GET /products?_page=1&_limit=10` (First page, 10 items)
-- `GET /products?_page=2&_limit=10` (Second page, 10 items)
+Product data adapted from [DummyJSON](https://dummyjson.com). Built as part of the Lexicon Frontend System Development program, 2025–2026 cohort.
 
-The response will include the `Link` header with `first`, `prev`, `next`, and `last` links.
-Our custom middleware also adds `X-Total-Count` header and wraps the response to include pagination metadata (total, limit, page, pages).
+---
 
-#### Sorting
-
-Use `_sort` and `_order` to sort data:
-
-- `GET /products?_sort=price&_order=asc` (Sort by price, ascending)
-- `GET /products?_sort=price&_order=desc` (Sort by price, descending)
-- `GET /products?_sort=price,title&_order=desc,asc` (Sort by multiple fields)
-
-#### Filtering
-
-- `GET /products?price_gte=10&price_lte=50` (Price between 10 and 50)
-- `GET /products?q=mascara` (Full-text search)
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-Heehee
+<div align="center">
+<sub>Made with care by <strong>Group 6</strong> at Lexicon</sub>
+</div>
