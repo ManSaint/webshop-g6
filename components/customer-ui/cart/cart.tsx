@@ -157,7 +157,7 @@ export default function Cart() {
                       type="button"
                       className="px-2 shadow-sm border border-(--color-border)/50 rounded-sm hover:cursor-pointer"
                     >
-                      –
+                      
                     </button>
 
                     <span>{item.quantity}</span>
@@ -167,7 +167,7 @@ export default function Cart() {
                       type="button"
                       className="px-2 shadow-sm border border-(--color-border)/50 rounded-sm hover:cursor-pointer"
                     >
-                      +
+                      
                     </button>
                   </div>
 
