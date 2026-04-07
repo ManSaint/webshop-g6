@@ -59,7 +59,28 @@ export default function Cart() {
     return sum + item.product.price * item.quantity;
   }, 0);
 
-  // 🔹 Loading state
+  const handleCheckout = async () => {
+    const lineItems = enrichedItems
+      .filter((item) => item.product)
+      .map((item) => ({
+        name: item.product!.title,
+        price: item.product!.price,
+        quantity: item.quantity,
+        image: item.product!.thumbnail,
+      }));
+
+    const res = await fetch("/api/checkout", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ items: lineItems }),
+    });
+
+    const data = await res.json();
+    if (data.url) {
+      window.location.href = data.url;
+    }
+  };
+
   if (loading) {
     return (
       <div className="w-full mx-auto text-center md:max-w-3xl">
@@ -70,8 +91,8 @@ export default function Cart() {
 
   if (items.length === 0) {
     return (
-      <div className="flex flex-col gap-16 max-w-4xl mx-auto md:min-h-140  p-4">
-        <div className="md:w-2xl justify-center w-full mx-auto flex flex-col  items-center text-center gap-10 md:gap-16 rounded-lg my-auto">
+      <div className="flex flex-col gap-16 max-w-4xl mx-auto md:min-h-140 p-4">
+        <div className="md:w-2xl justify-center w-full mx-auto flex flex-col items-center text-center gap-10 md:gap-16 rounded-lg my-auto">
           <h2 className="text-3xl font-medium font-serif text-(--color-darkbrown) leading-12">
             <span className="text-5xl font-semibold">Your cart is empty</span>{" "}
             <br />
@@ -80,7 +101,6 @@ export default function Cart() {
               <em>highly unusual</em>
             </span>
           </h2>
-
           <Link
             href="collection"
             className="text-xs tracking-widest border-b pb-1 transition hover:opacity-70"
@@ -102,7 +122,6 @@ export default function Cart() {
         <h1 className="text-4xl font-serif mb-6 text-(--color-darkbrown)">
           Shopping Cart
         </h1>
-
         <div className="space-y-6">
           {enrichedItems.map((item) => {
             if (!item.product) {
@@ -115,7 +134,6 @@ export default function Cart() {
 
             return (
               <div key={item.productId} className="flex gap-4 border-b pb-4">
-                {/* Bild */}
                 <Image
                   src={item.product.thumbnail}
                   alt={item.product.title}
@@ -139,7 +157,7 @@ export default function Cart() {
                       type="button"
                       className="px-2 shadow-sm border border-(--color-border)/50 rounded-sm hover:cursor-pointer"
                     >
-                      –
+                      
                     </button>
 
                     <span>{item.quantity}</span>
@@ -149,7 +167,7 @@ export default function Cart() {
                       type="button"
                       className="px-2 shadow-sm border border-(--color-border)/50 rounded-sm hover:cursor-pointer"
                     >
-                      +
+                      
                     </button>
                   </div>
 
@@ -171,10 +189,11 @@ export default function Cart() {
       {/* Total + check out*/}
       <div className="basis-2/5 mt-8 w-full justify-between flex flex-col gap-6 h-fit p-6 border-(--color-border)/50 border shadow-lg bg-(--color-cream) rounded-md">
         <p className="text-lg font-semibold text-(--color-darkbrown)">
-          Total: <span className="font-normal">${total.toFixed(2)} </span>
+          Total: <span className="font-normal">${total.toFixed(2)}</span>
         </p>
         <button
-          className=" basis-1/2 w-full border py-4 text-sm tracking-[0.2em] uppercase font-medium hover:bg-[var(--color-charcoal)] hover:text-[var(--color-cream)] transition-all duration-500 flex items-center justify-center gap-2 hover:cursor-pointer"
+          onClick={handleCheckout}
+          className="basis-1/2 w-full border py-4 text-sm tracking-[0.2em] uppercase font-medium hover:bg-[var(--color-charcoal)] hover:text-[var(--color-cream)] transition-all duration-500 flex items-center justify-center gap-2 hover:cursor-pointer"
           type="button"
           style={{ borderColor: "var(--color-charcoal)" }}
         >
