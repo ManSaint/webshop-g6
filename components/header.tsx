@@ -50,12 +50,7 @@ function CartIcon({ count }: { count: number }) {
         strokeLinejoin="round"
       >
         <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" />
-        <line
-          x1="3"
-          y1="6"
-          x2="21"
-          y2="6"
-        />
+        <line x1="3" y1="6" x2="21" y2="6" />
         <path d="M16 10a4 4 0 01-8 0" />
       </svg>
       {count > 0 && (
@@ -80,17 +75,8 @@ const SearchIcon = () => (
     strokeLinecap="round"
     strokeLinejoin="round"
   >
-    <circle
-      cx="11"
-      cy="11"
-      r="8"
-    />
-    <line
-      x1="21"
-      y1="21"
-      x2="16.65"
-      y2="16.65"
-    />
+    <circle cx="11" cy="11" r="8" />
+    <line x1="21" y1="21" x2="16.65" y2="16.65" />
   </svg>
 );
 
@@ -108,11 +94,7 @@ const AccountIcon = () => (
     strokeLinejoin="round"
   >
     <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
-    <circle
-      cx="12"
-      cy="7"
-      r="4"
-    />
+    <circle cx="12" cy="7" r="4" />
   </svg>
 );
 
@@ -129,24 +111,9 @@ const HamburgerIcon = () => (
     strokeLinecap="round"
     strokeLinejoin="round"
   >
-    <line
-      x1="3"
-      y1="6"
-      x2="21"
-      y2="6"
-    />
-    <line
-      x1="3"
-      y1="12"
-      x2="21"
-      y2="12"
-    />
-    <line
-      x1="3"
-      y1="18"
-      x2="21"
-      y2="18"
-    />
+    <line x1="3" y1="6" x2="21" y2="6" />
+    <line x1="3" y1="12" x2="21" y2="12" />
+    <line x1="3" y1="18" x2="21" y2="18" />
   </svg>
 );
 
@@ -163,18 +130,8 @@ const CloseIcon = () => (
     strokeLinecap="round"
     strokeLinejoin="round"
   >
-    <line
-      x1="18"
-      y1="6"
-      x2="6"
-      y2="18"
-    />
-    <line
-      x1="6"
-      y1="6"
-      x2="18"
-      y2="18"
-    />
+    <line x1="18" y1="6" x2="6" y2="18" />
+    <line x1="6" y1="6" x2="18" y2="18" />
   </svg>
 );
 
@@ -182,6 +139,7 @@ const navLinks = [
   { label: "HOME", href: "/" },
   { label: "PRODUCTS", href: "/customer/collection" },
   { label: "CONTACT", href: "/contact" },
+  { label: "ABOUT", href: "/about" },
 ];
 
 export default function GeeSixHeader() {
@@ -194,7 +152,9 @@ export default function GeeSixHeader() {
   const { user } = useUser();
   const isAdmin = user?.publicMetadata?.role === "admin";
 
-  const cartCount = useCartStore((state) => state.items.reduce((sum, item) => sum + item.quantity, 0));
+  const cartCount = useCartStore((state) =>
+    state.items.reduce((sum, item) => sum + item.quantity, 0),
+  );
 
   const wishlistCount = useWishlistStore((state) => state.items.length);
 
@@ -280,10 +240,7 @@ export default function GeeSixHeader() {
                 <SignInButton mode="modal">
                   {/** biome-ignore lint/a11y/useButtonType: <explanation> */}
                   <button className="hover:opacity-50 transition-opacity duration-200 bg-transparent border-none cursor-pointer p-0">
-                    <LogIn
-                      size={20}
-                      strokeWidth={1.5}
-                    />
+                    <LogIn size={20} strokeWidth={1.5} />
                   </button>
                 </SignInButton>
               ) : (
@@ -292,10 +249,7 @@ export default function GeeSixHeader() {
                   onClick={() => signOut()}
                   className="hover:opacity-50 transition-opacity duration-200 bg-transparent border-none cursor-pointer p-0"
                 >
-                  <LogOut
-                    size={20}
-                    strokeWidth={1.5}
-                  />
+                  <LogOut size={20} strokeWidth={1.5} />
                 </button>
               )}
             </div>
@@ -373,10 +327,7 @@ export default function GeeSixHeader() {
         {!isSignedIn ? (
           <SignInButton mode="modal">
             <div className="flex items-center gap-3 text-[22px] tracking-[0.12em] text-[#2a1f17] font-medium py-[18px] cursor-pointer mt-2">
-              <LogIn
-                size={22}
-                strokeWidth={1.5}
-              />
+              <LogIn size={22} strokeWidth={1.5} />
               SIGN IN
             </div>
           </SignInButton>
@@ -386,10 +337,7 @@ export default function GeeSixHeader() {
             onClick={() => signOut()}
             className="flex items-center gap-3 text-left text-[22px] tracking-[0.12em] text-[#2a1f17] font-medium py-[18px] cursor-pointer mt-2 bg-transparent border-none"
           >
-            <LogOut
-              size={22}
-              strokeWidth={1.5}
-            />
+            <LogOut size={22} strokeWidth={1.5} />
             SIGN OUT
           </button>
         )}
