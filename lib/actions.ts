@@ -73,8 +73,8 @@ export async function addProductActionState(
     };
   }
 
-  revalidatePath("/");
-  redirect("/?status=success");
+  revalidatePath("/admin");
+  redirect("/admin?status=success");
 }
 
 export async function updateProduct(formData: FormData) {
@@ -103,8 +103,8 @@ export async function updateProduct(formData: FormData) {
     throw error;
   }
 
-  revalidatePath("/");
-  redirect("/?status=updated");
+  revalidatePath("/admin");
+  redirect("/admin?status=updated");
 }
 
 /* Delete product */
