@@ -102,7 +102,7 @@ export default function Cart() {
             </span>
           </h2>
           <Link
-            href="collection"
+            href="/customer/collection"
             className="text-xs tracking-widest border-b pb-1 transition hover:opacity-70"
             style={{
               color: "var(--color-charcoal)",
@@ -156,9 +156,7 @@ export default function Cart() {
                       onClick={() => decrease(item.productId)}
                       type="button"
                       className="px-2 shadow-sm border border-(--color-border)/50 rounded-sm hover:cursor-pointer"
-                    >
-                      
-                    </button>
+                    ></button>
 
                     <span>{item.quantity}</span>
 
@@ -166,9 +164,7 @@ export default function Cart() {
                       onClick={() => increase(item.productId)}
                       type="button"
                       className="px-2 shadow-sm border border-(--color-border)/50 rounded-sm hover:cursor-pointer"
-                    >
-                      
-                    </button>
+                    ></button>
                   </div>
 
                   {/* Remove */}
