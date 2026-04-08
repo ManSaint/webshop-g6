@@ -7,7 +7,7 @@ import Link from "next/link"
 import { useSearchParams } from "next/navigation"
 import Pagination from "@/components/customer-ui/pagination"
 
-import { useState } from "react"
+import { useState, useTransition } from "react"
 
 
 export type SortOption = "low-to-high" | "high-to-low" 
@@ -52,7 +52,7 @@ export default function CollectionClient({ allProducts, selectedCategories, sort
   const searchParams = useSearchParams()
   const [searchQuery, setSearchQuery] = useState(searchParams.get("q") ?? "")
   const currentPage = Number(searchParams.get("page")) || 1
-
+  const [isPending, startTransition] = useTransition()
   let filtered = selectedCategories.includes("All")
     ? allProducts
     : allProducts.filter((p) =>
@@ -60,7 +60,6 @@ export default function CollectionClient({ allProducts, selectedCategories, sort
           p.category?.name?.toLowerCase() === cat.toLowerCase()
         )
       )
-
 
   if (searchQuery.trim()) {
     filtered = filtered.filter((p) =>
@@ -84,7 +83,6 @@ export default function CollectionClient({ allProducts, selectedCategories, sort
   return (
     <div className="min-h-screen" style={{ backgroundColor: "var(--color-cream)" }}>
       <div className="max-w-7xl mx-auto px-6 py-10">
-
         <div className="flex items-center gap-2 text-xs mb-6" style={{ color: "var(--color-text-muted)" }}>
           <Link href="/" className="hover:underline">Home</Link>
           <span>/</span>
@@ -96,24 +94,29 @@ export default function CollectionClient({ allProducts, selectedCategories, sort
           New Arrivals
         </h1>
 
-     
-      <div className="mb-4 flex justify-end">
+        <div className="mb-4 flex justify-end">
           <input
             type="text"
             value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+            onChange={(e) => {
+              const val = e.target.value
+              startTransition(() => {
+                setSearchQuery(val)
+              })
+            }}
             placeholder="Search products..."
             className="w-full max-w-sm text-sm px-4 py-2 border outline-none"
             style={{
               borderColor: "var(--color-border-store)",
               color: "var(--color-charcoal)",
               backgroundColor: "var(--color-cream)",
+              opacity: isPending ? 0.6 : 1,
             }}
           />
         </div>
 
         <p className="text-sm mb-4" style={{ color: "var(--color-text-muted)" }}>
-          {filtered.length} pieces
+          {isPending ? "Searching..." : `${filtered.length} pieces`}
         </p>
 
         <ActiveFilters
@@ -127,12 +130,11 @@ export default function CollectionClient({ allProducts, selectedCategories, sort
             selectedCategories={selectedCategories}
             sort={sortOrder as SortOption}
           />
-          <div className="flex-1">
+          <div className="flex-1" style={{ opacity: isPending ? 0.6 : 1, transition: "opacity 0.2s" }}>
             <ProductGrid products={paginatedProducts} />
             <Pagination totalPages={totalPages} />
           </div>
         </div>
-
       </div>
     </div>
   )
