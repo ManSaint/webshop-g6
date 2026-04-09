@@ -42,7 +42,6 @@ export default function Cart() {
     fetchProducts();
   }, [items]);
 
-  // 🔹 Koppla cart items till produkter (säker match)
   const enrichedItems = items.map((item) => {
     const product = products.find(
       (p) => Number(p.id) === Number(item.productId),
@@ -156,7 +155,9 @@ export default function Cart() {
                       onClick={() => decrease(item.productId)}
                       type="button"
                       className="px-2 shadow-sm border border-(--color-border)/50 rounded-sm hover:cursor-pointer"
-                    ></button>
+                    >
+                      -
+                    </button>
 
                     <span>{item.quantity}</span>
 
@@ -164,7 +165,9 @@ export default function Cart() {
                       onClick={() => increase(item.productId)}
                       type="button"
                       className="px-2 shadow-sm border border-(--color-border)/50 rounded-sm hover:cursor-pointer"
-                    ></button>
+                    >
+                      +
+                    </button>
                   </div>
 
                   {/* Remove */}
