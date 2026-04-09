@@ -8,7 +8,7 @@ type Props = {
  
 
 export default async function CollectionPage({ searchParams }: Props) {
-  const { products } = await getProducts(1,200)
+  const { products } = await getProducts(1,20)
   const { category, sort } = await searchParams
  
   const selectedCategories = category
