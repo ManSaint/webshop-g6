@@ -334,6 +334,8 @@ export default function GeeSixHeader() {
         ) : (
           // biome-ignore lint/a11y/useButtonType: <explanation>
           <button
+            type="button"
+            aria-label="Sign out"
             onClick={() => signOut()}
             className="flex items-center gap-3 text-left text-[22px] tracking-[0.12em] text-[#2a1f17] font-medium py-[18px] cursor-pointer mt-2 bg-transparent border-none"
           >

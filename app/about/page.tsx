@@ -23,7 +23,7 @@ export default function About() {
       <div className="w-full flex flex-col gap-18 md:gap-24 mx-auto container text-(--color-text-body)">
         <section
           id="our-story"
-          className="flex flex-col md:flex-row gap-4 w-full items-center rounded-lg md:shadow-md/5 md:p-4  transition-all duration-100 hover:shadow-lg"
+          className="flex flex-col md:flex-row gap-4 w-full items-center rounded-lg md:shadow-md/5 md:p-4  transition-all duration-100 hover:shadow-lg md:h-150"
         >
           <div className="flex flex-col gap-6 basis-1/2 p-4">
             <h2 className="font-serif text-3xl text-(--color-darkbrown) font-medium">
@@ -56,11 +56,11 @@ export default function About() {
 
         <section
           id="sustainability"
-          className="flex flex-col md:flex-row-reverse gap-4 w-full items-center rounded-lg md:shadow-md/5 md:p-4  transition-all duration-100 hover:shadow-lg"
+          className="flex flex-col md:flex-row-reverse gap-4 w-full items-center rounded-lg md:shadow-md/5 md:p-4  transition-all duration-100 hover:shadow-lg md:h-150"
         >
           <div className="flex flex-col gap-6 basis-1/2 p-4">
             <h2 className="font-serif text-3xl text-(--color-darkbrown) font-medium">
-              Sustanability
+              Sustainability
             </h2>
             <p className="md:max-w-[65ch] md:text-balance leading-6.5 md:leading-6">
               We believe true luxury must respect the future. Every supercar we
@@ -83,7 +83,7 @@ export default function About() {
           ></Image>
         </section>
 
-        <section className="flex flex-col md:flex-row gap-4 w-full items-center rounded-lg md:shadow-md/5 md:p-4  transition-all duration-100 hover:shadow-lg">
+        <section className="flex flex-col md:flex-row gap-4 w-full items-center rounded-lg md:shadow-md/5 md:p-4  transition-all duration-100 hover:shadow-lg md:h-150">
           <div className="flex flex-col gap-6 basis-1/2 p-4">
             <h2 className="font-serif text-3xl text-(--color-darkbrown) font-medium">
               Careers

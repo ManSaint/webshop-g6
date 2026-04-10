@@ -8,13 +8,16 @@ interface CategoryCardProps {
 export default function CategoryCard({ category }: CategoryCardProps) {
   return (
     <Link
-      href={{ pathname: "/customer/collection", query: { category: category.name } }}
+      href={{
+        pathname: "/customer/collection",
+        query: { category: category.name },
+      }}
       className="relative flex justify-center items-center overflow-hidden border border-(--color-cream) hover:shadow-lg/10 transition bg-cover bg-center aspect-4/3 "
       style={{
         backgroundImage: `url(${category.image})`,
       }}
     >
-      <div className="absolute inset-0 bg-(--color-charcoal)/40" />
+      <div className="absolute inset-0 bg-(--color-charcoal)/50" />
 
       <div className="relative flex items-center z-10 h-full p-4">
         <h3 className="text-lg leading-5 md:leading-normal md:text-2xl text-(--color-text-inverted) font-normal font-serif tracking-wider text-shadow-lg text-center">
