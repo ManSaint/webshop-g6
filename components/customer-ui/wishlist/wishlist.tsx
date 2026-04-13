@@ -103,7 +103,7 @@ export default function Wishlist() {
                 alt={item.product.title}
                 width={96}
                 height={96}
-                className="object-cover rounded"
+                className="object-cover rounded w-20 h-20 md:w-35 md:h-35"
               />
 
               <div className="flex-1">
