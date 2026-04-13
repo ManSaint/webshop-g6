@@ -1,5 +1,6 @@
 import CollectionClient from "@/components/customer-ui/collection/collectionClient"
 import { getProducts } from "@/lib/db"
+import { Suspense } from "react"
 
 type Props = {
   searchParams: Promise<{ category?: string | string[]; sort?: string }>
@@ -7,7 +8,7 @@ type Props = {
  
 
 export default async function CollectionPage({ searchParams }: Props) {
-  const { products } = await getProducts(1,200)
+  const { products } = await getProducts(1,20)
   const { category, sort } = await searchParams
  
   const selectedCategories = category
@@ -15,10 +16,18 @@ export default async function CollectionPage({ searchParams }: Props) {
     : ["All"]
  
   return (
-    <CollectionClient
-      allProducts={products}
-      selectedCategories={selectedCategories}
-      sortOrder={sort?? ""}
-    />
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center">
+        <p className="text-sm tracking-widest" style={{ color: "var(--color-text-muted)" }}>
+          Loading collection...
+        </p>
+      </div>
+    }>
+      <CollectionClient
+        allProducts={products}
+        selectedCategories={selectedCategories}
+        sortOrder={sort ?? ""}
+      />
+    </Suspense>
   )
 }

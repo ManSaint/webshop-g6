@@ -1,14 +1,28 @@
-'use client'
+"use client";
 
 import React, { useState } from "react";
 
-const shopLinks = ["New Arrivals", "Women", "Men", "Beauty", "Home", "Sale"];
+const shopLinks = ["New Arrivals", "Women", "Men", "Sale"];
 const aboutLinks = ["Our Story", "Sustainability", "Careers", "Press"];
-const customerCareLinks = ["Contact Us", "Shipping & Returns", "Size Guide", "FAQ"];
+const customerCareLinks = [
+  "Contact Us",
+  "Shipping & Returns",
+  "Size Guide",
+  "FAQ",
+];
 const socialLinks = ["Instagram", "Pinterest", "Twitter", "Facebook"];
 
 const ArrowRightIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.5"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
     <line x1="5" y1="12" x2="19" y2="12" />
     <polyline points="12 5 19 12 12 19" />
   </svg>
@@ -32,7 +46,7 @@ export default function Footer() {
       >
         <div className="max-w-[1400px] mx-auto px-5 md:px-10 py-14 md:py-16">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-12">
-
+            {/* Shop */}
             <div>
               <h3 className="text-white text-[11px] font-bold tracking-[0.2em] uppercase mb-6">
                 Shop
@@ -41,7 +55,7 @@ export default function Footer() {
                 {shopLinks.map((link) => (
                   <li key={link}>
                     <a
-                      href="#"
+                      href="/customer/collection"
                       className="text-[15px] hover:text-white transition-colors duration-200"
                     >
                       {link}
@@ -51,6 +65,7 @@ export default function Footer() {
               </ul>
             </div>
 
+            {/* About */}
             <div>
               <h3 className="text-white text-[11px] font-bold tracking-[0.2em] uppercase mb-6">
                 About
@@ -59,7 +74,7 @@ export default function Footer() {
                 {aboutLinks.map((link) => (
                   <li key={link}>
                     <a
-                      href="#"
+                      href="/about"
                       className="text-[15px] hover:text-white transition-colors duration-200"
                     >
                       {link}
@@ -69,6 +84,7 @@ export default function Footer() {
               </ul>
             </div>
 
+            {/* Customer Care */}
             <div>
               <h3 className="text-white text-[11px] font-bold tracking-[0.2em] uppercase mb-6">
                 Customer Care
@@ -77,7 +93,7 @@ export default function Footer() {
                 {customerCareLinks.map((link) => (
                   <li key={link}>
                     <a
-                      href="#"
+                      href="/contact"
                       className="text-[15px] hover:text-white transition-colors duration-200"
                     >
                       {link}
@@ -87,14 +103,16 @@ export default function Footer() {
               </ul>
             </div>
 
+            {/* Connect */}
             <div>
               <h3 className="text-white text-[11px] font-bold tracking-[0.2em] uppercase mb-6">
                 Connect
               </h3>
               <p className="text-[15px] leading-relaxed mb-6">
-                Sign up for exclusive access to new collections and private events.
+                Sign up for exclusive access to new collections and private
+                events.
               </p>
-              <form onSubmit={handleSubscribe} className="flex">
+              <form onSubmit={handleSubscribe} className="flex mb-8">
                 <input
                   type="email"
                   value={email}
@@ -116,26 +134,12 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-[#5a4530] mx-5 md:mx-10" />
-
-        <div className="max-w-[1400px] mx-auto px-5 md:px-10 py-6 flex flex-col md:flex-row items-center justify-between gap-3">
-          <nav aria-label="Social media links">
-            <ul className="flex items-center gap-6">
-              {socialLinks.map((link) => (
-                <li key={link}>
-                  <a
-                    href="#"
-                    className="text-[15px] text-[#c4a882] hover:text-white transition-colors duration-200"
-                  >
-                    {link}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </nav>
-          <p className="text-[14px] text-[#c4a882]">
-            &copy; 2026 GEESIX. All rights reserved.
-          </p>
+        <div className="border-t border-[#5a4530]">
+          <div className="max-w-[1400px] mx-auto px-5 md:px-10 py-5">
+            <p className="text-[13px] text-[#7a6550]">
+              &copy; 2026 GEESIX. All rights reserved.
+            </p>
+          </div>
         </div>
       </footer>
     </>

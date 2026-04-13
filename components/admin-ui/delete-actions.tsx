@@ -22,7 +22,7 @@ export function ProductActions({ id }: { id: string }) {
       );
 
       // Change URL - ToastListener reacts to this
-      router.push("/?status=deleted");
+      router.push("/admin?status=deleted");
     });
   };
 

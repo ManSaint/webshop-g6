@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
 
@@ -10,28 +10,29 @@ import toast from "react-hot-toast";
 export function ToastListener() {
   const searchParams = useSearchParams();
   const router = useRouter();
+  const pathname = usePathname();
 
   useEffect(() => {
     const status = searchParams.get("status");
 
+    const cleanUpUrl = () => {
+      const newParams = new URLSearchParams(searchParams.toString());
+      newParams.delete("status");
+      const qs = newParams.toString();
+      router.replace(qs ? `${pathname}?${qs}` : pathname);
+    };
+
     if (status === "success") {
       toast.success("Product added successfuly!");
-      // Clean up the URL
-      const newParams = new URLSearchParams(searchParams.toString());
-      newParams.delete("status");
-      router.replace(`/?${newParams.toString()}`);
+      cleanUpUrl();
     } else if (status === "updated") {
       toast.success("Product updated successfully!");
-      const newParams = new URLSearchParams(searchParams.toString());
-      newParams.delete("status");
-      router.replace(`/?${newParams.toString()}`);
+      cleanUpUrl();
     } else if (status === "deleted") {
       toast.success("Product deleted successfully!");
-      const newParams = new URLSearchParams(searchParams.toString());
-      newParams.delete("status");
-      router.replace(`/?${newParams.toString()}`);
+      cleanUpUrl();
     }
-  }, [searchParams, router]);
+  }, [searchParams, router, pathname]);
 
   return null;
 }
