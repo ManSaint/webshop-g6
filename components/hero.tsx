@@ -10,7 +10,7 @@ export default function Hero() {
         className="object-cover"
       ></Image>
 
-      <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent"></div>
+      <div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/50 to-transparent"></div>
 
       <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-10 md:p-16 lg:p-20">
         <div className="flex flex-col gap-2">
@@ -22,16 +22,16 @@ export default function Hero() {
           </p>
           <div className="flex flex-col md:flex-row gap-4">
             <a
-              href="/"
+              href="/customer/collection"
               className="bg-(--color-bg) px-8 py-3 border text-center w-fit uppercase font-medium text-(--color-darkbrown) hover:cursor-pointer hover:bg-(--color-cream) tracking-wider text-sm hover:scale-102 duration-100"
             >
               Shop new season
             </a>
             <a
-              href="/"
+              href="/about"
               className="bg-none px-8 py-3 border w-fit text-center  uppercase font-medium text-(--color-text-inverted) hover:cursor-pointer hover:bg-(--color-cream)/10 tracking-wider text-sm hover:scale-102 duration-100"
             >
-              View lookbook
+              about our mission
             </a>
           </div>
         </div>
