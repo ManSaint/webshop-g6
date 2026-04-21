@@ -1,12 +1,13 @@
 import { getProducts } from "@/lib/db";
 import ProductCard from "./product-card";
+import Link from "next/link";
 
 type Props = {
-  limit?: number
-}
+  limit?: number;
+};
 
 export default async function ProductsGrid({ limit = 3 }: Props) {
-  const { products } = await getProducts(1, limit)
+  const { products } = await getProducts(1, limit);
 
   return (
     <section
@@ -14,10 +15,9 @@ export default async function ProductsGrid({ limit = 3 }: Props) {
       style={{ backgroundColor: "var(--color-cream)" }}
     >
       <div className="max-w-6xl mx-auto px-6">
-
-     
         <div className="text-center mb-14 space-y-3">
-          <h2 className="text-4xl"
+          <h2
+            className="text-4xl"
             style={{
               fontFamily: "var(--font-serif)",
               color: "var(--color-darkbrown)",
@@ -29,39 +29,38 @@ export default async function ProductsGrid({ limit = 3 }: Props) {
           <p
             className="text-xs"
             style={{
-            //   color: "var(--color-text-muted)",
-              color: "#7c8594"
+              //   color: "var(--color-text-muted)",
+              color: "#7c8594",
             }}
           >
             Thoughtfully designed pieces for every occasion,
-              <br />
+            <br />
             crafted from the finest materials.
           </p>
         </div>
 
-
         <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-7">
-        {products.map((product) => (
+          {products.map((product) => (
             <li key={product.id} className="w-full">
-            <ProductCard product={product} />
+              <ProductCard product={product} />
             </li>
-        ))}
+          ))}
         </ul>
 
         <div className="text-center mt-16">
           {/** biome-ignore lint/a11y/useButtonType: <explanation> */}
-            <button
+          <Link
+            href="/customer/collection"
             className="text-xs tracking-widest border-b pb-1 transition hover:opacity-70"
             style={{
-               color: "var(--color-charcoal)",
+              color: "var(--color-charcoal)",
               borderColor: "var(--color-border-store)",
             }}
           >
-             VIEW ALL NEW ARRIVALS
-          </button>
+            VIEW ALL NEW ARRIVALS
+          </Link>
         </div>
-
       </div>
     </section>
-  )
+  );
 }

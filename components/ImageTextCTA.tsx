@@ -25,10 +25,10 @@ export default function () {
               with you, age with grace, and feel unmistakably yours.
             </p>
             <a
-              href="/"
+              href="/about/#sustainability"
               className="bg-(--color-darkbrown) px-8 py-3 border w-full text-center md:w-fit uppercase font-medium text-(--color-text-inverted) hover:cursor-pointer hover:bg-(--color-charcoal) tracking-wider text-sm"
             >
-              Explore Wardrobe Edits
+              How We Work Sustainably
             </a>
           </div>
         </div>
